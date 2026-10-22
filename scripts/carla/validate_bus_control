@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd -P)"
+test_case="${1:-}"
+case "$test_case" in
+  straight|curve) ;;
+  *) echo "usage: $0 {straight|curve} [output-directory]" >&2; exit 2 ;;
+esac
+output_dir="${2:-${repo_root}/log/bus-control-$(date +%Y%m%d-%H%M%S)}"
+mkdir -p "$output_dir"
+exec 9>"${TMPDIR:-/tmp}/carla-bus-control-validation.lock"
+flock -n 9 || { echo "Another bus control validation is running." >&2; exit 1; }
+container=selfcar-carla-autoware
+if docker exec "$container" pgrep -f '^python3 .*carla_bus_control_validation.py' >/dev/null; then
+  echo "A bus control validation is already running." >&2
+  exit 1
+fi
+docker exec "$container" mkdir -p /tmp/bus-tools
+for name in carla_bus_control_validation.py carla_closed_loop_validation.py carla_validation_actors.py carla_native_lane_check.py; do
+  docker cp "$repo_root/tools/$name" "$container:/tmp/bus-tools/"
+done
+report="/tmp/bus-control-${test_case}-$$.json"
+set +e
+docker exec "$container" bash -lc '
+  source /opt/ros/jazzy/setup.bash && source /opt/autoware/setup.bash &&
+  source /opt/selfcar_overlay/setup.bash && source /opt/carla_overlay/setup.bash &&
+  python3 /tmp/bus-tools/carla_bus_control_validation.py --case "$1" --duration 360 --output "$2"
+' bash "$test_case" "$report" 2>&1 | tee "$output_dir/$test_case.log"
+result=${PIPESTATUS[0]}
+set -e
+if docker exec "$container" test -f "$report"; then
+  docker cp "$container:$report" "$output_dir/$test_case.json"
+fi
+echo "Validation output: $output_dir (exit=$result)"
+exit "$result"

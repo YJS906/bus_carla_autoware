@@ -1,0 +1,57 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.bus
+#1 transferring dockerfile: 1.93kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 1.0s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/selfcar-2026-carla:lane-start-fix-20260923
+#4 DONE 1.7s
+
+#5 [internal] load .dockerignore
+#5 transferring context:
+#5 transferring context: 286B done
+#5 DONE 0.2s
+
+#6 [1/7] FROM docker.io/library/selfcar-2026-carla:lane-start-fix-20260923@sha256:18e85ecc61d5294f5c986f13e0c3d599267c86af52e36e92375c08d74cf340b0
+#6 resolve docker.io/library/selfcar-2026-carla:lane-start-fix-20260923@sha256:18e85ecc61d5294f5c986f13e0c3d599267c86af52e36e92375c08d74cf340b0 0.0s done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 17.27kB done
+#7 DONE 0.0s
+
+#8 [6/7] COPY docker/files/install_carla_runtime.py /opt/carla-bus-build/install_carla_runtime.py
+#8 CACHED
+
+#9 [4/7] RUN source /opt/ros/jazzy/setup.bash &&     source /opt/autoware/setup.bash && source /opt/selfcar_overlay/setup.bash &&     source /opt/carla_overlay/setup.bash &&     CMAKE_BUILD_PARALLEL_LEVEL=2 MAKEFLAGS=-j2 colcon --log-base /opt/carla-bus-build/log build       --base-paths /opt/carla-bus-build/src --packages-select autoware_carla_interface autoware_mission_planner_universe       --executor sequential --merge-install --install-base /opt/carla_overlay       --build-base /opt/carla-bus-build/build       --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON &&     source /opt/carla_overlay/setup.bash &&     LD_LIBRARY_PATH=/opt/carla_overlay/lib:/opt/acados/lib:/usr/local/cuda/lib64 /opt/carla-bus-build/build/autoware_mission_planner_universe/test_autoware_mission_planner_universe --gtest_filter='*Bus*' &&     find /opt/carla-bus-build/src -type f -not -path '*/__pycache__/*' -print0 |       sort -z | xargs -0 sha256sum > /opt/carla-bus-build/source-manifest.sha256
+#9 CACHED
+
+#10 [5/7] COPY config/carla /opt/carla-config
+#10 CACHED
+
+#11 [2/7] COPY carla_overlay/src/autoware_carla_interface /opt/carla-bus-build/src/autoware_carla_interface
+#11 CACHED
+
+#12 [3/7] COPY vtd_overlay/src/autoware_universe/planning/autoware_mission_planner_universe /opt/carla-bus-build/src/autoware_mission_planner_universe
+#12 CACHED
+
+#13 [7/7] RUN python3 /opt/carla-bus-build/install_carla_runtime.py --vehicle-profile fusorosa
+#13 CACHED
+
+#14 exporting to image
+#14 exporting layers 0.1s done
+#14 exporting manifest sha256:571007c3518f4b840914ac0e1cc47501643000ec38588860cab2c22c537b2b08
+#14 exporting manifest sha256:571007c3518f4b840914ac0e1cc47501643000ec38588860cab2c22c537b2b08 0.0s done
+#14 exporting config sha256:8116afc1291a7925f84684d3da9829733238b9f4639730080591eece1a3968da done
+#14 exporting attestation manifest sha256:824015c56835cef00afe3166a4e3703a8041bdf1b1a9b4291ebaef1e7fc9693a done
+#14 exporting manifest list sha256:d9804cba70fd7db58c138d375359a8a929ab8490c404093c147adf21ea874ad3 done
+#14 naming to docker.io/library/selfcar-2026-carla:bus done
+#14 unpacking to docker.io/library/selfcar-2026-carla:bus 0.1s done
+#14 DONE 0.7s

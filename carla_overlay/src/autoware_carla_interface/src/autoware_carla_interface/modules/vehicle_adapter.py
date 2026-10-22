@@ -87,7 +87,11 @@ def validate_vehicle_profile(actor, geometry, profile, tolerance=0.05):
     for key, actual in measured.items():
         value = float(expected[key])
         allowed = .01 if key == 'max_steer_angle' else tolerance
-        if not math.isfinite(value) or abs(actual-value) > allowed:
+        # A measured collision envelope may be wider than the render bounding
+        # box (Fuso front-wheel spheres). Conservative lateral enlargement is
+        # allowed; never accept a smaller lateral envelope.
+        mismatch = value < actual-allowed if key in ('width', 'left_extent', 'right_extent') else abs(actual-value) > allowed
+        if not math.isfinite(value) or mismatch:
             raise ValueError(f'Vehicle profile mismatch for {key}: CARLA={actual:.6f}, profile={value:.6f}')
     return measured
 

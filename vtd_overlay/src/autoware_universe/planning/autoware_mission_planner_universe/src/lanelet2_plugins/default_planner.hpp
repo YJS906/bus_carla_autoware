@@ -39,6 +39,7 @@ struct DefaultPlannerParameters
   bool enable_correct_goal_pose;
   bool consider_no_drivable_lanes;
   bool check_footprint_inside_lanes;
+  bool allow_goal_footprint_in_lane_changeable_lanes;
   bool allow_area;
 };
 
@@ -89,6 +90,10 @@ protected:
    * @param goal_footprint footprint of the ego vehicle at the goal pose
    */
   [[nodiscard]] bool check_goal_footprint_inside_lanes(
+    const lanelet::ConstLanelets & lanelets_near_goal,
+    const autoware_utils::Polygon2d & goal_footprint) const;
+
+  [[nodiscard]] bool check_goal_footprint_inside_lane_changeable_corridor(
     const lanelet::ConstLanelets & lanelets_near_goal,
     const autoware_utils::Polygon2d & goal_footprint) const;
 

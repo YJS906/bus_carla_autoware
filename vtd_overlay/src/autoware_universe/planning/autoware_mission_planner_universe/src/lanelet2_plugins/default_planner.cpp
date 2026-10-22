@@ -34,6 +34,7 @@
 #include <visualization_msgs/msg/marker.hpp>
 
 #include <boost/geometry/algorithms/correct.hpp>
+#include <boost/geometry/algorithms/area.hpp>
 #include <boost/geometry/algorithms/difference.hpp>
 #include <boost/geometry/algorithms/is_empty.hpp>
 
@@ -400,6 +401,8 @@ void DefaultPlanner::initialize_common(rclcpp::Node * node)
   param_.consider_no_drivable_lanes = node_->declare_parameter<bool>("consider_no_drivable_lanes");
   param_.check_footprint_inside_lanes =
     node_->declare_parameter<bool>("check_footprint_inside_lanes");
+  param_.allow_goal_footprint_in_lane_changeable_lanes =
+    node_->declare_parameter<bool>("allow_goal_footprint_in_lane_changeable_lanes", false);
   param_.allow_area = node_->declare_parameter<bool>("allow_area", false);
   route_handler_.setAllowArea(param_.allow_area);
 }
@@ -575,6 +578,39 @@ bool DefaultPlanner::check_goal_footprint_inside_lanes(
   return boost::geometry::covered_by(goal_footprint, lane_polygon);
 }
 
+bool DefaultPlanner::check_goal_footprint_inside_lane_changeable_corridor(
+  const lanelet::ConstLanelets & lanelets_near_goal,
+  const autoware_utils::Polygon2d & goal_footprint) const
+{
+  const auto graph = route_handler_.getRoutingGraphPtr();
+  if (!graph) return false;
+  std::deque<lanelet::ConstLanelet> pending(lanelets_near_goal.begin(), lanelets_near_goal.end());
+  std::unordered_set<lanelet::Id> visited;
+  std::vector<autoware_utils::Polygon2d> remaining{goal_footprint};
+  // Subtract only legal, same-direction lane-change neighbours. No road-border
+  // buffering, shoulder expansion, opposite lanes, or convex hull over gaps.
+  while (!pending.empty()) {
+    const auto lane = pending.front();
+    pending.pop_front();
+    if (!visited.insert(lane.id()).second || !route_handler_.isRoadLanelet(lane)) continue;
+    autoware_utils::Polygon2d polygon;
+    for (const auto & p : lane.polygon2d()) polygon.outer().emplace_back(p.x(), p.y());
+    boost::geometry::correct(polygon);
+    std::vector<autoware_utils::Polygon2d> next;
+    for (const auto & part : remaining) {
+      std::vector<autoware_utils::Polygon2d> difference;
+      boost::geometry::difference(part, polygon, difference);
+      next.insert(next.end(), difference.begin(), difference.end());
+    }
+    remaining = std::move(next);
+    if (const auto left = graph->left(lane)) pending.push_back(*left);
+    if (const auto right = graph->right(lane)) pending.push_back(*right);
+  }
+  double uncovered_area = 0.0;
+  for (const auto & part : remaining) uncovered_area += std::abs(boost::geometry::area(part));
+  return uncovered_area < 1e-6;
+}
+
 bool DefaultPlanner::is_goal_valid(const geometry_msgs::msg::Pose & goal)
 {
   const auto logger = node_->get_logger();
@@ -650,6 +686,8 @@ bool DefaultPlanner::is_goal_valid(const geometry_msgs::msg::Pose & goal)
   if (
     param_.check_footprint_inside_lanes &&
     !check_goal_footprint_inside_lanes(lanelets_near_goal, polygon_footprint) &&
+    !(param_.allow_goal_footprint_in_lane_changeable_lanes &&
+      check_goal_footprint_inside_lane_changeable_corridor(lanelets_near_goal, polygon_footprint)) &&
     !is_in_parking_lot(
       lanelet::utils::query::getAllParkingLots(route_handler_.getLaneletMapPtr()),
       experimental::lanelet2_utils::from_ros(goal.position))) {

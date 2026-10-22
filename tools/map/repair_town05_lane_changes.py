@@ -2,8 +2,9 @@
 """Conservatively recover native Town05 legal lane changes, entirely offline.
 
 Only tags on previously unclassified, shared road boundaries are added. We do
-not rebuild/split geometry: a boundary spanning uncertain/multiple native lanes,
-variable markings, a junction, or one-way permission stays non-changeable. This
+not rebuild/split geometry: a boundary spanning disconnected native lanes, variable markings, a junction,
+or one-way permission stays non-changeable. Connected road sections are allowed
+only when every section has the same explicit two-way lane-change permission. This
 is intentionally narrower than the simulator's complete road network.
 """
 from __future__ import annotations
@@ -63,7 +64,7 @@ def match_lane(left, right, native):
     ll, rr = LineString(left), LineString(right)
     length = max(ll.length, rr.length)
     count = max(4, math.ceil(length / 2))
-    keys, max_error = set(), 0.0
+    keys, max_error = [], 0.0
     for i in range(count + 1):
         # Endpoints coincide with adjoining roads; sample 10 cm inward. Require
         # the ENTIRE matched native laneSection to have a uniform legal mark,
@@ -91,10 +92,41 @@ def match_lane(left, right, native):
             return None, "direction_mismatch", max_error
         if wp.is_junction:
             return None, "junction", max_error
-        keys.add((wp.road_id, wp.section_id, wp.lane_id))
-    if len(keys) != 1:
-        return None, "multiple_native_lanes", max_error
-    return next(iter(keys)), None, max_error
+        key = (wp.road_id, wp.section_id, wp.lane_id)
+        if not keys or keys[-1] != key:
+            keys.append(key)
+    return keys, None, max_error
+
+
+def connected_native_sequence(keys, roads):
+    """Prove each sampled transition using explicit OpenDRIVE road/lane links."""
+    for a, b in zip(keys, keys[1:]):
+        road_a, section_a, lane_a = a
+        road_b, section_b, lane_b = b
+        direction = "successor" if lane_a < 0 else "predecessor"
+        sections = roads[road_a].findall("./lanes/laneSection")
+        lane = next(l for l in sections[section_a].findall("./*/lane")
+                    if int(l.get("id")) == lane_a)
+        link = lane.find("./link/" + direction)
+        if link is None or int(link.get("id")) != lane_b:
+            return False
+        if road_a == road_b:
+            if section_b != section_a + (1 if lane_a < 0 else -1):
+                return False
+        else:
+            # Reject skipped sections, junction links and reversed road contacts.
+            if section_a != (len(sections)-1 if lane_a < 0 else 0):
+                return False
+            road_link = roads[road_a].find("./link/" + direction)
+            if road_link is None or road_link.get("elementType") != "road" or \
+                    int(road_link.get("elementId")) != road_b:
+                return False
+            contact = "start" if lane_b < 0 else "end"
+            target_sections = roads[road_b].findall("./lanes/laneSection")
+            if road_link.get("contactPoint") != contact or \
+                    section_b != (0 if lane_b < 0 else len(target_sections)-1):
+                return False
+    return True
 
 
 def repair(map_path, xodr_path, output, manifest=None, output_manifest=None):
@@ -105,6 +137,7 @@ def repair(map_path, xodr_path, output, manifest=None, output_manifest=None):
     nodes = {n.get("id"): tuple(float(tags(n).get(k, 0)) for k in ("local_x", "local_y", "ele"))
              for n in root.findall("node")}
     ways = {w.get("id"): w for w in root.findall("way")}
+    roads = {int(road.get("id")): road for road in xroot.findall("road")}
     sections = {(int(road.get("id")), i): section
                 for road in xroot.findall("road")
                 for i, section in enumerate(road.findall("./lanes/laneSection"))}
@@ -133,14 +166,20 @@ def repair(map_path, xodr_path, output, manifest=None, output_manifest=None):
             record["native_lanes"] = [match_a, match_b]
             record["max_center_match_error_m"] = max(error_a, error_b)
             reason = reason_a or reason_b
-            if not reason and not same_direction_adjacent(match_a, match_b):
+            if not reason and (len(match_a) != len(match_b) or not all(
+                    same_direction_adjacent(a, b) for a, b in zip(match_a, match_b))):
                 reason = "not_same_native_road_adjacent_lanes"
+            if not reason and not all(connected_native_sequence(keys, roads)
+                                      for keys in (match_a, match_b)):
+                reason = "disconnected_native_sections"
             if not reason:
-                section = sections[match_a[:2]]
-                mark_lane = native_marking_lane(section, match_a[2], match_b[2])
-                record["markings"] = [dict(m.attrib) for m in mark_lane.findall("roadMark")]
-                if not constant_broken_both(mark_lane):
-                    reason = "not_uniform_broken_both_in_native_section"
+                record["markings"] = []
+                for a, b in zip(match_a, match_b):
+                    mark_lane = native_marking_lane(sections[a[:2]], a[2], b[2])
+                    record["markings"].append({"road_section": a[:2],
+                        "road_marks": [dict(m.attrib) for m in mark_lane.findall("roadMark")]})
+                    if not constant_broken_both(mark_lane):
+                        reason = "not_uniform_broken_both_in_native_section"
         current = tags(ways[way_id])
         owned = current.get("carla:lane_marking_source") == SOURCE
         if owned and (reason or any(current.get(k) != v for k, v in OWNED_TAGS.items())):
@@ -158,7 +197,7 @@ def repair(map_path, xodr_path, output, manifest=None, output_manifest=None):
     if str(Path(map_path).resolve()) == str(Path(output).resolve()):
         raise ValueError("Write a candidate, never modify input in place")
     tree.write(output, encoding="UTF-8", xml_declaration=True)
-    result = {"schema": 1, "source": SOURCE, "input_map_sha256": sha(map_path),
+    result = {"schema": 2, "matcher_version": 2, "source": SOURCE, "input_map_sha256": sha(map_path),
               "output_map_sha256": sha(output), "xodr_sha256": sha(xodr_path),
               "road_lanelets": len(matches), "road_boundaries": len(uses),
               "allowed_boundaries": sum(r["allowed"] for r in records),

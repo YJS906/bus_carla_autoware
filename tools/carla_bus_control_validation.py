@@ -16,6 +16,7 @@ import rclpy
 from autoware_adapi_v1_msgs.msg import OperationModeState
 from autoware_adapi_v1_msgs.srv import ChangeOperationMode, ClearRoute, SetRoutePoints
 from autoware_internal_planning_msgs.msg import VelocityLimit
+from tier4_vehicle_msgs.msg import ActuationCommandStamped
 from rosidl_runtime_py.convert import message_to_ordereddict
 
 from carla_closed_loop_validation import Validation, speed, xyz
@@ -28,7 +29,15 @@ class BusValidation(Validation):
         if len(self.world.get_actors().filter('vehicle.*'))!=1 or self.world.get_actors().filter('walker.pedestrian.*'):
             raise RuntimeError('Basic control test requires no background vehicles or pedestrians')
         self.collision_sensor=None;self.collisions=[]
+        self.actuation_subscription=self.create_subscription(ActuationCommandStamped,
+            '/control/command/actuation_cmd',self.on_actuation,10)
+        self.actuation_received=0.
+        self.result.update(required_stop_hold_s=3.0,maximum_goal_error_m=1.5,
+                           maximum_centreline_error_m=1.0)
         self.base_offset=(-2.6150478087440625,-.000007316637322674069,.0009262561798095703)
+
+    def on_actuation(self,message):
+        self.actuation_received=time.monotonic()
 
     def rear_pose(self):
         point=self.ego.get_transform().transform(carla.Location(*self.base_offset))
@@ -70,6 +79,7 @@ class BusValidation(Validation):
                    and time.monotonic()-self.received['trajectory']<1,30,'fresh trajectory')
         self.until(lambda:'velocity_limit' in self.last and self.last['velocity_limit'].max_velocity<=self.args.speed_kmh/3.6+.01,10,'speed cap applied')
         self.until(lambda:self.last['mode'].is_autonomous_mode_available,30,'AUTO available')
+        self.until(lambda:time.monotonic()-self.actuation_received<1,10,'fresh converted actuation commands')
         if not self.last['mode'].is_autoware_control_enabled:
             self.call(self.enable_client,ChangeOperationMode.Request(),'enable_autoware_control')
         self.result['native_start']={'road':37,'lane':-2,'s':s0}
@@ -90,6 +100,7 @@ class BusValidation(Validation):
             self.spin(.10)
             if self.carla.get_world().id!=self.world_id:raise RuntimeError('World changed')
             if time.monotonic()-self.received.get('odom',0)>1:raise RuntimeError('Stale localization')
+            if time.monotonic()-self.actuation_received>1:raise RuntimeError('Stale actuation commands')
             now=self.world.get_snapshot();rear=self.rear_pose();v=speed(self.ego)
             distance+=rear.distance(last_position);last_position=rear
             goal_distance=rear.distance(self.goal_wp.transform.location)

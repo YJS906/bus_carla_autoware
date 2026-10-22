@@ -86,6 +86,8 @@ def install(config, root, vehicle_profile='prius'):
              '/opt/autoware/sample_vehicle_description/share/sample_vehicle_description/urdf/vehicle.xacro')
         copy(profile_dir.relative_to(config) / 'planning_common.param.yaml',
              launch_share + '/config/planning/scenario_planning/common/common.param.yaml')
+        for source in (profile_dir / 'planning').rglob('*.yaml'):
+            copy(source.relative_to(config), launch_share + '/config/planning/' + source.relative_to(profile_dir / 'planning').as_posix())
     active_path = root / 'opt/carla-config/active_vehicle_profile.json'
     active_path.parent.mkdir(parents=True, exist_ok=True)
     active_path.write_text(json.dumps(active, indent=2) + '\n')

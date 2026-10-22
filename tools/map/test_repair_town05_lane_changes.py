@@ -11,7 +11,7 @@ import unittest
 import xml.etree.ElementTree as ET
 
 from repair_town05_lane_changes import (
-    OWNED_TAGS, constant_broken_both, native_marking_lane, repair,
+    OWNED_TAGS, connected_native_sequence, constant_broken_both, native_marking_lane, repair,
     same_direction_adjacent, sha, tags,
 )
 
@@ -43,6 +43,17 @@ class PermissionTests(unittest.TestCase):
         self.assertTrue(same_direction_adjacent((38,0,3), (38,0,2)))
         for other in ((38,0,2), (38,0,-1), (39,0,-2), (38,1,-2)):
             self.assertFalse(same_direction_adjacent((38,0,-3), other))
+
+    def test_native_transition_requires_explicit_road_and_lane_links(self):
+        roads = {36: ET.fromstring('''<road><link><successor elementType="road"
+          elementId="37" contactPoint="start"/></link><lanes><laneSection><right>
+          <lane id="-2"><link><successor id="-2"/></link></lane>
+          </right></laneSection></lanes></road>'''),
+          37: ET.fromstring('<road><lanes><laneSection/></lanes></road>')}
+        self.assertTrue(connected_native_sequence([(36,0,-2),(37,0,-2)], roads))
+        self.assertFalse(connected_native_sequence([(36,0,-2),(37,0,-1)], roads))
+        roads[36].find('./link/successor').set('elementType', 'junction')
+        self.assertFalse(connected_native_sequence([(36,0,-2),(37,0,-2)], roads))
 
     def test_shared_marking_belongs_to_inner_lane_on_both_sides(self):
         section = ET.fromstring('''<laneSection><left><lane id="2"/><lane id="3"/></left>
@@ -96,6 +107,10 @@ class MapIntegrationTests(unittest.TestCase):
                 self.assertIn(additions, ({}, OWNED_TAGS))
         boundary = next(r for r in result['boundaries'] if r['way_id']==18050)
         self.assertTrue(boundary['allowed'])
+        for way_id in (12542, 13360):
+            ring = next(r for r in result['boundaries'] if r['way_id'] == way_id)
+            self.assertTrue(ring['allowed'], ring)
+            self.assertEqual({key[0] for key in ring['native_lanes'][0]}, {36, 37})
         self.assertEqual(json.loads(manifest.read_text())['map_sha256'], sha(out))
         self.assertLess(result['allowed_boundaries'], result['road_boundaries'])
         out2, _, again = self.run_repair(out, 'again')

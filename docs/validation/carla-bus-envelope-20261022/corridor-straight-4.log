@@ -1,0 +1,27 @@
+{"event": "stop", "sim_time": 8.300000123, "status": {"success": true, "code": 60001, "message": "The mode is the same as the current."}}
+{"event": "clear_old_route", "sim_time": 8.400000125, "status": {"success": true, "code": 0, "message": ""}}
+{"event": "set_bus_test_route", "sim_time": 11.950000178, "status": {"success": true, "code": 0, "message": ""}}
+{"event": "engage_bus", "sim_time": 14.850000221, "status": {"success": true, "code": 0, "message": ""}}
+{"event": "bus_progress", "sim_time": 15.200000226, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 20.200000301, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 25.250000376, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 30.300000451, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 35.300000526, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 40.400000602, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 45.400000676, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 50.400000751, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 55.500000827, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 60.500000901, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 65.600000977, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 70.600001052, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 75.650001127, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 80.700001202, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 85.750001277, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 90.800001353, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 95.800001427, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 100.850001502, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 105.900001578, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+{"event": "bus_progress", "sim_time": 111.000001654, "speed_kmh": 0.0, "distance_m": 0.0, "goal_distance_m": 60.0, "error_m": 0.12040125578641891}
+RuntimeError('Test interrupted')
+{"event": "stop", "sim_time": 116.000001728, "status": {"success": true, "code": 0, "message": ""}}
+{"event": "clear_test_route", "sim_time": 116.500001735, "status": {"success": true, "code": 0, "message": ""}}

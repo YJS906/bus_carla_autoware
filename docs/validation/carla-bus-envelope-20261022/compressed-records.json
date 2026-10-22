@@ -1,0 +1,18 @@
+{
+  "audit.json": {
+    "sha256": "8f740ea878ffb604e3fced07aa321a2dd5f41aefe57ff753ffbe01f607bd9fe8",
+    "uncompressed_bytes": 2216169
+  },
+  "audit-attempt1.json": {
+    "sha256": "944853d50828d4bfe0dd142de4cadeb8c60e7df5c2929afee546ee2b096b7651",
+    "uncompressed_bytes": 1823246
+  },
+  "corridor-straight-4.json": {
+    "sha256": "72410fef9d230349f7671c1c9261d77e942914458531c4b1a70dfc646a682add",
+    "uncompressed_bytes": 1435942
+  },
+  "corridor-straight-5.json": {
+    "sha256": "1ced5897e794837acf42ab8a980123ce3f5e6d663e75f5d7d7b0269bd75d67f0",
+    "uncompressed_bytes": 1599944
+  }
+}

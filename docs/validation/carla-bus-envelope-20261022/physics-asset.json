@@ -1,0 +1,122 @@
+{
+  "uasset": "/home/a/CARLA/0.9.16/CarlaUE4/Content/Carla/Static/Bus/Mitsubishi_FusoRosa/Phys_FusoRosa.uasset",
+  "sha256": "c0ec14fd6ef44e2dd6cd7c3f78a6015e1deea4edc2db30e4c68c32bbde4a7f35",
+  "uexp_sha256": "b521e260c939a96f28596ef7fac38df616f6d9a897da6551d9026e2158c540ce",
+  "bodies": [
+    {
+      "bone": "Vehicle_Base",
+      "properties": [
+        {
+          "name": "CollisionEnabled",
+          "value": "ECollisionEnabled::QueryAndPhysics",
+          "uexp_offset": 3928
+        },
+        {
+          "name": "BoneName",
+          "value": "Vehicle_Base",
+          "uexp_offset": 4071
+        }
+      ]
+    },
+    {
+      "bone": "Wheel_Front_Left",
+      "properties": [
+        {
+          "name": "Radius",
+          "value": 63.89472198486328,
+          "uexp_offset": 6364
+        },
+        {
+          "name": "CollisionEnabled",
+          "value": "ECollisionEnabled::QueryAndPhysics",
+          "uexp_offset": 6481
+        },
+        {
+          "name": "BoneName",
+          "value": "Wheel_Front_Left",
+          "uexp_offset": 6624
+        },
+        {
+          "name": "PhysicsType",
+          "value": "PhysType_Kinematic",
+          "uexp_offset": 6657
+        }
+      ]
+    },
+    {
+      "bone": "Wheel_Front_Right",
+      "properties": [
+        {
+          "name": "Radius",
+          "value": 63.894718170166016,
+          "uexp_offset": 6975
+        },
+        {
+          "name": "CollisionEnabled",
+          "value": "ECollisionEnabled::QueryAndPhysics",
+          "uexp_offset": 7092
+        },
+        {
+          "name": "BoneName",
+          "value": "Wheel_Front_Right",
+          "uexp_offset": 7235
+        },
+        {
+          "name": "PhysicsType",
+          "value": "PhysType_Kinematic",
+          "uexp_offset": 7268
+        }
+      ]
+    },
+    {
+      "bone": "Wheel_Rear_Right",
+      "properties": [
+        {
+          "name": "Radius",
+          "value": 65.9799575805664,
+          "uexp_offset": 7586
+        },
+        {
+          "name": "CollisionEnabled",
+          "value": "ECollisionEnabled::QueryAndPhysics",
+          "uexp_offset": 7703
+        },
+        {
+          "name": "BoneName",
+          "value": "Wheel_Rear_Right",
+          "uexp_offset": 7846
+        },
+        {
+          "name": "PhysicsType",
+          "value": "PhysType_Kinematic",
+          "uexp_offset": 7879
+        }
+      ]
+    },
+    {
+      "bone": "Wheel_Rear_Left",
+      "properties": [
+        {
+          "name": "Radius",
+          "value": 65.97992706298828,
+          "uexp_offset": 8197
+        },
+        {
+          "name": "CollisionEnabled",
+          "value": "ECollisionEnabled::QueryAndPhysics",
+          "uexp_offset": 8314
+        },
+        {
+          "name": "BoneName",
+          "value": "Wheel_Rear_Left",
+          "uexp_offset": 8457
+        },
+        {
+          "name": "PhysicsType",
+          "value": "PhysType_Kinematic",
+          "uexp_offset": 8490
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "/control/command/control_cmd": {
+    "stamp": {
+      "sec": 88,
+      "nanosec": 800001323
+    },
+    "control_time": {
+      "sec": 0,
+      "nanosec": 0
+    },
+    "lateral": {
+      "stamp": {
+        "sec": 88,
+        "nanosec": 800001323
+      },
+      "control_time": {
+        "sec": 0,
+        "nanosec": 0
+      },
+      "steering_tire_angle": 0.003833611262962222,
+      "steering_tire_rotation_rate": 0.002557561034336686,
+      "is_defined_steering_tire_rotation_rate": false
+    },
+    "longitudinal": {
+      "stamp": {
+        "sec": 88,
+        "nanosec": 800001323
+      },
+      "control_time": {
+        "sec": 0,
+        "nanosec": 0
+      },
+      "velocity": 5.551115123125783e-17,
+      "acceleration": -0.5630440711975098,
+      "jerk": 0.0,
+      "is_defined_acceleration": false,
+      "is_defined_jerk": false
+    }
+  },
+  "/control/trajectory_follower/control_cmd": {
+    "stamp": {
+      "sec": 88,
+      "nanosec": 800001323
+    },
+    "control_time": {
+      "sec": 0,
+      "nanosec": 0
+    },
+    "lateral": {
+      "stamp": {
+        "sec": 88,
+        "nanosec": 800001323
+      },
+      "control_time": {
+        "sec": 0,
+        "nanosec": 0
+      },
+      "steering_tire_angle": 0.003833611262962222,
+      "steering_tire_rotation_rate": 0.002557561034336686,
+      "is_defined_steering_tire_rotation_rate": false
+    },
+    "longitudinal": {
+      "stamp": {
+        "sec": 88,
+        "nanosec": 800001323
+      },
+      "control_time": {
+        "sec": 0,
+        "nanosec": 0
+      },
+      "velocity": 5.551115123125783e-17,
+      "acceleration": -0.5630440711975098,
+      "jerk": 0.0,
+      "is_defined_acceleration": false,
+      "is_defined_jerk": false
+    }
+  },
+  "/control/trajectory_follower/longitudinal/diagnostic": {
+    "stamp": {
+      "sec": 88,
+      "nanosec": 850001323
+    },
+    "layout": {
+      "dim": [],
+      "data_offset": 0
+    },
+    "data": [
+      0.05000000074505806,
+      0.2398657202720642,
+      5.551115123125783e-17,
+      -1.5033263522923335e-08,
+      5.551115123125783e-17,
+      -1.5033263522923335e-08,
+      0.0,
+      -7.519435598624113e-07,
+      -5.841255187988281e-06,
+      -4.308319330448285e-05,
+      -0.00033467926550656557,
+      -0.2398657202720642,
+      -0.26072195172309875,
+      0.0,
+      -0.5607219934463501,
+      -0.5607219934463501,
+      -0.5607219934463501,
+      -0.5607293248176575,
+      -0.5607293248176575,
+      -0.26072195172309875,
+      -0.30000001192092896,
+      0.0,
+      0.0,
+      0.0,
+      0.2117137461900711,
+      -0.31480950117111206,
+      0.0,
+      0.0,
+      -9.743861198425293,
+      2.0,
+      -3.006652704584667e-08,
+      0.24591247737407684,
+      0.5316528677940369,
+      -0.5607219934463501,
+      -7.519435598624113e-07,
+      -4.308319330448285e-05,
+      0.0
+    ]
+  },
+  "/planning/scenario_planning/lane_driving/behavior_planning/path": {
+    "n": 4,
+    "velocities": [
+      13.88888931274414,
+      13.88888931274414,
+      13.88888931274414,
+      0.0
+    ],
+    "max_v": 13.88888931274414
+  },
+  "/planning/scenario_planning/lane_driving/motion_planning/path_optimizer/trajectory": {
+    "n": 3,
+    "velocities": [
+      13.88888931274414,
+      13.88888931274414,
+      13.88888931274414
+    ],
+    "max_v": 13.88888931274414
+  },
+  "/planning/trajectory": {
+    "n": 8,
+    "velocities": [
+      0.66593998670578,
+      0.693845808506012,
+      0.6875865459442139,
+      0.6502447724342346,
+      0.5822746157646179,
+      0.4863296151161194,
+      0.3498033881187439,
+      0.0
+    ],
+    "max_v": 0.693845808506012
+  }
+}

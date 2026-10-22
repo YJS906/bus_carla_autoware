@@ -46,6 +46,10 @@ struct DefaultPlanner : public autoware::mission_planner_universe::lanelet2::Def
   // todo(someone): create tests with various kinds of maps
   void set_default_test_map() { route_handler_.setMap(autoware::test_utils::makeMapBinMsg()); }
   void set_test_map(const lanelet::LaneletMapPtr & map) { route_handler_.setMap(map); }
+  bool bus_corridor(const lanelet::ConstLanelets & lanes, const autoware_utils::Polygon2d & footprint)
+  {
+    return check_goal_footprint_inside_lane_changeable_corridor(lanes, footprint);
+  }
   [[nodiscard]] bool check_goal_inside_lanes(
     const lanelet::ConstLanelets & lanelets_near_goal,
     const autoware_utils::Polygon2d & goal_footprint) const
@@ -97,6 +101,43 @@ protected:
 
   DefaultPlanner planner_;
 };
+
+TEST_F(DefaultPlannerTest, BusCorridorRequiresLegalNeighboursAndKeepsRoadEdges)
+{
+  for (const bool solid : {false, true}) {
+    for (const bool opposite : {false, true}) {
+      auto map = std::make_shared<lanelet::LaneletMap>();
+      std::vector<lanelet::LineString3d> boundaries;
+      for (int i = 0; i < 4; ++i) {
+        const double y = 5.25 - 3.5 * i;
+        lanelet::LineString3d line(100 + i, {
+          lanelet::Point3d(200 + 2 * i, 0.0, y, 0.0),
+          lanelet::Point3d(201 + 2 * i, 40.0, y, 0.0)});
+        line.attributes()["type"] = "line_thin";
+        line.attributes()["subtype"] = solid ? "solid" : "dashed";
+        boundaries.push_back(line);
+      }
+      for (int i = 0; i < 3; ++i) {
+        lanelet::Lanelet lane(300 + i, boundaries[i], boundaries[i + 1]);
+        lane.attributes()["subtype"] = "road";
+        lane.attributes()["location"] = "urban";
+        lane.attributes()["one_way"] = "yes";
+        if (opposite && i != 1) lane = lane.invert();
+        map->add(lane);
+      }
+      planner_.set_test_map(map);
+      autoware_utils::Polygon2d footprint;
+      footprint.outer() = {{10, -2.1}, {10, 2.0}, {20, 2.0}, {20, -2.1}, {10, -2.1}};
+      const auto middle = map->laneletLayer.get(301);
+      EXPECT_FALSE(planner_.check_goal_inside_lanes({middle}, footprint));
+      EXPECT_EQ(planner_.bus_corridor({middle}, footprint), !solid && !opposite);
+      footprint.outer() = {{10, -5.3}, {10, 2.0}, {20, 2.0}, {20, -5.3}, {10, -5.3}};
+      EXPECT_FALSE(planner_.bus_corridor({middle}, footprint));
+      footprint.outer() = {{39, -2.1}, {39, 2.0}, {41, 2.0}, {41, -2.1}, {39, -2.1}};
+      EXPECT_FALSE(planner_.bus_corridor({middle}, footprint));
+    }
+  }
+}
 
 TEST_F(DefaultPlannerTest, checkGoalInsideLane)
 {

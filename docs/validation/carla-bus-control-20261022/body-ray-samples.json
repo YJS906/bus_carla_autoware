@@ -1,0 +1,330 @@
+[
+  {
+    "x": -3,
+    "z": 0.8,
+    "hits_by_side": [
+      [
+        {
+          "label": "Bus",
+          "local_y_m": -1.627
+        },
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        },
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        }
+      ],
+      [
+        {
+          "label": "Bus",
+          "local_y_m": 1.625
+        },
+        {
+          "label": "Bus",
+          "local_y_m": 1.59
+        },
+        {
+          "label": "Bus",
+          "local_y_m": 1.589
+        }
+      ]
+    ]
+  },
+  {
+    "x": 0,
+    "z": 0.8,
+    "hits_by_side": [
+      [
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        },
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        }
+      ],
+      [
+        {
+          "label": "Bus",
+          "local_y_m": 1.59
+        },
+        {
+          "label": "Bus",
+          "local_y_m": 1.59
+        }
+      ]
+    ]
+  },
+  {
+    "x": 3,
+    "z": 0.8,
+    "hits_by_side": [
+      [
+        {
+          "label": "Bus",
+          "local_y_m": -1.925
+        },
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        },
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        }
+      ],
+      [
+        {
+          "label": "Bus",
+          "local_y_m": 1.925
+        },
+        {
+          "label": "Bus",
+          "local_y_m": 1.59
+        },
+        {
+          "label": "Bus",
+          "local_y_m": 1.59
+        }
+      ]
+    ]
+  },
+  {
+    "x": -3,
+    "z": 1.8,
+    "hits_by_side": [
+      [
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        },
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        }
+      ],
+      [
+        {
+          "label": "Bus",
+          "local_y_m": 1.589
+        },
+        {
+          "label": "Bus",
+          "local_y_m": 1.589
+        }
+      ]
+    ]
+  },
+  {
+    "x": 0,
+    "z": 1.8,
+    "hits_by_side": [
+      [
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        },
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        }
+      ],
+      [
+        {
+          "label": "Bus",
+          "local_y_m": 1.59
+        },
+        {
+          "label": "Bus",
+          "local_y_m": 1.589
+        }
+      ]
+    ]
+  },
+  {
+    "x": 3,
+    "z": 1.8,
+    "hits_by_side": [
+      [
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        },
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        }
+      ],
+      [
+        {
+          "label": "Bus",
+          "local_y_m": 1.59
+        },
+        {
+          "label": "Bus",
+          "local_y_m": 1.589
+        }
+      ]
+    ]
+  },
+  {
+    "x": -3,
+    "z": 2.8,
+    "hits_by_side": [
+      [
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        },
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        }
+      ],
+      [
+        {
+          "label": "Bus",
+          "local_y_m": 1.589
+        },
+        {
+          "label": "Bus",
+          "local_y_m": 1.589
+        }
+      ]
+    ]
+  },
+  {
+    "x": 0,
+    "z": 2.8,
+    "hits_by_side": [
+      [
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        },
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        }
+      ],
+      [
+        {
+          "label": "Bus",
+          "local_y_m": 1.59
+        },
+        {
+          "label": "Bus",
+          "local_y_m": 1.589
+        }
+      ]
+    ]
+  },
+  {
+    "x": 3,
+    "z": 2.8,
+    "hits_by_side": [
+      [
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        },
+        {
+          "label": "Bus",
+          "local_y_m": -1.589
+        }
+      ],
+      [
+        {
+          "label": "Bus",
+          "local_y_m": 1.59
+        },
+        {
+          "label": "Bus",
+          "local_y_m": 1.589
+        }
+      ]
+    ]
+  },
+  {
+    "x": -3,
+    "z": 3.8,
+    "hits_by_side": [
+      [
+        {
+          "label": "Bus",
+          "local_y_m": -1.553
+        },
+        {
+          "label": "Bus",
+          "local_y_m": -1.552
+        }
+      ],
+      [
+        {
+          "label": "Bus",
+          "local_y_m": 1.552
+        },
+        {
+          "label": "Bus",
+          "local_y_m": 1.552
+        }
+      ]
+    ]
+  },
+  {
+    "x": 0,
+    "z": 3.8,
+    "hits_by_side": [
+      [
+        {
+          "label": "Bus",
+          "local_y_m": -1.553
+        },
+        {
+          "label": "Bus",
+          "local_y_m": -1.552
+        }
+      ],
+      [
+        {
+          "label": "Bus",
+          "local_y_m": 1.552
+        },
+        {
+          "label": "Bus",
+          "local_y_m": 1.552
+        }
+      ]
+    ]
+  },
+  {
+    "x": 3,
+    "z": 3.8,
+    "hits_by_side": [
+      [
+        {
+          "label": "Bus",
+          "local_y_m": -1.553
+        },
+        {
+          "label": "Bus",
+          "local_y_m": -1.552
+        }
+      ],
+      [
+        {
+          "label": "Bus",
+          "local_y_m": 1.552
+        },
+        {
+          "label": "Bus",
+          "local_y_m": 1.552
+        }
+      ]
+    ]
+  }
+]

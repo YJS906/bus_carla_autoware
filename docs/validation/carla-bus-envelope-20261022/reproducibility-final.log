@@ -1,0 +1,35 @@
+PASS active runtime path has no developer home/overlay reference
+PASS runtime compose has no host .so mount
+PASS no .so/.a is tracked
+PASS build/install/log are not tracked
+PASS required manifest exists: vtd_overlay/origin.yaml
+PASS required manifest exists: config/vtd/config-origin.yaml
+PASS required manifest exists: repositories/autoware.lock.repos
+PASS required manifest exists: .env.example
+PASS lock manifest versions are full commit SHAs
+PASS base image is pinned by digest
+PASS complete custom package: autoware_mission_planner_universe
+PASS complete custom package: autoware_path_optimizer
+PASS complete custom package: autoware_behavior_path_lane_change_module
+PASS complete custom package: autoware_behavior_path_avoidance_by_lane_change_module
+PASS complete custom package: autoware_behavior_path_external_request_lane_change_module
+PASS complete custom package: autoware_behavior_path_planner
+PASS complete custom package: autoware_behavior_path_planner_common
+PASS complete custom package: autoware_behavior_path_static_obstacle_avoidance_module
+PASS complete custom package: autoware_behavior_velocity_intersection_module
+PASS complete custom package: autoware_behavior_velocity_traffic_light_module
+PASS complete custom package: vtd_ros2_bridge
+PASS docker compose config
+PASS git diff --check
+PASS colcon discovers autoware_mission_planner_universe
+PASS colcon discovers autoware_path_optimizer
+PASS colcon discovers autoware_behavior_path_lane_change_module
+PASS colcon discovers autoware_behavior_path_avoidance_by_lane_change_module
+PASS colcon discovers autoware_behavior_path_external_request_lane_change_module
+PASS colcon discovers autoware_behavior_path_planner
+PASS colcon discovers autoware_behavior_path_planner_common
+PASS colcon discovers autoware_behavior_path_static_obstacle_avoidance_module
+PASS colcon discovers autoware_behavior_velocity_intersection_module
+PASS colcon discovers autoware_behavior_velocity_traffic_light_module
+PASS colcon discovers vtd_ros2_bridge
+All reproducibility checks passed.

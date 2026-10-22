@@ -4,6 +4,8 @@
     2.78,
     5.56
   ],
+  "minimum_pedal_acceleration_step_mps2": 0.001,
+  "strict_order_reason": "Autoware inverse interpolation rejects equal acceleration rows",
   "outside_measured_bands": "clamped, not measured",
   "adjustments": [
     {
@@ -138,10 +140,10 @@
       "fitted": [
         -1.7436067510902657,
         -1.90919158366052,
-        -1.90919158366052,
-        -1.90919158366052,
-        -1.90919158366052,
-        -1.90919158366052,
+        -1.9101915836605199,
+        -1.9111915836605198,
+        -1.9121915836605197,
+        -1.9131915836605196,
         -1.9791934396535276,
         -8.511638692197335,
         -12.496442986332234,

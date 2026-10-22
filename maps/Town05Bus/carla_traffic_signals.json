@@ -1,0 +1,917 @@
+{
+  "groups": [
+    {
+      "approach_lanelet_ids": [
+        2088,
+        2124
+      ],
+      "group_id": 35817,
+      "lanelet_ids": [
+        2088,
+        2124,
+        26308,
+        26410,
+        27997,
+        28031
+      ],
+      "opendrive_id": "2376",
+      "stop_line_id": 35804
+    },
+    {
+      "approach_lanelet_ids": [
+        1367,
+        1421
+      ],
+      "group_id": 35833,
+      "lanelet_ids": [
+        1367,
+        1421,
+        25128,
+        25157,
+        26970,
+        27230
+      ],
+      "opendrive_id": "2377",
+      "stop_line_id": 35820
+    },
+    {
+      "approach_lanelet_ids": [
+        1850,
+        1802
+      ],
+      "group_id": 35849,
+      "lanelet_ids": [
+        1802,
+        1850,
+        26743,
+        28096,
+        28129,
+        35059
+      ],
+      "opendrive_id": "2378",
+      "stop_line_id": 35836
+    },
+    {
+      "approach_lanelet_ids": [
+        1099,
+        1072
+      ],
+      "group_id": 35865,
+      "lanelet_ids": [
+        1072,
+        1099,
+        25212,
+        25240,
+        25776,
+        26545
+      ],
+      "opendrive_id": "2379",
+      "stop_line_id": 35852
+    },
+    {
+      "approach_lanelet_ids": [
+        5261,
+        5205
+      ],
+      "group_id": 35881,
+      "lanelet_ids": [
+        5205,
+        5261,
+        29853,
+        29883,
+        29932,
+        30939
+      ],
+      "opendrive_id": "2380",
+      "stop_line_id": 35868
+    },
+    {
+      "approach_lanelet_ids": [
+        20242,
+        20200
+      ],
+      "group_id": 35897,
+      "lanelet_ids": [
+        20200,
+        20242,
+        31491,
+        32319,
+        32351,
+        35308
+      ],
+      "opendrive_id": "2381",
+      "stop_line_id": 35884
+    },
+    {
+      "approach_lanelet_ids": [
+        5571,
+        5621
+      ],
+      "group_id": 35913,
+      "lanelet_ids": [
+        5571,
+        5621,
+        31235,
+        31323,
+        34317,
+        34348
+      ],
+      "opendrive_id": "2382",
+      "stop_line_id": 35900
+    },
+    {
+      "approach_lanelet_ids": [
+        20688,
+        20779
+      ],
+      "group_id": 35929,
+      "lanelet_ids": [
+        20688,
+        20779,
+        27547,
+        30010,
+        32414,
+        32447
+      ],
+      "opendrive_id": "2383",
+      "stop_line_id": 35916
+    },
+    {
+      "approach_lanelet_ids": [
+        960,
+        1019
+      ],
+      "group_id": 35945,
+      "lanelet_ids": [
+        960,
+        1019,
+        32612,
+        32641,
+        34258,
+        34467
+      ],
+      "opendrive_id": "2385",
+      "stop_line_id": 35932
+    },
+    {
+      "approach_lanelet_ids": [
+        21752,
+        21817
+      ],
+      "group_id": 35961,
+      "lanelet_ids": [
+        21752,
+        21817,
+        32147,
+        32176,
+        33726,
+        34147
+      ],
+      "opendrive_id": "2386",
+      "stop_line_id": 35948
+    },
+    {
+      "approach_lanelet_ids": [
+        652,
+        615
+      ],
+      "group_id": 35977,
+      "lanelet_ids": [
+        615,
+        652,
+        32696,
+        32724,
+        33307,
+        33563
+      ],
+      "opendrive_id": "2387",
+      "stop_line_id": 35964
+    },
+    {
+      "approach_lanelet_ids": [
+        21372,
+        21311
+      ],
+      "group_id": 35993,
+      "lanelet_ids": [
+        21311,
+        21372,
+        33170,
+        33818,
+        34728,
+        34756
+      ],
+      "opendrive_id": "2388",
+      "stop_line_id": 35980
+    },
+    {
+      "approach_lanelet_ids": [
+        690,
+        728
+      ],
+      "group_id": 36009,
+      "lanelet_ids": [
+        690,
+        728,
+        24062,
+        24668,
+        24703,
+        35349
+      ],
+      "opendrive_id": "2389",
+      "stop_line_id": 35996
+    },
+    {
+      "approach_lanelet_ids": [
+        22970,
+        22954
+      ],
+      "group_id": 36025,
+      "lanelet_ids": [
+        22954,
+        22970,
+        23893,
+        23922,
+        25352,
+        26009
+      ],
+      "opendrive_id": "2390",
+      "stop_line_id": 36012
+    },
+    {
+      "approach_lanelet_ids": [
+        23068,
+        23085
+      ],
+      "group_id": 36041,
+      "lanelet_ids": [
+        23068,
+        23085,
+        23979,
+        24009,
+        34930,
+        35200
+      ],
+      "opendrive_id": "2391",
+      "stop_line_id": 36028
+    },
+    {
+      "approach_lanelet_ids": [
+        436,
+        384
+      ],
+      "group_id": 36057,
+      "lanelet_ids": [
+        384,
+        436,
+        25480,
+        29130,
+        29164,
+        34979
+      ],
+      "opendrive_id": "2392",
+      "stop_line_id": 36044
+    },
+    {
+      "approach_lanelet_ids": [
+        22775,
+        22830
+      ],
+      "group_id": 36073,
+      "lanelet_ids": [
+        22775,
+        22830,
+        27271,
+        28467,
+        30446,
+        30484
+      ],
+      "opendrive_id": "2393",
+      "stop_line_id": 36060
+    },
+    {
+      "approach_lanelet_ids": [
+        1591,
+        1534
+      ],
+      "group_id": 36089,
+      "lanelet_ids": [
+        1534,
+        1591,
+        26475,
+        26508,
+        27357,
+        27598
+      ],
+      "opendrive_id": "2394",
+      "stop_line_id": 36076
+    },
+    {
+      "approach_lanelet_ids": [
+        22405,
+        22329
+      ],
+      "group_id": 36105,
+      "lanelet_ids": [
+        22329,
+        22405,
+        27461,
+        28569,
+        30336,
+        30373
+      ],
+      "opendrive_id": "2395",
+      "stop_line_id": 36092
+    },
+    {
+      "approach_lanelet_ids": [
+        1899,
+        1948
+      ],
+      "group_id": 36121,
+      "lanelet_ids": [
+        1899,
+        1948,
+        28194,
+        28228,
+        28273,
+        28675
+      ],
+      "opendrive_id": "2396",
+      "stop_line_id": 36108
+    },
+    {
+      "approach_lanelet_ids": [
+        1649,
+        1707
+      ],
+      "group_id": 36137,
+      "lanelet_ids": [
+        1649,
+        1707,
+        30541,
+        31196,
+        31646,
+        34180
+      ],
+      "opendrive_id": "2397",
+      "stop_line_id": 36124
+    },
+    {
+      "approach_lanelet_ids": [
+        3547,
+        3597
+      ],
+      "group_id": 36153,
+      "lanelet_ids": [
+        3547,
+        3597,
+        26197,
+        26226,
+        31724,
+        32256
+      ],
+      "opendrive_id": "2398",
+      "stop_line_id": 36140
+    },
+    {
+      "approach_lanelet_ids": [
+        8131,
+        8014
+      ],
+      "group_id": 36169,
+      "lanelet_ids": [
+        8014,
+        8131,
+        30637,
+        31045,
+        32092,
+        32492
+      ],
+      "opendrive_id": "2399",
+      "stop_line_id": 36156
+    },
+    {
+      "approach_lanelet_ids": [
+        3255,
+        3221
+      ],
+      "group_id": 36185,
+      "lanelet_ids": [
+        3221,
+        3255,
+        31270,
+        32221,
+        33653,
+        33681
+      ],
+      "opendrive_id": "2400",
+      "stop_line_id": 36172
+    },
+    {
+      "approach_lanelet_ids": [
+        3764,
+        3789
+      ],
+      "group_id": 36201,
+      "lanelet_ids": [
+        3764,
+        3789,
+        23766,
+        23795,
+        30055,
+        34539
+      ],
+      "opendrive_id": "2401",
+      "stop_line_id": 36188
+    },
+    {
+      "approach_lanelet_ids": [
+        167,
+        111
+      ],
+      "group_id": 36217,
+      "lanelet_ids": [
+        111,
+        167,
+        24284,
+        24312,
+        34393,
+        34789
+      ],
+      "opendrive_id": "2402",
+      "stop_line_id": 36204
+    },
+    {
+      "approach_lanelet_ids": [
+        3638,
+        3624
+      ],
+      "group_id": 36233,
+      "lanelet_ids": [
+        3624,
+        3638,
+        23683,
+        23711,
+        29242,
+        34213
+      ],
+      "opendrive_id": "2403",
+      "stop_line_id": 36220
+    },
+    {
+      "approach_lanelet_ids": [
+        489,
+        542
+      ],
+      "group_id": 36249,
+      "lanelet_ids": [
+        489,
+        542,
+        33922,
+        33951,
+        35092,
+        35439
+      ],
+      "opendrive_id": "2404",
+      "stop_line_id": 36236
+    },
+    {
+      "approach_lanelet_ids": [
+        224,
+        281
+      ],
+      "group_id": 36265,
+      "lanelet_ids": [
+        224,
+        281,
+        24357,
+        25868,
+        26097,
+        33984
+      ],
+      "opendrive_id": "2405",
+      "stop_line_id": 36252
+    },
+    {
+      "approach_lanelet_ids": [
+        6624,
+        6645
+      ],
+      "group_id": 36281,
+      "lanelet_ids": [
+        6624,
+        6645,
+        25073,
+        27025,
+        27054,
+        27496
+      ],
+      "opendrive_id": "2406",
+      "stop_line_id": 36268
+    },
+    {
+      "approach_lanelet_ids": [
+        20017,
+        19968
+      ],
+      "group_id": 36297,
+      "lanelet_ids": [
+        19968,
+        20017,
+        25535,
+        25727,
+        27304,
+        27643
+      ],
+      "opendrive_id": "2407",
+      "stop_line_id": 36284
+    },
+    {
+      "approach_lanelet_ids": [
+        6502,
+        6482
+      ],
+      "group_id": 36313,
+      "lanelet_ids": [
+        6482,
+        6502,
+        24601,
+        27402,
+        31820,
+        31848
+      ],
+      "opendrive_id": "2408",
+      "stop_line_id": 36300
+    },
+    {
+      "approach_lanelet_ids": [
+        23470,
+        23522
+      ],
+      "group_id": 36329,
+      "lanelet_ids": [
+        23470,
+        23522,
+        28773,
+        28804,
+        30263,
+        30990
+      ],
+      "opendrive_id": "2409",
+      "stop_line_id": 36316
+    },
+    {
+      "approach_lanelet_ids": [
+        5761,
+        5797
+      ],
+      "group_id": 36345,
+      "lanelet_ids": [
+        5761,
+        5797,
+        26596,
+        28934,
+        32021,
+        32057
+      ],
+      "opendrive_id": "2410",
+      "stop_line_id": 36332
+    },
+    {
+      "approach_lanelet_ids": [
+        23192,
+        23156
+      ],
+      "group_id": 36361,
+      "lanelet_ids": [
+        23156,
+        23192,
+        28863,
+        28893,
+        29628,
+        29794
+      ],
+      "opendrive_id": "2411",
+      "stop_line_id": 36348
+    },
+    {
+      "approach_lanelet_ids": [
+        5521,
+        5472
+      ],
+      "group_id": 36377,
+      "lanelet_ids": [
+        5472,
+        5521,
+        31141,
+        31917,
+        31952,
+        34840
+      ],
+      "opendrive_id": "2412",
+      "stop_line_id": 36364
+    },
+    {
+      "approach_lanelet_ids": [
+        22032,
+        21960
+      ],
+      "group_id": 36393,
+      "lanelet_ids": [
+        21960,
+        22032,
+        32908,
+        32945,
+        33137
+      ],
+      "opendrive_id": "2413",
+      "stop_line_id": 36380
+    },
+    {
+      "approach_lanelet_ids": [
+        1127,
+        1155
+      ],
+      "group_id": 36409,
+      "lanelet_ids": [
+        1127,
+        1155,
+        33221,
+        33434
+      ],
+      "opendrive_id": "2414",
+      "stop_line_id": 36396
+    },
+    {
+      "approach_lanelet_ids": [
+        22482,
+        22559
+      ],
+      "group_id": 36425,
+      "lanelet_ids": [
+        22482,
+        22559,
+        32797,
+        32835,
+        33487
+      ],
+      "opendrive_id": "2415",
+      "stop_line_id": 36412
+    },
+    {
+      "approach_lanelet_ids": [
+        10879,
+        10895,
+        10911
+      ],
+      "group_id": 36441,
+      "lanelet_ids": [
+        10879,
+        10895,
+        10911,
+        23628,
+        35502,
+        35535,
+        35568
+      ],
+      "opendrive_id": "2419",
+      "stop_line_id": 36428
+    },
+    {
+      "approach_lanelet_ids": [
+        10694,
+        10670,
+        10646
+      ],
+      "group_id": 36457,
+      "lanelet_ids": [
+        10646,
+        10670,
+        10694,
+        35631,
+        35663,
+        35695,
+        35760
+      ],
+      "opendrive_id": "2420",
+      "stop_line_id": 36444
+    },
+    {
+      "approach_lanelet_ids": [
+        3135,
+        3154
+      ],
+      "group_id": 36473,
+      "lanelet_ids": [
+        3135,
+        3154,
+        23587,
+        35801
+      ],
+      "opendrive_id": "2421",
+      "stop_line_id": 36460
+    },
+    {
+      "approach_lanelet_ids": [
+        5318,
+        5375
+      ],
+      "group_id": 36489,
+      "lanelet_ids": [
+        5318,
+        5375,
+        24872,
+        25672,
+        26042,
+        29577
+      ],
+      "opendrive_id": "2423",
+      "stop_line_id": 36476
+    },
+    {
+      "approach_lanelet_ids": [
+        7109,
+        7158
+      ],
+      "group_id": 36505,
+      "lanelet_ids": [
+        7109,
+        7158,
+        25594,
+        25625,
+        25813,
+        26651
+      ],
+      "opendrive_id": "2424",
+      "stop_line_id": 36492
+    },
+    {
+      "approach_lanelet_ids": [
+        7622,
+        7739
+      ],
+      "group_id": 36521,
+      "lanelet_ids": [
+        7622,
+        7739,
+        24764,
+        25301,
+        26794,
+        28318
+      ],
+      "opendrive_id": "2425",
+      "stop_line_id": 36508
+    },
+    {
+      "approach_lanelet_ids": [
+        6855,
+        6825
+      ],
+      "group_id": 36537,
+      "lanelet_ids": [
+        6825,
+        6855,
+        25411,
+        25441,
+        26142,
+        27093
+      ],
+      "opendrive_id": "2426",
+      "stop_line_id": 36524
+    },
+    {
+      "approach_lanelet_ids": [
+        21107,
+        21190
+      ],
+      "group_id": 36553,
+      "lanelet_ids": [
+        21107,
+        21190,
+        29315,
+        29353,
+        29516
+      ],
+      "opendrive_id": "2427",
+      "stop_line_id": 36540
+    },
+    {
+      "approach_lanelet_ids": [
+        23229,
+        23266
+      ],
+      "group_id": 36569,
+      "lanelet_ids": [
+        23229,
+        23266,
+        28412,
+        34434
+      ],
+      "opendrive_id": "2428",
+      "stop_line_id": 36556
+    },
+    {
+      "approach_lanelet_ids": [
+        20597,
+        20507
+      ],
+      "group_id": 36585,
+      "lanelet_ids": [
+        20507,
+        20597,
+        28359,
+        29426,
+        29463
+      ],
+      "opendrive_id": "2429",
+      "stop_line_id": 36572
+    },
+    {
+      "approach_lanelet_ids": [
+        4443
+      ],
+      "group_id": 36592,
+      "lanelet_ids": [
+        4443,
+        30582
+      ],
+      "opendrive_id": "2430",
+      "stop_line_id": 36588
+    },
+    {
+      "approach_lanelet_ids": [
+        3290,
+        3325
+      ],
+      "group_id": 36599,
+      "lanelet_ids": [
+        3290,
+        3325,
+        30110,
+        30139,
+        30678
+      ],
+      "opendrive_id": "2431",
+      "stop_line_id": 36595
+    },
+    {
+      "approach_lanelet_ids": [
+        14178,
+        13361,
+        12544
+      ],
+      "group_id": 36615,
+      "lanelet_ids": [
+        12544,
+        13361,
+        14178,
+        29691,
+        29723,
+        29755,
+        31556
+      ],
+      "opendrive_id": "2432",
+      "stop_line_id": 36602
+    },
+    {
+      "approach_lanelet_ids": [
+        6741,
+        6766
+      ],
+      "group_id": 36631,
+      "lanelet_ids": [
+        6741,
+        6766,
+        31450,
+        32557
+      ],
+      "opendrive_id": "2433",
+      "stop_line_id": 36618
+    },
+    {
+      "approach_lanelet_ids": [
+        19263,
+        19567,
+        19871
+      ],
+      "group_id": 36647,
+      "lanelet_ids": [
+        19263,
+        19567,
+        19871,
+        28997,
+        29030,
+        29063,
+        31765
+      ],
+      "opendrive_id": "2434",
+      "stop_line_id": 36634
+    }
+  ],
+  "live_xodr_sha256": "7edc53b0be840e177598da7a4ed9571146d7b2595ce280d154c90f92e8a48851",
+  "map_name": "Town05",
+  "map_sha256": "f4039b2f94bd863b5d7dd0aba68ffe5df6b0341f591f5785de5703e053544834",
+  "schema": 1,
+  "xodr_sha256": "7edc53b0be840e177598da7a4ed9571146d7b2595ce280d154c90f92e8a48851"
+}

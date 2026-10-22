@@ -77,7 +77,9 @@ if augmented:
         raise SystemExit("The map is already augmented but its signal manifest is missing. "
                          "Existing edits were preserved; restore/review the matching bundle.")
     validate_bundle(target, manifest)
-    if b"carla_town05_lane_change_v1" in target.read_bytes():
+    lane_report_path = maps / "carla_lane_change_report.json"
+    lane_report_current = json.loads(lane_report_path.read_text()) if lane_report_path.exists() else {}
+    if b"carla_town05_lane_change_v1" in target.read_bytes() and lane_report_current.get("matcher_version", 1) >= 2:
         print("Town05 map, native lane changes and signal manifest already match; no files changed.")
         sys.exit(0)
 if not augmented and original.exists() and file_hash(target) != file_hash(original):

@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+map_root="${AUTOWARE_MAP_DIR:-/home/a/autoware_data/maps}"
+source_dir="${AUTOWARE_BUS_SOURCE_MAP_DIR:-${map_root}/Town05}"
+target_dir="${map_root}/${AUTOWARE_MAP_NAME:-Town05Bus}"
+
+# Keep the existing passenger-car map, including saved speed tags, intact.
+python3 - "${source_dir}" "${target_dir}" <<'PY'
+import hashlib
+import json
+from pathlib import Path
+import shutil
+import sys
+import tempfile
+
+source, target = map(Path, sys.argv[1:])
+if source.resolve() == target.resolve():
+    raise SystemExit('Bus map must use a separate directory from the source map')
+if not target.exists():
+    required = ('lanelet2_map.osm', 'pointcloud_map.pcd', 'map_projector_info.yaml',
+                'carla_traffic_signals.json')
+    for name in required:
+        if not (source/name).is_file():
+            raise SystemExit('Missing source map asset: ' + str(source/name))
+    with tempfile.TemporaryDirectory(prefix='.bus-map-', dir=target.parent) as directory:
+        candidate = Path(directory)/'map'
+        candidate.mkdir()
+        for path in source.iterdir():
+            if path.name in required or (path.is_file() and path.name.startswith('carla_')
+                                        and path.suffix == '.json' and '.candidate.' not in path.name):
+                shutil.copy2(path, candidate/path.name)
+        (candidate/'bus_map_source.json').write_text(json.dumps({
+            'source': str(source),
+            'source_map_sha256': hashlib.sha256((source/'lanelet2_map.osm').read_bytes()).hexdigest(),
+            'note': 'Independent copy; existing bus map edits are preserved on subsequent runs.'
+        }, indent=2)+'\n')
+        candidate.rename(target)
+print('Bus map:', target)
+PY
+AUTOWARE_TOWN05_MAP_DIR="${target_dir}" "${script_dir}/prepare_town05_map"

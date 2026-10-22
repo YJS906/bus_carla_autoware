@@ -20,11 +20,17 @@ def generate():
     front,rear=ws[:2].mean(axis=0),ws[2:].mean(axis=0)
     centre,extent=np.array(d['bounding_box']['location']),np.array(d['bounding_box']['extent'])
     tread=abs(ws[0,1]-ws[1,1]);base=np.array([rear[0],rear[1],centre[2]-extent[2]])
+    physics_source=ROOT/'docs/validation/carla-bus-envelope-20261022/physics-asset.json'
+    bodies=json.loads(physics_source.read_text())['bodies']
+    radii={b['bone']:next((p['value']/100 for p in b['properties'] if p['name']=='Radius'),0) for b in bodies}
+    wheel_names=['Wheel_Front_Left','Wheel_Front_Right','Wheel_Rear_Left','Wheel_Rear_Right']
+    min_y=min(centre[1]-extent[1],*[p[1]-radii[n] for p,n in zip(ws,wheel_names)])
+    max_y=max(centre[1]+extent[1],*[p[1]+radii[n] for p,n in zip(ws,wheel_names)])
     profile=dict(wheel_radius=.63,wheel_width=.30,wheel_base=float(front[0]-rear[0]),
         wheel_tread=float(tread),front_overhang=float(centre[0]+extent[0]-front[0]),
         rear_overhang=float(rear[0]-centre[0]+extent[0]),
-        left_overhang=float(extent[1]-centre[1]+rear[1]-tread/2),
-        right_overhang=float(extent[1]+centre[1]-rear[1]-tread/2),vehicle_height=float(2*extent[2]),
+        left_overhang=float(-min_y+rear[1]-tread/2),
+        right_overhang=float(max_y-rear[1]-tread/2),vehicle_height=float(2*extent[2]),
         max_steer_angle=math.radians(max(w['max_steer_angle_deg'] for w in d['wheels'])))
     (out/'vehicle_info.param.yaml').write_text(
         '# CARLA 0.9.16 Fuso Rosa, measured 2026-10-22. Rear axle ground base_link.\n'
@@ -49,6 +55,8 @@ def generate():
     (out/'sensors/sensors_calibration.yaml').write_text((ROOT/'config/carla/sensors/sensors_calibration.yaml').read_text())
     manifest={'profile':'fusorosa','blueprint':'vehicle.mitsubishi.fusorosa',
         'measurement':str(source.relative_to(ROOT)),'base_offset_carla_m':base.tolist(),
+        'collision_measurement':str(physics_source.relative_to(ROOT)),
+        'lateral_envelope':'union of reported mesh bounding box and measured wheel collision spheres',
         'initial_validation_speed_cap_kmh':10}
     (out/'profile.json').write_text(json.dumps(manifest,indent=2)+'\n')
     print(json.dumps(profile,indent=2))

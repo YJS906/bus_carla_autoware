@@ -31,6 +31,10 @@ services:
         source /opt/autoware/setup.bash &&
         source /opt/selfcar_overlay/setup.bash &&
         source /opt/carla_overlay/setup.bash &&
+        if [ "${CARLA_VEHICLE_TYPE:-vehicle.toyota.prius}" = "vehicle.mitsubishi.fusorosa" ]; then
+          export AMENT_PREFIX_PATH=/opt/carla_overlay:$${AMENT_PREFIX_PATH};
+          export LD_LIBRARY_PATH=/opt/carla_overlay/lib:$${LD_LIBRARY_PATH};
+        fi &&
         exec ros2 launch autoware_launch e2e_simulator.launch.xml
         map_path:=/home/aw/autoware_data/maps/${AUTOWARE_MAP_NAME:-Town01}
         carla_map:=${CARLA_MAP_NAME:-}

@@ -1,0 +1,109 @@
+Running main() from /opt/ros/jazzy/src/gtest_vendor/src/gtest_main.cc
+[==========] Running 17 tests from 2 test suites.
+[----------] Global test environment set-up.
+[----------] 8 tests from DefaultPlannerTest
+[ RUN      ] DefaultPlannerTest.BusCorridorRequiresLegalNeighboursAndKeepsRoadEdges
+[WARN] [1792656836.403760919] [route_handler]: setMap() for invalid version map: 
+[WARN] [1792656836.404009623] [route_handler]: setMap() for invalid version map: 
+[WARN] [1792656836.404105642] [route_handler]: setMap() for invalid version map: 
+[WARN] [1792656836.404189078] [route_handler]: setMap() for invalid version map: 
+[       OK ] DefaultPlannerTest.BusCorridorRequiresLegalNeighboursAndKeepsRoadEdges (25 ms)
+[ RUN      ] DefaultPlannerTest.checkGoalInsideLane
+[       OK ] DefaultPlannerTest.checkGoalInsideLane (28 ms)
+[ RUN      ] DefaultPlannerTest.isValidGoal
+[WARN] [1792656836.452420678] [test_node]: Goal's footprint exceeds lane!
+[WARN] [1792656836.452463938] [test_node]: Goal's footprint exceeds lane!
+[WARN] [1792656836.452482521] [test_node]: Goal's footprint exceeds lane!
+[WARN] [1792656836.452499235] [test_node]: Goal's footprint exceeds lane!
+[ERROR] [1792656836.452504598] [route_handler]: Loop detected within route! Currently, no loop is allowed for route! Using previous route
+[WARN] [1792656836.452557439] [test_node]: Goal's footprint exceeds lane!
+[WARN] [1792656836.452578960] [test_node]: Goal's footprint exceeds lane!
+[       OK ] DefaultPlannerTest.isValidGoal (21 ms)
+[ RUN      ] DefaultPlannerTest.plan
+[INFO] [1792656836.474032154] [test_node]: Planned lanelet id: 9102
+[INFO] [1792656836.474070988] [test_node]: Planned lanelet id: 9540
+[INFO] [1792656836.474074961] [test_node]: Planned lanelet id: 9546
+[INFO] [1792656836.474077688] [test_node]: Planned lanelet id: 9178
+[INFO] [1792656836.474079789] [test_node]: Planned lanelet id: 52
+[INFO] [1792656836.474082328] [test_node]: Planned lanelet id: 124
+[INFO] [1792656836.474150603] [route_handler]: getMainLanelets: lanelet_sequence = [ids: 9102 9540 9546 9178 52 124 ]
+[INFO] [1792656836.474185278] [test_node]: [DefaultPlanner] Route segments for message: total=6 (lane_segments=6, area_segments=0)
+[INFO] [1792656836.474317911] [test_node]: Planned lanelet id: 9102
+[INFO] [1792656836.474321998] [test_node]: Planned lanelet id: 9540
+[INFO] [1792656836.474324291] [test_node]: Planned lanelet id: 9546
+[INFO] [1792656836.474334826] [route_handler]: getMainLanelets: lanelet_sequence = [ids: 9102 9540 9546 ]
+[INFO] [1792656836.474340583] [test_node]: [DefaultPlanner] Route segments for message: total=3 (lane_segments=3, area_segments=0)
+[       OK ] DefaultPlannerTest.plan (20 ms)
+[ RUN      ] DefaultPlannerTest.rejectsInsufficientCheckpoints
+[WARN] [1792656836.497282691] [test_node]: Route planning requires at least a start and a goal checkpoint.
+[WARN] [1792656836.497327110] [test_node]: Route planning requires at least a start and a goal checkpoint.
+[       OK ] DefaultPlannerTest.rejectsInsufficientCheckpoints (22 ms)
+[ RUN      ] DefaultPlannerTest.rejectsEmptyPathFromNonFiniteRouteCost
+[WARN] [1792656836.506193910] [route_handler]: setMap() for invalid version map: 
+[WARN] [1792656836.506256556] [test_node]: Goal's footprint exceeds lane!
+[WARN] [1792656836.506274658] [test_node]: Goal's footprint exceeds lane!
+[WARN] [1792656836.506312482] [test_node]: Route planning produced an empty path or non-finite lanelet geometry.
+[INFO] [1792656836.506323653] [test_node]: Planned lanelet id: 100
+[INFO] [1792656836.506326762] [test_node]: Planned lanelet id: 101
+[INFO] [1792656836.506329196] [test_node]: Planned lanelet id: 102
+[INFO] [1792656836.506346687] [route_handler]: getMainLanelets: lanelet_sequence = [ids: 100 101 102 ]
+[INFO] [1792656836.506356178] [test_node]: [DefaultPlanner] Route segments for message: total=3 (lane_segments=3, area_segments=0)
+[WARN] [1792656836.506398844] [test_node]: Route planning produced an empty path or non-finite lanelet geometry.
+[       OK ] DefaultPlannerTest.rejectsEmptyPathFromNonFiniteRouteCost (9 ms)
+[ RUN      ] DefaultPlannerTest.visualize
+[       OK ] DefaultPlannerTest.visualize (23 ms)
+[ RUN      ] DefaultPlannerTest.visualizeDebugFootprint
+[       OK ] DefaultPlannerTest.visualizeDebugFootprint (23 ms)
+[----------] 8 tests from DefaultPlannerTest (176 ms total)
+
+[----------] 9 tests from TestUtilityFunctions
+[ RUN      ] TestUtilityFunctions.convertLinearRingToPolygon
+[       OK ] TestUtilityFunctions.convertLinearRingToPolygon (0 ms)
+[ RUN      ] TestUtilityFunctions.convertCenterlineToPoints
+[       OK ] TestUtilityFunctions.convertCenterlineToPoints (0 ms)
+[ RUN      ] TestUtilityFunctions.insertMarkerArray
+[       OK ] TestUtilityFunctions.insertMarkerArray (0 ms)
+[ RUN      ] TestUtilityFunctions.convertBasicPoint3dToPose
+[       OK ] TestUtilityFunctions.convertBasicPoint3dToPose (0 ms)
+[ RUN      ] TestUtilityFunctions.is_in_lane
+[       OK ] TestUtilityFunctions.is_in_lane (0 ms)
+[ RUN      ] TestUtilityFunctions.is_in_parking_lot
+[       OK ] TestUtilityFunctions.is_in_parking_lot (0 ms)
+[ RUN      ] TestUtilityFunctions.is_in_parking_space
+[       OK ] TestUtilityFunctions.is_in_parking_space (0 ms)
+[ RUN      ] TestUtilityFunctions.project_goal_to_map
+[       OK ] TestUtilityFunctions.project_goal_to_map (0 ms)
+[ RUN      ] TestUtilityFunctions.TestUtilityFunctions
+[       OK ] TestUtilityFunctions.TestUtilityFunctions (0 ms)
+[----------] 9 tests from TestUtilityFunctions (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 17 tests from 2 test suites ran. (176 ms total)
+[  PASSED  ] 17 tests.
+test_callback_steering_and_watchdog_brake (test_bridge_contract.BridgeContractTest.test_callback_steering_and_watchdog_brake) ... ok
+test_gear_reverse_neutral_park_and_moving_interlock (test_bridge_contract.BridgeContractTest.test_gear_reverse_neutral_park_and_moving_interlock) ... ok
+test_initialpose_is_rear_axle_and_does_not_mutate_ros_message (test_bridge_contract.BridgeContractTest.test_initialpose_is_rear_axle_and_does_not_mutate_ros_message) ... ok
+test_loader_matches_scan_joint_and_reflects_side_camera (test_bridge_contract.BridgeContractTest.test_loader_matches_scan_joint_and_reflects_side_camera) ... ok
+test_stale_and_nonfinite_commands_cannot_release_brakes (test_bridge_contract.BridgeContractTest.test_stale_and_nonfinite_commands_cannot_release_brakes) ... ok
+test_velocity_report_uses_ros_rear_axle_twist_and_actual_gear (test_bridge_contract.BridgeContractTest.test_velocity_report_uses_ros_rear_axle_twist_and_actual_gear) ... ok
+test_angular_units_and_reference_offset_velocity (test_ground_truth_objects.GroundTruthTest.test_angular_units_and_reference_offset_velocity) ... ok
+test_classifications_and_actor_exclusion (test_ground_truth_objects.GroundTruthTest.test_classifications_and_actor_exclusion) ... ok
+test_fresh_list_stable_id_and_no_stale_objects (test_ground_truth_objects.GroundTruthTest.test_fresh_list_stable_id_and_no_stale_objects) ... ok
+test_invalid_geometry_excluded_and_range_rejected (test_ground_truth_objects.GroundTruthTest.test_invalid_geometry_excluded_and_range_rejected) ... ok
+test_rotated_bounding_box_matches_vertices (test_ground_truth_objects.GroundTruthTest.test_rotated_bounding_box_matches_vertices) ... ok
+test_world_reflection_box_center_and_local_velocity (test_ground_truth_objects.GroundTruthTest.test_world_reflection_box_center_and_local_velocity) ... ok
+test_bus_lidar_mount_clears_body (test_vehicle_adapter.VehicleAdapterTest.test_bus_lidar_mount_clears_body) ... ok
+test_bus_profile_matches_recorded_physics_and_rejects_prius (test_vehicle_adapter.VehicleAdapterTest.test_bus_profile_matches_recorded_physics_and_rejects_prius) ... ok
+test_gears_and_direction_change_interlock (test_vehicle_adapter.VehicleAdapterTest.test_gears_and_direction_change_interlock) ... ok
+test_lateral_velocity_is_ros_left_positive (test_vehicle_adapter.VehicleAdapterTest.test_lateral_velocity_is_ros_left_positive) ... ok
+test_prius_vehicle_profile_matches_measured_geometry (test_vehicle_adapter.VehicleAdapterTest.test_prius_vehicle_profile_matches_measured_geometry) ... ok
+test_rear_axle_twist_has_correct_handedness_units_and_lever_arm (test_vehicle_adapter.VehicleAdapterTest.test_rear_axle_twist_has_correct_handedness_units_and_lever_arm) ... ok
+test_sensor_world_and_ros_tf_positions_agree_at_all_headings (test_vehicle_adapter.VehicleAdapterTest.test_sensor_world_and_ros_tf_positions_agree_at_all_headings) ... ok
+test_steering_curve_uses_kmh_and_is_heading_independent (test_vehicle_adapter.VehicleAdapterTest.test_steering_curve_uses_kmh_and_is_heading_independent) ... ok
+test_watchdog_requires_fresh_commands_and_handles_clock_reset (test_vehicle_adapter.VehicleAdapterTest.test_watchdog_requires_fresh_commands_and_handles_clock_reset) ... ok
+test_world_centimetre_wheels_are_measured_in_actor_frame (test_vehicle_adapter.VehicleAdapterTest.test_world_centimetre_wheels_are_measured_in_actor_frame) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.035s
+
+OK

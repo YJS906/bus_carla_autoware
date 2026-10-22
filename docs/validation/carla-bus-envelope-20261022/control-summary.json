@@ -1,0 +1,71 @@
+{
+  "recorded_at": "2026-10-22T08:39:51.408926+00:00",
+  "tests": [
+    {
+      "file": "corridor-straight-6.json",
+      "case": "straight",
+      "success": true,
+      "travel_distance_m": 59.296603682512796,
+      "max_speed_mps": 2.76641842730863,
+      "max_centreline_error_m": 0.12464108318090439,
+      "final_goal_error_m": 0.7477852702140808,
+      "yaw_change_deg": 0.00026702880859375005,
+      "stop_hold_s": 3.0000000447034836,
+      "collisions": []
+    },
+    {
+      "file": "corridor-curve-1.json",
+      "case": "curve",
+      "success": true,
+      "travel_distance_m": 177.24783802323054,
+      "max_speed_mps": 2.806761204333384,
+      "max_centreline_error_m": 0.24021881818771362,
+      "final_goal_error_m": 0.7347140908241272,
+      "yaw_change_deg": -87.57426452636717,
+      "stop_hold_s": 3.0000000447034836,
+      "collisions": []
+    },
+    {
+      "file": "repeat-straight/straight.json",
+      "case": "straight",
+      "success": true,
+      "travel_distance_m": 59.185152904532515,
+      "max_speed_mps": 2.764941239276569,
+      "max_centreline_error_m": 0.12160280346870422,
+      "final_goal_error_m": 0.8562158942222595,
+      "yaw_change_deg": -0.01145172119140625,
+      "stop_hold_s": 3.0000000447034836,
+      "collisions": []
+    }
+  ],
+  "scope": "empty Town05 bus basic control; not full mission/signals/traffic validation",
+  "image": "sha256:54af6d857cb50f71c281ec56105937021a688ac5bc65d2f3f5dc8cbaabc9a0f7",
+  "preserved_prius_image": "sha256:18e85ecc61d5294f5c986f13e0c3d599267c86af52e36e92375c08d74cf340b0",
+  "map_sha256": "f4039b2f94bd863b5d7dd0aba68ffe5df6b0341f591f5785de5703e053544834",
+  "original_town05_sha256": "59197c86022c27ade92902aa4ec9e42e2b154b8f456edc5c8b1912cf2c5c14be",
+  "source_sha256": {
+    "config/carla/vehicle_profiles/fusorosa/profile.json": "5eb0c9383719f61aa537fbdf3a0430bcc8bb9642685ac16038ce12828180974e",
+    "config/carla/vehicle_profiles/fusorosa/raw_vehicle_cmd_converter.param.yaml": "a686d04999cf65c6a9a7d7aa7c05782fd6c8a36ade4125f49d0e4a02e555f262",
+    "config/carla/vehicle_profiles/fusorosa/vehicle.xacro": "990c20527fa8be3b6ce0c86eac7fcdfda59e34d5af3b30d823d4902f2f5c130f",
+    "config/carla/vehicle_profiles/fusorosa/planning_common.param.yaml": "659ba06fc9f2e70297bcc51444bf37b5e441bbb32f3fa57a6030ce66e8073bbe",
+    "config/carla/vehicle_profiles/fusorosa/vehicle_info.param.yaml": "3fff5b94edbbfbecbc7c8b6fc31dc7b9e238d200d1adda399f7c7dce44a0c6a3",
+    "config/carla/vehicle_profiles/fusorosa/pid.param.yaml": "11cb7f36592e193a0e9b067ae9d27a08e7150f71a163cf5dd60e9cc36cb027c7",
+    "config/carla/vehicle_profiles/fusorosa/sensors/sensors_calibration.yaml": "53e8ff8292972e7074c982c9f3718dd6d4e2e19a813b41d63e065e432a658edc",
+    "config/carla/vehicle_profiles/fusorosa/sensors/sensor_kit_calibration.yaml": "c2b343ac537a5ef1d6ada8f6a13d7876e8a0b14c8102769119ef67c99970c645",
+    "config/carla/vehicle_profiles/fusorosa/calibration_maps/brake_map.csv": "fc6f1ae85e66f6be6e778e3d7df979ef5a2774e3f31fe9a5cc5017a392f27ba3",
+    "config/carla/vehicle_profiles/fusorosa/calibration_maps/accel_map.csv": "884860f21a4dca34c62dbeece6b03ac9647c1d7254e49df7bd50bc583f6d0bc3",
+    "config/carla/vehicle_profiles/fusorosa/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_stop.param.yaml": "6d392b7922f7f277fc9ce41a0cb52318f922d904cafd2827eb434d315dea5692",
+    "config/carla/vehicle_profiles/fusorosa/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/drivable_area_expansion.param.yaml": "cd5db434e7408b9033c592cd018bbfd69c75f324e611c8fc482cbbf7f776bd0d",
+    "config/carla/vehicle_profiles/fusorosa/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/autoware_behavior_path_static_obstacle_avoidance_module/static_obstacle_avoidance.param.yaml": "9b4cad5152b36940eccff38a6a2217d41398c44f50e35120f75743669ca747a4",
+    "config/carla/vehicle_profiles/fusorosa/planning/mission_planning/mission_planner/mission_planner.param.yaml": "bcb491733ac8195fc881a52c3a58c3d348a92687e48068041407f76f59dfcc62",
+    "docker/carla/Dockerfile.bus": "29c128f938a3b66b42b534565a5eb4a3be2c2752f787180447e56466997cd15c",
+    "docker/carla/compose.yaml": "70cabe15fa686b4c8fb62d23a065ae419657151e4c3ff77a2a5632b1a10ec959",
+    "docker/files/install_carla_runtime.py": "b5fcb9e15af63ec0e400809eb21d23c8f83575c5141c214caee9e78666a4b8e9",
+    "scripts/carla/carla_autoware": "6587d36affaf988b1fd6769a3a198a99ec066f18c4be1223b4d989ba5337e7f8",
+    "scripts/carla/prepare_bus_map": "eda6e624b95b7087bc5694baa00fbfc2590015c3b94dfba89d25f28f9e606124",
+    "scripts/carla/prepare_town05_map": "0dcc508652e53b3e2cc7084f11af585e120154db2323fba2a00dfbd36deebc1a",
+    "tools/carla_bus_control_validation.py": "3294ad018ec3fea1cd0f450f1b0d65afe37159562d38e6208cc79dee49ece6cf",
+    "tools/map/repair_town05_lane_changes.py": "6a3f817925800713f4725b84d32528ec384cffb19a9ebb1638386eddaff250e5",
+    "vtd_overlay/src/autoware_universe/planning/autoware_mission_planner_universe/src/lanelet2_plugins/default_planner.cpp": "fea255195c9e5b6a69b707d2af644d97f45332d10fe7f97d0f2e2a7a17c81182"
+  }
+}

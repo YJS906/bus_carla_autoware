@@ -1,0 +1,2 @@
+{"steer_input": -1.0, "collisions": [], "swept_bbox_lateral_bounds_m": [-5.518573719222218, 2.6391633544434967], "final_yaw_deg": -26.09097290039062, "peak_speed_mps": 1.2988953590393066, "final_speed_mps": 0.007945751771330833}
+{"steer_input": 1.0, "collisions": [], "swept_bbox_lateral_bounds_m": [-2.8572147610678087, 5.282998955357982], "final_yaw_deg": 25.96675872802734, "peak_speed_mps": 1.2993335723876953, "final_speed_mps": 0.007617632392793894}

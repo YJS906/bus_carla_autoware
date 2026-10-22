@@ -31,6 +31,8 @@ def generate():
     speeds=sorted({c['target_speed_mps'] for c in data['cases']})
     columns=[0,1.39,2.78,4.17,5.56,8.33,13.89]
     report={'source':str(source.relative_to(ROOT)),'measured_speed_bands_mps':speeds,
+            'minimum_pedal_acceleration_step_mps2':0.001,
+            'strict_order_reason':'Autoware inverse interpolation rejects equal acceleration rows',
             'outside_measured_bands':'clamped, not measured','adjustments':[]}
     coast={v:next(c['mean_acceleration_mps2'] for c in data['cases']
                  if c['target_speed_mps']==v and c['kind']=='brake' and c['pedal']==0) for v in speeds}
@@ -44,8 +46,12 @@ def generate():
             fit=isotonic(raw,increasing=kind=='throttle')
             # Keep the identical zero-pedal coast row in both maps.
             fit[0]=coast[v]
-            if kind=='brake':fit=np.minimum.accumulate(fit).tolist()
-            else:fit=np.maximum.accumulate(fit).tolist()
+            # PAVA can create plateaus. The converter inverts this table and
+            # requires STRICT order, including after six-decimal CSV rounding.
+            # A 0.001 m/s^2 regularization is below the calibration uncertainty.
+            for i in range(1,len(fit)):
+                fit[i]=(min(fit[i],fit[i-1]-.001) if kind=='brake'
+                        else max(fit[i],fit[i-1]+.001))
             fitted[v]=fit
             report['adjustments'].append({'kind':kind,'speed_mps':v,'pedals':pedals,'raw':raw,'fitted':fit})
         with (out/name).open('w',newline='') as stream:

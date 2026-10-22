@@ -1,0 +1,103 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.bus
+#1 transferring dockerfile: 1.87kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 2.0s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/selfcar-2026-carla:lane-start-fix-20260923
+#4 DONE 1.6s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 286B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 374.17kB done
+#6 DONE 0.0s
+
+#7 [1/7] FROM docker.io/library/selfcar-2026-carla:lane-start-fix-20260923@sha256:18e85ecc61d5294f5c986f13e0c3d599267c86af52e36e92375c08d74cf340b0
+#7 resolve docker.io/library/selfcar-2026-carla:lane-start-fix-20260923@sha256:18e85ecc61d5294f5c986f13e0c3d599267c86af52e36e92375c08d74cf340b0 0.0s done
+#7 CACHED
+
+#8 [2/7] COPY carla_overlay/src/autoware_carla_interface /opt/carla-bus-build/src/autoware_carla_interface
+#8 DONE 0.0s
+
+#9 [3/7] COPY vtd_overlay/src/autoware_universe/planning/autoware_mission_planner_universe /opt/carla-bus-build/src/autoware_mission_planner_universe
+#9 DONE 0.0s
+
+#10 [4/7] RUN source /opt/ros/jazzy/setup.bash &&     source /opt/autoware/setup.bash && source /opt/selfcar_overlay/setup.bash &&     source /opt/carla_overlay/setup.bash &&     CMAKE_BUILD_PARALLEL_LEVEL=2 MAKEFLAGS=-j2 colcon --log-base /opt/carla-bus-build/log build       --base-paths /opt/carla-bus-build/src --packages-select autoware_carla_interface autoware_mission_planner_universe       --executor sequential --merge-install --install-base /opt/carla_overlay       --build-base /opt/carla-bus-build/build       --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON &&     source /opt/carla_overlay/setup.bash &&     /opt/carla-bus-build/build/autoware_mission_planner_universe/test_autoware_mission_planner_universe --gtest_filter='*Bus*' &&     find /opt/carla-bus-build/src -type f -not -path '*/__pycache__/*' -print0 |       sort -z | xargs -0 sha256sum > /opt/carla-bus-build/source-manifest.sha256
+#10 1.614 Starting >>> autoware_carla_interface
+#10 20.24 Finished <<< autoware_carla_interface [18.6s]
+#10 20.24 Starting >>> autoware_mission_planner_universe
+#10 117.2 --- stderr: autoware_mission_planner_universe
+#10 117.2 CMake Deprecation Warning at /opt/ros/jazzy/share/tl_expected/cmake/tl_expectedConfig.cmake:37 (message):
+#10 117.2   Package 'tl_expected' is deprecated (This package will be removed in ROS 2
+#10 117.2   Lyrical Luth.
+#10 117.2 
+#10 117.2         Use tl/expected.hpp from libexpected-dev,
+#10 117.2         or rcpputils/tl_expected/expected.hpp if the system header is not available)
+#10 117.2 Call Stack (most recent call first):
+#10 117.2   /opt/autoware/autoware_trajectory/share/autoware_trajectory/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+#10 117.2   /opt/autoware/autoware_trajectory/share/autoware_trajectory/cmake/autoware_trajectoryConfig.cmake:41 (include)
+#10 117.2   /opt/autoware/autoware_route_handler/share/autoware_route_handler/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+#10 117.2   /opt/autoware/autoware_route_handler/share/autoware_route_handler/cmake/autoware_route_handlerConfig.cmake:41 (include)
+#10 117.2   /opt/ros/jazzy/share/ament_cmake_auto/cmake/ament_auto_find_build_dependencies.cmake:67 (find_package)
+#10 117.2   /opt/autoware/autoware_cmake/share/autoware_cmake/cmake/autoware_package.cmake:63 (ament_auto_find_build_dependencies)
+#10 117.2   CMakeLists.txt:5 (autoware_package)
+#10 117.2 
+#10 117.2 
+#10 117.2 CMake Warning (dev) at /opt/ros/jazzy/share/mrt_cmake_modules/cmake/Modules/FindFLANN.cmake:45 (find_package):
+#10 117.2   Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT
+#10 117.2   variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the
+#10 117.2   cmake_policy command to set the policy and suppress this warning.
+#10 117.2 
+#10 117.2   CMake variable FLANN_ROOT is set to:
+#10 117.2 
+#10 117.2     /usr
+#10 117.2 
+#10 117.2   For compatibility, find_package is ignoring the variable, but code in a
+#10 117.2   .cmake module might still use it.
+#10 117.2 Call Stack (most recent call first):
+#10 117.2   /usr/lib/x86_64-linux-gnu/cmake/pcl/PCLConfig.cmake:261 (find_package)
+#10 117.2   /usr/lib/x86_64-linux-gnu/cmake/pcl/PCLConfig.cmake:306 (find_flann)
+#10 117.2   /usr/lib/x86_64-linux-gnu/cmake/pcl/PCLConfig.cmake:570 (find_external_library)
+#10 117.2   /opt/ros/jazzy/share/pcl_conversions/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+#10 117.2   /opt/ros/jazzy/share/pcl_conversions/cmake/pcl_conversionsConfig.cmake:41 (include)
+#10 117.2   /opt/autoware/autoware_utils_pcl/share/autoware_utils_pcl/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+#10 117.2   /opt/autoware/autoware_utils_pcl/share/autoware_utils_pcl/cmake/autoware_utils_pclConfig.cmake:41 (include)
+#10 117.2   /opt/autoware/autoware_utils/share/autoware_utils/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+#10 117.2   /opt/autoware/autoware_utils/share/autoware_utils/cmake/autoware_utilsConfig.cmake:41 (include)
+#10 117.2   /opt/ros/jazzy/share/ament_cmake_auto/cmake/ament_auto_find_build_dependencies.cmake:67 (find_package)
+#10 117.2   /opt/autoware/autoware_cmake/share/autoware_cmake/cmake/autoware_package.cmake:63 (ament_auto_find_build_dependencies)
+#10 117.2   CMakeLists.txt:5 (autoware_package)
+#10 117.2 This warning is for project developers.  Use -Wno-dev to suppress it.
+#10 117.2 
+#10 117.2 In this package, headers install destination is set to `include` by ament_auto_package. It is recommended to install `include/autoware_mission_planner_universe` instead and will be the default behavior of ament_auto_package from ROS 2 Kilted Kaiju. On distributions before Kilted, ament_auto_package behaves the same way when you use USE_SCOPED_HEADER_INSTALL_DIR option.
+#10 117.2 ---
+#10 117.2 Finished <<< autoware_mission_planner_universe [1min 37s]
+#10 117.3 
+#10 117.3 Summary: 2 packages finished [1min 56s]
+#10 117.3   1 package had stderr output: autoware_mission_planner_universe
+#10 117.7 /opt/carla-bus-build/build/autoware_mission_planner_universe/test_autoware_mission_planner_universe: symbol lookup error: /opt/carla-bus-build/build/autoware_mission_planner_universe/test_autoware_mission_planner_universe: undefined symbol: _ZNK8autoware24mission_planner_universe8lanelet214DefaultPlanner52check_goal_footprint_inside_lane_changeable_corridorERKSt6vectorIN7lanelet12ConstLaneletESaIS5_EERKN5boost8geometry5model7polygonIN23autoware_utils_geometry7Point2dELb1ELb1ES3_S3_SaSaEE
+#10 ERROR: process "/bin/bash -o pipefail -c source /opt/ros/jazzy/setup.bash &&     source /opt/autoware/setup.bash && source /opt/selfcar_overlay/setup.bash &&     source /opt/carla_overlay/setup.bash &&     CMAKE_BUILD_PARALLEL_LEVEL=2 MAKEFLAGS=-j2 colcon --log-base /opt/carla-bus-build/log build       --base-paths /opt/carla-bus-build/src --packages-select autoware_carla_interface autoware_mission_planner_universe       --executor sequential --merge-install --install-base /opt/carla_overlay       --build-base /opt/carla-bus-build/build       --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON &&     source /opt/carla_overlay/setup.bash &&     /opt/carla-bus-build/build/autoware_mission_planner_universe/test_autoware_mission_planner_universe --gtest_filter='*Bus*' &&     find /opt/carla-bus-build/src -type f -not -path '*/__pycache__/*' -print0 |       sort -z | xargs -0 sha256sum > /opt/carla-bus-build/source-manifest.sha256" did not complete successfully: exit code: 127
+------
+ > [4/7] RUN source /opt/ros/jazzy/setup.bash &&     source /opt/autoware/setup.bash && source /opt/selfcar_overlay/setup.bash &&     source /opt/carla_overlay/setup.bash &&     CMAKE_BUILD_PARALLEL_LEVEL=2 MAKEFLAGS=-j2 colcon --log-base /opt/carla-bus-build/log build       --base-paths /opt/carla-bus-build/src --packages-select autoware_carla_interface autoware_mission_planner_universe       --executor sequential --merge-install --install-base /opt/carla_overlay       --build-base /opt/carla-bus-build/build       --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON &&     source /opt/carla_overlay/setup.bash &&     /opt/carla-bus-build/build/autoware_mission_planner_universe/test_autoware_mission_planner_universe --gtest_filter='*Bus*' &&     find /opt/carla-bus-build/src -type f -not -path '*/__pycache__/*' -print0 |       sort -z | xargs -0 sha256sum > /opt/carla-bus-build/source-manifest.sha256:
+117.2   CMakeLists.txt:5 (autoware_package)
+117.2 This warning is for project developers.  Use -Wno-dev to suppress it.
+117.2 
+117.2 In this package, headers install destination is set to `include` by ament_auto_package. It is recommended to install `include/autoware_mission_planner_universe` instead and will be the default behavior of ament_auto_package from ROS 2 Kilted Kaiju. On distributions before Kilted, ament_auto_package behaves the same way when you use USE_SCOPED_HEADER_INSTALL_DIR option.
+117.2 ---
+117.2 Finished <<< autoware_mission_planner_universe [1min 37s]
+117.3 
+117.3 Summary: 2 packages finished [1min 56s]
+117.3   1 package had stderr output: autoware_mission_planner_universe
+117.7 /opt/carla-bus-build/build/autoware_mission_planner_universe/test_autoware_mission_planner_universe: symbol lookup error: /opt/carla-bus-build/build/autoware_mission_planner_universe/test_autoware_mission_planner_universe: undefined symbol: _ZNK8autoware24mission_planner_universe8lanelet214DefaultPlanner52check_goal_footprint_inside_lane_changeable_corridorERKSt6vectorIN7lanelet12ConstLaneletESaIS5_EERKN5boost8geometry5model7polygonIN23autoware_utils_geometry7Point2dELb1ELb1ES3_S3_SaSaEE
+------
+ERROR: failed to build: failed to solve: process "/bin/bash -o pipefail -c source /opt/ros/jazzy/setup.bash &&     source /opt/autoware/setup.bash && source /opt/selfcar_overlay/setup.bash &&     source /opt/carla_overlay/setup.bash &&     CMAKE_BUILD_PARALLEL_LEVEL=2 MAKEFLAGS=-j2 colcon --log-base /opt/carla-bus-build/log build       --base-paths /opt/carla-bus-build/src --packages-select autoware_carla_interface autoware_mission_planner_universe       --executor sequential --merge-install --install-base /opt/carla_overlay       --build-base /opt/carla-bus-build/build       --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON &&     source /opt/carla_overlay/setup.bash &&     /opt/carla-bus-build/build/autoware_mission_planner_universe/test_autoware_mission_planner_universe --gtest_filter='*Bus*' &&     find /opt/carla-bus-build/src -type f -not -path '*/__pycache__/*' -print0 |       sort -z | xargs -0 sha256sum > /opt/carla-bus-build/source-manifest.sha256" did not complete successfully: exit code: 127

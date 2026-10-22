@@ -1,0 +1,1 @@
+RuntimeError('Exactly one CARLA ego_vehicle is required')

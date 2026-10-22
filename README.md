@@ -1,4 +1,44 @@
-# Autoware - the world's leading open-source software project for autonomous driving
+# CARLA + Autoware 수요 기반 자율주행 버스
+
+CARLA 0.9.16 **Town05 / Fuso Rosa** 버스로 도심 → 순환로 → 도심 노선을 주행하고,
+하차벨과 대기 승객에 따라 정류장 정차 여부를 결정하는 프로젝트다.
+기존 Prius/VTD 작업과 검증 이력도 함께 보존한다.
+
+## 현재 상태 — 2026-10-22
+
+- 기존 작업 전체 백업, 도심 정류장 **10개**와 고정 노선, 정지 버스 확인 UI 완료.
+- 버스 형상·물리 충돌체 측정, 전용 차량/센서/가감속 설정 완료.
+- 차량 폭으로 인한 경로 거부, 순환로 지도 태그 누락, 제동표 로딩 오류,
+  목표 정지 후 기어가는 현상을 수정했다.
+- **빈 도로에서 Autoware 저속 직진·곡선·목표 정지 시험 통과.**
+  직진 약 59m, 곡선 약 177m, 목표 오차 약 0.75m/0.73m, 정지 유지 3초, 충돌 0건.
+- **전체 노선 완주·교차로 신호 주행·조건부 정류장 정차·하차벨 UI는 후속 단계다.**
+  기존 승용차 시험을 버스 검증 결과로 간주하지 않는다.
+
+[실제 주행 검증과 수정 근거](docs/validation/carla-bus-envelope-20261022/README.md) ·
+[실행 방법](docs/carla-bus-operations.md) ·
+[미션 설계 및 진행 단계](docs/carla-bus-mission.md) ·
+[노선·정류장](scenarios/bus/README.md) ·
+[검증 지도 사본](maps/Town05Bus/README.md)
+
+현재 PC에서 버스를 실행하려면:
+
+```bash
+./scripts/carla/carla_autoware stop
+./scripts/carla/build_bus_image
+./scripts/carla/carla_autoware start-bus
+# 빈 도로에서만 실행: 시작 위치를 옮긴 뒤 실제 AUTO 주행/정지 시험
+./scripts/carla/validate_bus_control straight
+./scripts/carla/validate_bus_control curve
+```
+
+CARLA 서버가 먼저 실행되어 있어야 한다. 시작 명령은 버스를 STOP 상태로 생성한다.
+버스는 `Town05Bus` 지도와 `selfcar-2026-carla:bus` 이미지를 사용하며,
+기존 Town05 지도와 Prius 실행 이미지는 보존한다.
+외부 설치 자산·새 PC 준비·백업 범위는 [버스 실행 안내](docs/carla-bus-operations.md)에 정리했다.
+
+<details>
+<summary>기반 프로젝트 Autoware 안내</summary>
 
 <p align="center">
     <img src="https://user-images.githubusercontent.com/63835446/158918717-58d6deaf-93fb-47f9-891d-e242b02cba7b.png"
@@ -43,6 +83,8 @@ Autoware is the world's leading open-source autonomous driving framework. Autowa
 >
 > 1. **[Install Autoware](https://autowarefoundation.github.io/autoware-documentation/main/installation)** → Set up your environment and build the stack from source.
 > 2. **[Run the Quick Start demo](https://autowarefoundation.github.io/autoware-documentation/main/demos/)** → Drive a simulated vehicle in just a few minutes.
+
+</details>
 
 ## Selfcar 2026 VTD runtime
 
@@ -107,8 +149,8 @@ self-hosted NVIDIA runner.
 [도심 정류장 10개와 서부 순환 노선](scenarios/bus/README.md)을 생성했다.
 차로 중앙 정차, 하차벨·대기 승객 조건, 구현 단계는
 [버스 미션 설계](docs/carla-bus-mission.md)를 따른다.
-현재는 노선·정류장 배치와 정지 버스 확인까지이며, 조건부 정차 UI와 버스 자율주행
-통합을 완료한 상태는 아니다.
+버스의 저속 직진·곡선·목표 정지까지 검증했다. 조건부 정차 UI와 전체 노선 통합은
+후속 단계이며, 버스용 최신 결과는 위의 검증 보고서를 따른다.
 
 The current city setup is Town05. The latest [behavior repair and AUTO validation report](docs/carla-behavior-repair-20260922.md)
 records three parked-car avoidance runs, three pedestrian-stop runs, and two
@@ -150,8 +192,9 @@ docker build \
 ```
 
 CARLA itself, point-cloud/Lanelet2 map assets, ML models, and generated
-TensorRT engines are external runtime assets and are intentionally not stored
-in Git. With CARLA 0.9.16 installed under `/home/a/CARLA/0.9.16` and the map
+TensorRT engines are external runtime assets. The tested bus Lanelet2 map and
+signal bundle are included under `maps/Town05Bus`; large point clouds, model
+weights and generated engines are not stored in Git. With CARLA 0.9.16 installed under `/home/a/CARLA/0.9.16` and the map
 and models under `/home/a/autoware_data`, prepare the Town05 map as described
 above and run:
 

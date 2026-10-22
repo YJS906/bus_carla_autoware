@@ -1,0 +1,5 @@
+{
+  "source": "/home/a/autoware_data/maps/Town05",
+  "source_map_sha256": "59197c86022c27ade92902aa4ec9e42e2b154b8f456edc5c8b1912cf2c5c14be",
+  "note": "Independent copy; existing bus map edits are preserved on subsequent runs."
+}
