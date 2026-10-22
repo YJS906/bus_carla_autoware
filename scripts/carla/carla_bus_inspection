@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd -P)"
+state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/carla_pp/bus-preview"
+mkdir -p "$state_dir"
+exec 9>"$state_dir/inspection.lock"
+if ! flock -n 9; then
+  echo 'The bus inspection panel is already running.' >&2
+  exit 1
+fi
+exec "${CARLA_PYTHON:-/home/a/CARLA/venv-0.9.16/bin/python}" "${repo_root}/tools/carla_bus_inspection.py"
