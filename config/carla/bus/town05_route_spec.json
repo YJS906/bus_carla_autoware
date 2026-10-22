@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "name": "Town05 도심·서부 순환 버스",
+  "map": "Town05_Opt",
+  "closed_loop": true,
+  "stopping_policy": "Stop in the centre of the outermost driving lane; no bus bay required",
+  "anchors": [
+    {
+      "id": "S01",
+      "name": "서부 도심",
+      "kind": "stop",
+      "road_id": 44,
+      "lane_id": -2,
+      "s": 30.0
+    },
+    {
+      "id": "S02",
+      "name": "북서 도심",
+      "kind": "stop",
+      "road_id": 8,
+      "lane_id": 2,
+      "s": 16.0
+    },
+    {
+      "id": "S03",
+      "name": "중앙 북부",
+      "kind": "stop",
+      "road_id": 5,
+      "lane_id": -2,
+      "s": 26.0
+    },
+    {
+      "id": "S04",
+      "name": "중앙 도심",
+      "kind": "stop",
+      "road_id": 1,
+      "lane_id": 2,
+      "s": 24.0
+    },
+    {
+      "id": "S05",
+      "name": "북동 도심",
+      "kind": "stop",
+      "road_id": 16,
+      "lane_id": 2,
+      "s": 24.0
+    },
+    {
+      "id": "R01",
+      "name": "북쪽 순환로 접근",
+      "kind": "via",
+      "road_id": 13,
+      "lane_id": 1,
+      "s": 7.0
+    },
+    {
+      "id": "R02",
+      "name": "서부 순환로 진입",
+      "kind": "via",
+      "road_id": 37,
+      "lane_id": -1,
+      "s": 40.0
+    },
+    {
+      "id": "R03",
+      "name": "순환로 북서부",
+      "kind": "via",
+      "road_id": 37,
+      "lane_id": -3,
+      "s": 200.0
+    },
+    {
+      "id": "R04",
+      "name": "순환로 서부",
+      "kind": "via",
+      "road_id": 37,
+      "lane_id": -3,
+      "s": 500.0
+    },
+    {
+      "id": "R05",
+      "name": "순환로 남서부",
+      "kind": "via",
+      "road_id": 37,
+      "lane_id": -1,
+      "s": 760.0
+    },
+    {
+      "id": "R06",
+      "name": "남쪽 도심 복귀",
+      "kind": "via",
+      "road_id": 27,
+      "lane_id": -1,
+      "s": 10.0
+    },
+    {
+      "id": "S06",
+      "name": "남동 도심",
+      "kind": "stop",
+      "road_id": 29,
+      "lane_id": -2,
+      "s": 22.0
+    },
+    {
+      "id": "S07",
+      "name": "동부 도심",
+      "kind": "stop",
+      "road_id": 0,
+      "lane_id": -2,
+      "s": 26.0
+    },
+    {
+      "id": "S08",
+      "name": "중앙 남부",
+      "kind": "stop",
+      "road_id": 40,
+      "lane_id": -2,
+      "s": 20.0
+    },
+    {
+      "id": "S09",
+      "name": "남서 도심",
+      "kind": "stop",
+      "road_id": 23,
+      "lane_id": -2,
+      "s": 16.0
+    },
+    {
+      "id": "S10",
+      "name": "서부 남단",
+      "kind": "stop",
+      "road_id": 43,
+      "lane_id": -2,
+      "s": 30.0
+    }
+  ]
+}

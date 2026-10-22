@@ -1,0 +1,124 @@
+{
+  "length_m": 2014.037,
+  "validation": {
+    "stop_count": 10,
+    "directed_segments": 16,
+    "max_reference_sample_gap_m": 6.946,
+    "all_stops_in_urban_roads": true,
+    "no_stop_signs_added_to_map": true,
+    "autoware_route_handler_validated": false,
+    "live_driving_validated": false
+  },
+  "stops": [
+    {
+      "id": "S01",
+      "name": "서부 도심",
+      "lanelet_id": 21623,
+      "non_junction": true,
+      "outermost_driving_lane": true,
+      "crosswalk_distance_m": 29.998,
+      "junction_free_front_and_rear_m": 9,
+      "bus_swept_envelope_verified": false,
+      "closed_loop_driving_verified": false
+    },
+    {
+      "id": "S02",
+      "name": "북서 도심",
+      "lanelet_id": 2124,
+      "non_junction": true,
+      "outermost_driving_lane": true,
+      "crosswalk_distance_m": 15.938,
+      "junction_free_front_and_rear_m": 9,
+      "bus_swept_envelope_verified": false,
+      "closed_loop_driving_verified": false
+    },
+    {
+      "id": "S03",
+      "name": "중앙 북부",
+      "lanelet_id": 1260,
+      "non_junction": true,
+      "outermost_driving_lane": true,
+      "crosswalk_distance_m": 26.002,
+      "junction_free_front_and_rear_m": 9,
+      "bus_swept_envelope_verified": false,
+      "closed_loop_driving_verified": false
+    },
+    {
+      "id": "S04",
+      "name": "중앙 도심",
+      "lanelet_id": 542,
+      "non_junction": true,
+      "outermost_driving_lane": true,
+      "crosswalk_distance_m": 24.21,
+      "junction_free_front_and_rear_m": 9,
+      "bus_swept_envelope_verified": false,
+      "closed_loop_driving_verified": false
+    },
+    {
+      "id": "S05",
+      "name": "북동 도심",
+      "lanelet_id": 3597,
+      "non_junction": true,
+      "outermost_driving_lane": true,
+      "crosswalk_distance_m": 24.212,
+      "junction_free_front_and_rear_m": 9,
+      "bus_swept_envelope_verified": false,
+      "closed_loop_driving_verified": false
+    },
+    {
+      "id": "S06",
+      "name": "남동 도심",
+      "lanelet_id": 7012,
+      "non_junction": true,
+      "outermost_driving_lane": true,
+      "crosswalk_distance_m": 23.165,
+      "junction_free_front_and_rear_m": 9,
+      "bus_swept_envelope_verified": false,
+      "closed_loop_driving_verified": false
+    },
+    {
+      "id": "S07",
+      "name": "동부 도심",
+      "lanelet_id": 111,
+      "non_junction": true,
+      "outermost_driving_lane": true,
+      "crosswalk_distance_m": 26.722,
+      "junction_free_front_and_rear_m": 9,
+      "bus_swept_envelope_verified": false,
+      "closed_loop_driving_verified": false
+    },
+    {
+      "id": "S08",
+      "name": "중앙 남부",
+      "lanelet_id": 20200,
+      "non_junction": true,
+      "outermost_driving_lane": true,
+      "crosswalk_distance_m": 21.954,
+      "junction_free_front_and_rear_m": 9,
+      "bus_swept_envelope_verified": false,
+      "closed_loop_driving_verified": false
+    },
+    {
+      "id": "S09",
+      "name": "남서 도심",
+      "lanelet_id": 5690,
+      "non_junction": true,
+      "outermost_driving_lane": true,
+      "crosswalk_distance_m": 16.168,
+      "junction_free_front_and_rear_m": 9,
+      "bus_swept_envelope_verified": false,
+      "closed_loop_driving_verified": false
+    },
+    {
+      "id": "S10",
+      "name": "서부 남단",
+      "lanelet_id": 21311,
+      "non_junction": true,
+      "outermost_driving_lane": true,
+      "crosswalk_distance_m": 28.901,
+      "junction_free_front_and_rear_m": 9,
+      "bus_swept_envelope_verified": false,
+      "closed_loop_driving_verified": false
+    }
+  ]
+}

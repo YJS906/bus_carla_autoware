@@ -1,0 +1,11 @@
+test_crosswalk_approach_is_rejected (test_town05_bus_route.BusRouteTest.test_crosswalk_approach_is_rejected) ... ok
+test_generated_data_matches_current_map_and_spec (test_town05_bus_route.BusRouteTest.test_generated_data_matches_current_map_and_spec) ... ok
+test_inner_lane_is_rejected (test_town05_bus_route.BusRouteTest.test_inner_lane_is_rejected) ... ok
+test_junction_is_rejected (test_town05_bus_route.BusRouteTest.test_junction_is_rejected) ... ok
+test_saved_loop_has_no_reverse_samples_or_open_seams (test_town05_bus_route.BusRouteTest.test_saved_loop_has_no_reverse_samples_or_open_seams) ... ok
+test_ten_distinct_stops_in_outer_urban_lanes (test_town05_bus_route.BusRouteTest.test_ten_distinct_stops_in_outer_urban_lanes) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.343s
+
+OK

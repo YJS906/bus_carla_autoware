@@ -1,0 +1,8 @@
+{
+  "map": "Carla/Maps/Town05_Opt",
+  "stop_markers": 10,
+  "duration_seconds": 120.0,
+  "actors_spawned": 0,
+  "vehicle_control_commands": 0,
+  "world_ticks": 0
+}

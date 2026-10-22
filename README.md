@@ -103,6 +103,13 @@ self-hosted NVIDIA runner.
 
 ## CARLA 0.9.16 integration
 
+**2026-10-22 버스 미션 전환:** 기존 결과를 백업하고 `mission/town05-bus`에서
+[도심 정류장 10개와 서부 순환 노선](scenarios/bus/README.md)을 생성했다.
+차로 중앙 정차, 하차벨·대기 승객 조건, 구현 단계는
+[버스 미션 설계](docs/carla-bus-mission.md)를 따른다.
+현재는 노선·정류장 배치와 정지 버스 확인까지이며, 조건부 정차 UI와 버스 자율주행
+통합을 완료한 상태는 아니다.
+
 The current city setup is Town05. The latest [behavior repair and AUTO validation report](docs/carla-behavior-repair-20260922.md)
 records three parked-car avoidance runs, three pedestrian-stop runs, and two
 regression runs with no collisions. These results use the separate CARLA
