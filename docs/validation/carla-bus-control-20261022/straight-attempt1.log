@@ -1,0 +1,6 @@
+{"event": "stop", "sim_time": 216.200003221, "status": {"success": true, "code": 60001, "message": "The mode is the same as the current."}}
+{"event": "clear_old_route", "sim_time": 216.250003222, "status": {"success": true, "code": 0, "message": ""}}
+{"event": "set_bus_test_route", "sim_time": 219.800003275, "status": {"success": false, "code": 3, "message": "The planned route is empty."}}
+RuntimeError('set_bus_test_route: The planned route is empty.')
+{"event": "stop", "sim_time": 219.900003276, "status": {"success": true, "code": 60001, "message": "The mode is the same as the current."}}
+{"event": "clear_test_route", "sim_time": 220.350003283, "status": {"success": true, "code": 0, "message": ""}}

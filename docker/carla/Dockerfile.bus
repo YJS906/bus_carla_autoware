@@ -1,0 +1,22 @@
+# syntax=docker/dockerfile:1.7
+# Keep the validated Prius image intact. This image owns the bus calibration.
+ARG CARLA_BASE_IMAGE=selfcar-2026-carla:lane-start-fix-20260923
+FROM ${CARLA_BASE_IMAGE}
+USER root
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+COPY carla_overlay/src/autoware_carla_interface /opt/carla-bus-build/src/autoware_carla_interface
+RUN source /opt/ros/jazzy/setup.bash && \
+    source /opt/autoware/setup.bash && source /opt/selfcar_overlay/setup.bash && \
+    source /opt/carla_overlay/setup.bash && \
+    CMAKE_BUILD_PARALLEL_LEVEL=2 MAKEFLAGS=-j2 colcon --log-base /opt/carla-bus-build/log build \
+      --base-paths /opt/carla-bus-build/src --packages-select autoware_carla_interface \
+      --executor sequential --merge-install --install-base /opt/carla_overlay \
+      --build-base /opt/carla-bus-build/build \
+      --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF && \
+    find /opt/carla-bus-build/src -type f -not -path '*/__pycache__/*' -print0 | \
+      sort -z | xargs -0 sha256sum > /opt/carla-bus-build/source-manifest.sha256
+COPY config/carla /opt/carla-config
+COPY docker/files/install_carla_runtime.py /opt/carla-bus-build/install_carla_runtime.py
+RUN python3 /opt/carla-bus-build/install_carla_runtime.py --vehicle-profile fusorosa
+LABEL org.opencontainers.image.title="Town05 Autoware Fuso Rosa bus" \
+      org.opencontainers.image.description="Measured bus geometry, bus sensor mounts and dedicated control calibration"

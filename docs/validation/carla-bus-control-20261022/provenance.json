@@ -1,0 +1,18 @@
+{
+  "bus_image": "sha256:b3e5fd520ae58b773e7eaacdeaf732b6de6951f859c463f7d527e7d5df247911",
+  "preserved_prius_image": "sha256:18e85ecc61d5294f5c986f13e0c3d599267c86af52e36e92375c08d74cf340b0",
+  "parent_commit": "ab997a6afff825ce1e3f74cbd9c1503576a33254",
+  "profile_sha256": {
+    "config/carla/vehicle_profiles/fusorosa/profile.json": "b642e90dc4fbd8f7acc0642513e6acc9ed58663b412a42bc169384bf2ca4d3d1",
+    "config/carla/vehicle_profiles/fusorosa/raw_vehicle_cmd_converter.param.yaml": "a686d04999cf65c6a9a7d7aa7c05782fd6c8a36ade4125f49d0e4a02e555f262",
+    "config/carla/vehicle_profiles/fusorosa/vehicle.xacro": "990c20527fa8be3b6ce0c86eac7fcdfda59e34d5af3b30d823d4902f2f5c130f",
+    "config/carla/vehicle_profiles/fusorosa/planning_common.param.yaml": "659ba06fc9f2e70297bcc51444bf37b5e441bbb32f3fa57a6030ce66e8073bbe",
+    "config/carla/vehicle_profiles/fusorosa/vehicle_info.param.yaml": "1a813764b34c33b081310568e469b1a37f7ff93974c291497ab691277e1678a2",
+    "config/carla/vehicle_profiles/fusorosa/pid.param.yaml": "bad71f03cf9bec2701f30fb0102241b610c03b8fca65d79573bdd81099de2a2e",
+    "config/carla/vehicle_profiles/fusorosa/sensors/sensors_calibration.yaml": "53e8ff8292972e7074c982c9f3718dd6d4e2e19a813b41d63e065e432a658edc",
+    "config/carla/vehicle_profiles/fusorosa/sensors/sensor_kit_calibration.yaml": "c2b343ac537a5ef1d6ada8f6a13d7876e8a0b14c8102769119ef67c99970c645",
+    "config/carla/vehicle_profiles/fusorosa/calibration_maps/brake_map.csv": "58c098e7c80f447b28a2468050ef53e50c37a44b69f7f053d44663bae70558af",
+    "config/carla/vehicle_profiles/fusorosa/calibration_maps/accel_map.csv": "884860f21a4dca34c62dbeece6b03ac9647c1d7254e49df7bd50bc583f6d0bc3"
+  },
+  "status": "profile_and_runtime_verified; route_rejected_by_vehicle_footprint; closed_loop_tests_incomplete"
+}

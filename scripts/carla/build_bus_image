@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd -P)"
+exec docker build --progress=plain \
+  --build-arg "CARLA_BASE_IMAGE=${CARLA_BASE_IMAGE:-selfcar-2026-carla:lane-start-fix-20260923}" \
+  -t "${CARLA_AUTOWARE_IMAGE:-selfcar-2026-carla:bus}" \
+  -f "$repo_root/docker/carla/Dockerfile.bus" "$repo_root"

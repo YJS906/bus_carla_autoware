@@ -1,0 +1,14 @@
+# CARLA 0.9.16 Fuso Rosa, measured 2026-10-22. Rear axle ground base_link.
+# wheel_width is descriptive (not exposed by CARLA); envelope dimensions are measured.
+/**:
+  ros__parameters:
+    wheel_radius: 0.63
+    wheel_width: 0.3
+    wheel_base: 5.630101407923259
+    wheel_tread: 2.61667973065866
+    front_overhang: 1.6760634192820305
+    rear_overhang: 2.9665202237590655
+    left_overhang: 0.784613153347621
+    right_overhang: 0.5428589943506523
+    vehicle_height: 4.252848148345947
+    max_steer_angle: 1.2217303432379762

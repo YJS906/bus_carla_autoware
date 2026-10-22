@@ -51,6 +51,7 @@
       <param name="ego_vehicle_role_name" value="$(var ego_vehicle_role_name)"/>
       <param name="spawn_point" value="$(var spawn_point)"/>
       <param name="vehicle_type" value="$(var vehicle_type)"/>
+      <param name="vehicle_profile_path" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
       <param name="use_traffic_manager" value="$(var use_traffic_manager)"/>
       <param name="max_real_delta_seconds" value="$(var max_real_delta_seconds)"/>
       <param name="sensor_kit_name" value="$(var sensor_kit_name)"/>

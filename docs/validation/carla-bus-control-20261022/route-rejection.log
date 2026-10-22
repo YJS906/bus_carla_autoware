@@ -1,0 +1,2 @@
+[component_container_mt-30] [WARN] [1792654107.495653724] [planning.mission_planning.mission_planner]: Goal's footprint exceeds lane!
+[component_container_mt-30] [WARN] [1792654107.495660607] [planning.mission_planning.mission_planner]: Goal is not valid! Please check position and angle of goal_pose

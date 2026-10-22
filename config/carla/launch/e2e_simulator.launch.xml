@@ -8,6 +8,7 @@
   <arg name="use_sim_time" default="true" description="use simulation time"/>
   <arg name="map_path" description="point cloud and lanelet2 map directory path"/>
   <arg name="vehicle_model" default="sample_vehicle" description="vehicle model name"/>
+  <arg name="carla_vehicle_type" default="vehicle.toyota.prius" description="CARLA blueprint; must match installed vehicle profile"/>
   <arg name="sensor_model" default="sample_sensor_kit" description="sensor model name"/>
   <arg name="data_path" default="$(env HOME)/autoware_data/ml_models" description="packages data and artifacts directory path"/>
   <arg name="simulator_type" default="awsim" description="select the simulator type ('awsim' or 'carla')"/>
@@ -69,6 +70,8 @@
     <group scoped="false" if="$(equals $(var simulator_type) 'carla')">
       <include file="$(find-pkg-share autoware_carla_interface)/launch/autoware_carla_interface.launch.xml">
         <arg name="map_path" value="$(var map_path)"/>
+        <arg name="vehicle_type" value="$(var carla_vehicle_type)"/>
+        <arg name="vehicle_model" value="$(var vehicle_model)"/>
         <arg name="carla_map" value="$(var carla_map)"/>
         <arg name="spawn_point" value="$(var spawn_point)"/>
         <arg name="use_traffic_manager" value="$(var use_carla_traffic_manager)"/>

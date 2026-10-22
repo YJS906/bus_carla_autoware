@@ -2,6 +2,7 @@
 
 import importlib.util
 import math
+import json
 import os
 from pathlib import Path
 import sys
@@ -133,6 +134,31 @@ class VehicleAdapterTest(unittest.TestCase):
         self.assertFalse(converter["convert_steer_cmd"])
         self.assertEqual(converter["max_steer"], profile["max_steer_angle"])
         self.assertEqual(converter["min_steer"], -profile["max_steer_angle"])
+
+    def test_bus_profile_matches_recorded_physics_and_rejects_prius(self):
+        data = json.loads((CONFIG.parents[1] / 'docs/validation/carla-bus-route-20261022/bus-geometry.json').read_text())
+        bbox = NS(location=NS(**dict(zip(('x','y','z'),data['bounding_box']['location']))),
+                  extent=NS(**dict(zip(('x','y','z'),data['bounding_box']['extent']))))
+        actor = NS(bounding_box=bbox, get_transform=lambda:NS(get_inverse_matrix=lambda:data['actor_inverse_transform']))
+        physics = NS(wheels=[NS(position=NS(**dict(zip(('x','y','z'),w['position_cm']))),
+                               max_steer_angle=w['max_steer_angle_deg']) for w in data['wheels']])
+        geometry = adapter.VehicleGeometry.from_actor(actor,physics)
+        profile = yaml.safe_load((CONFIG/'vehicle_profiles/fusorosa/vehicle_info.param.yaml').read_text())['/**']['ros__parameters']
+        measured = adapter.validate_vehicle_profile(actor,geometry,profile)
+        self.assertAlmostEqual(measured['width'],3.9441518783569336)
+        prius = yaml.safe_load((CONFIG/'vehicle/vehicle_info.param.yaml').read_text())['/**']['ros__parameters']
+        with self.assertRaisesRegex(ValueError,'profile mismatch'):
+            adapter.validate_vehicle_profile(actor,geometry,prius)
+        swapped = dict(profile,left_overhang=profile['right_overhang'],right_overhang=profile['left_overhang'])
+        with self.assertRaisesRegex(ValueError,'left_extent'):
+            adapter.validate_vehicle_profile(actor,geometry,swapped)
+
+    def test_bus_lidar_mount_clears_body(self):
+        root = CONFIG/'vehicle_profiles/fusorosa'
+        vehicle = yaml.safe_load((root/'vehicle_info.param.yaml').read_text())['/**']['ros__parameters']
+        sensors = yaml.safe_load((root/'sensors/sensor_kit_calibration.yaml').read_text())['sensor_kit_base_link']
+        self.assertGreater(sensors['velodyne_top_base_link']['z'], vehicle['vehicle_height'])
+        self.assertGreater(sensors['CAM_FRONT/camera_link']['x'],vehicle['wheel_base']+vehicle['front_overhang'])
 
 
 if __name__ == "__main__":

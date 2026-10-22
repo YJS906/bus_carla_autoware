@@ -1,0 +1,19 @@
+brake 0 speed 2.78 accel -1.1556926498566353
+brake 0.005 speed 2.78 accel -1.2905640099513271
+brake 0.01 speed 2.78 accel -1.3178090986798583
+brake 0.02 speed 2.78 accel -1.3143707466468884
+brake 0.04 speed 2.78 accel -1.3949153657794022
+brake 0.06 speed 2.78 accel -1.4613569455276798
+brake 0.1 speed 2.78 accel -1.6559747492390378
+brake 0.2 speed 2.78 accel -2.0981702980370893
+throttle 0.1 speed 2.78 accel -0.7428065026628937
+throttle 0.2 speed 2.78 accel -0.2673461944813051
+throttle 0.3 speed 2.78 accel 0.26010261732045653
+throttle 0.4 speed 2.78 accel 0.731729778344218
+Traceback (most recent call last):
+  File "/home/a/carla_pp/tools/carla_bus_actuation_probe.py", line 98, in <module>
+    run(args.output)
+  File "/home/a/carla_pp/tools/carla_bus_actuation_probe.py", line 62, in run
+    if not reached:raise RuntimeError('Bus failed to accelerate to calibration speed')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Bus failed to accelerate to calibration speed

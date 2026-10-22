@@ -34,6 +34,7 @@ services:
         exec ros2 launch autoware_launch e2e_simulator.launch.xml
         map_path:=/home/aw/autoware_data/maps/${AUTOWARE_MAP_NAME:-Town01}
         carla_map:=${CARLA_MAP_NAME:-}
+        carla_vehicle_type:=${CARLA_VEHICLE_TYPE:-vehicle.toyota.prius}
         vehicle_model:=sample_vehicle
         sensor_model:=carla_sensor_kit
         simulator_type:=carla
@@ -80,7 +81,7 @@ services:
         source /opt/autoware/setup.bash &&
         source /opt/carla_overlay/setup.bash &&
         exec ros2 run autoware_carla_interface spectator_follow
-        --role ego_vehicle --distance 8 --height 4 --pitch -15
+        --role ego_vehicle --distance ${CARLA_SPECTATOR_DISTANCE:-8} --height ${CARLA_SPECTATOR_HEIGHT:-4} --pitch -15
 
   traffic_signals:
     image: ${CARLA_AUTOWARE_IMAGE:-selfcar-2026-carla:local}

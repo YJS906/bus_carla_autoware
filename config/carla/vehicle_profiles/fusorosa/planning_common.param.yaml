@@ -1,0 +1,14 @@
+# Initial bus testing only. Limits do not imply validated closed-loop driving.
+/**:
+  ros__parameters:
+    max_vel: 2.7777777778 # 10 km/h
+    normal:
+      min_acc: -3.0
+      max_acc: 0.7
+      min_jerk: -2.0
+      max_jerk: 1.0
+    limit:
+      min_acc: -5.0
+      max_acc: 0.7
+      min_jerk: -3.5
+      max_jerk: 1.4

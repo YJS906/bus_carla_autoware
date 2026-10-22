@@ -1,0 +1,27 @@
+test_callback_steering_and_watchdog_brake (test_bridge_contract.BridgeContractTest.test_callback_steering_and_watchdog_brake) ... ok
+test_gear_reverse_neutral_park_and_moving_interlock (test_bridge_contract.BridgeContractTest.test_gear_reverse_neutral_park_and_moving_interlock) ... ok
+test_initialpose_is_rear_axle_and_does_not_mutate_ros_message (test_bridge_contract.BridgeContractTest.test_initialpose_is_rear_axle_and_does_not_mutate_ros_message) ... ok
+test_loader_matches_scan_joint_and_reflects_side_camera (test_bridge_contract.BridgeContractTest.test_loader_matches_scan_joint_and_reflects_side_camera) ... ok
+test_stale_and_nonfinite_commands_cannot_release_brakes (test_bridge_contract.BridgeContractTest.test_stale_and_nonfinite_commands_cannot_release_brakes) ... ok
+test_velocity_report_uses_ros_rear_axle_twist_and_actual_gear (test_bridge_contract.BridgeContractTest.test_velocity_report_uses_ros_rear_axle_twist_and_actual_gear) ... ok
+test_angular_units_and_reference_offset_velocity (test_ground_truth_objects.GroundTruthTest.test_angular_units_and_reference_offset_velocity) ... ok
+test_classifications_and_actor_exclusion (test_ground_truth_objects.GroundTruthTest.test_classifications_and_actor_exclusion) ... ok
+test_fresh_list_stable_id_and_no_stale_objects (test_ground_truth_objects.GroundTruthTest.test_fresh_list_stable_id_and_no_stale_objects) ... ok
+test_invalid_geometry_excluded_and_range_rejected (test_ground_truth_objects.GroundTruthTest.test_invalid_geometry_excluded_and_range_rejected) ... ok
+test_rotated_bounding_box_matches_vertices (test_ground_truth_objects.GroundTruthTest.test_rotated_bounding_box_matches_vertices) ... ok
+test_world_reflection_box_center_and_local_velocity (test_ground_truth_objects.GroundTruthTest.test_world_reflection_box_center_and_local_velocity) ... ok
+test_bus_lidar_mount_clears_body (test_vehicle_adapter.VehicleAdapterTest.test_bus_lidar_mount_clears_body) ... ok
+test_bus_profile_matches_recorded_physics_and_rejects_prius (test_vehicle_adapter.VehicleAdapterTest.test_bus_profile_matches_recorded_physics_and_rejects_prius) ... ok
+test_gears_and_direction_change_interlock (test_vehicle_adapter.VehicleAdapterTest.test_gears_and_direction_change_interlock) ... ok
+test_lateral_velocity_is_ros_left_positive (test_vehicle_adapter.VehicleAdapterTest.test_lateral_velocity_is_ros_left_positive) ... ok
+test_prius_vehicle_profile_matches_measured_geometry (test_vehicle_adapter.VehicleAdapterTest.test_prius_vehicle_profile_matches_measured_geometry) ... ok
+test_rear_axle_twist_has_correct_handedness_units_and_lever_arm (test_vehicle_adapter.VehicleAdapterTest.test_rear_axle_twist_has_correct_handedness_units_and_lever_arm) ... ok
+test_sensor_world_and_ros_tf_positions_agree_at_all_headings (test_vehicle_adapter.VehicleAdapterTest.test_sensor_world_and_ros_tf_positions_agree_at_all_headings) ... ok
+test_steering_curve_uses_kmh_and_is_heading_independent (test_vehicle_adapter.VehicleAdapterTest.test_steering_curve_uses_kmh_and_is_heading_independent) ... ok
+test_watchdog_requires_fresh_commands_and_handles_clock_reset (test_vehicle_adapter.VehicleAdapterTest.test_watchdog_requires_fresh_commands_and_handles_clock_reset) ... ok
+test_world_centimetre_wheels_are_measured_in_actor_frame (test_vehicle_adapter.VehicleAdapterTest.test_world_centimetre_wheels_are_measured_in_actor_frame) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.039s
+
+OK

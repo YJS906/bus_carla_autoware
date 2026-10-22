@@ -16,6 +16,7 @@ from copy import deepcopy
 import math
 import threading
 import time
+import yaml
 
 from autoware_vehicle_msgs.msg import ControlModeReport
 from autoware_vehicle_msgs.msg import GearCommand
@@ -58,7 +59,7 @@ from .modules.carla_utils import ros_pose_to_carla_transform
 from .modules.carla_wrapper import SensorInterface
 from .modules.vehicle_adapter import (
     CommandWatchdog, VehicleGeometry, base_world_position, body_velocity_ros,
-    canonical_gear, longitudinal_speed, select_gear, steering_command,
+    canonical_gear, longitudinal_speed, select_gear, steering_command, validate_vehicle_profile,
 )
 
 
@@ -78,6 +79,7 @@ class carla_ros2_interface(object):
             "ego_vehicle_role_name": (rclpy.Parameter.Type.STRING, None),
             "spawn_point": (rclpy.Parameter.Type.STRING, None),
             "vehicle_type": (rclpy.Parameter.Type.STRING, None),
+            "vehicle_profile_path": (rclpy.Parameter.Type.STRING, ""),
             "use_traffic_manager": (rclpy.Parameter.Type.BOOL, None),
             "max_real_delta_seconds": (rclpy.Parameter.Type.DOUBLE, None),
             "command_timeout_sec": (rclpy.Parameter.Type.DOUBLE, 0.5),
@@ -292,6 +294,11 @@ class carla_ros2_interface(object):
         """Bind measured vehicle physics before constructing sensor transforms."""
         physics = actor.get_physics_control()
         geometry = VehicleGeometry.from_actor(actor, physics)
+        profile_path = self.param_values.get('vehicle_profile_path', '')
+        if profile_path:
+            with open(profile_path) as stream:
+                profile = yaml.safe_load(stream)['/**']['ros__parameters']
+            validate_vehicle_profile(actor, geometry, profile)
         with self._state_lock:
             self.ego_actor = actor
             self.physics_control = physics

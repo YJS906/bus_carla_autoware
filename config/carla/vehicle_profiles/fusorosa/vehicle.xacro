@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Measured bounding envelope, not a cosmetic passenger-car mesh. -->
+  <xacro:property name="v" value="${xacro.load_yaml('$(find sample_vehicle_description)/config/vehicle_info.param.yaml')['/**']['ros__parameters']}"/>
+  <link name="base_link">
+    <visual>
+      <origin xyz="${(v['wheel_base']+v['front_overhang']-v['rear_overhang'])/2} ${(v['left_overhang']-v['right_overhang'])/2} ${v['vehicle_height']/2}"/>
+      <geometry>
+        <box size="${v['wheel_base']+v['front_overhang']+v['rear_overhang']} ${v['wheel_tread']+v['left_overhang']+v['right_overhang']} ${v['vehicle_height']}"/>
+      </geometry>
+      <material name="bus_envelope"><color rgba="0.95 0.65 0.1 0.6"/></material>
+    </visual>
+  </link>
+</robot>

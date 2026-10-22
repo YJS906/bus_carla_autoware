@@ -31,7 +31,8 @@ RUN source /opt/ros/jazzy/setup.bash && \
 
 COPY config/carla /opt/carla-config
 COPY docker/files/install_carla_runtime.py /opt/carla-build/install_carla_runtime.py
-RUN python3 /opt/carla-build/install_carla_runtime.py
+ARG CARLA_VEHICLE_PROFILE=prius
+RUN python3 /opt/carla-build/install_carla_runtime.py --vehicle-profile "${CARLA_VEHICLE_PROFILE}"
 
 COPY --chmod=0755 tools/carla_localization_ready.py \
   /opt/carla_overlay/lib/autoware_carla_interface/carla_localization_ready

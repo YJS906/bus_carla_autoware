@@ -1,0 +1,107 @@
+{
+  "case": "straight",
+  "speed_cap_kmh": 10,
+  "samples": [],
+  "events": [
+    {
+      "event": "stop",
+      "sim_time": 216.200003221,
+      "status": {
+        "success": true,
+        "code": 60001,
+        "message": "The mode is the same as the current."
+      }
+    },
+    {
+      "event": "clear_old_route",
+      "sim_time": 216.250003222,
+      "status": {
+        "success": true,
+        "code": 0,
+        "message": ""
+      }
+    },
+    {
+      "event": "set_bus_test_route",
+      "sim_time": 219.800003275,
+      "status": {
+        "success": false,
+        "code": 3,
+        "message": "The planned route is empty."
+      }
+    },
+    {
+      "event": "stop",
+      "sim_time": 219.900003276,
+      "status": {
+        "success": true,
+        "code": 60001,
+        "message": "The mode is the same as the current."
+      }
+    },
+    {
+      "event": "clear_test_route",
+      "sim_time": 220.350003283,
+      "status": {
+        "success": true,
+        "code": 0,
+        "message": ""
+      }
+    }
+  ],
+  "planning_factors": {},
+  "rtc": {},
+  "success": false,
+  "result": "error",
+  "cleanup": {
+    "stop_verified": true,
+    "test_speed_limit_clear_sent": true,
+    "route_cleared": true,
+    "errors": []
+  },
+  "minimum_motion_mps": 2.0,
+  "required_stop_hold_s": 2.0,
+  "original_scene": [
+    {
+      "id": 143,
+      "type": "vehicle.mitsubishi.fusorosa",
+      "attributes": {
+        "has_dynamic_doors": "false",
+        "generation": "2",
+        "number_of_wheels": "4",
+        "special_type": "",
+        "base_type": "Bus",
+        "object_type": "",
+        "sticky_control": "true",
+        "color": "255,255,255",
+        "terramechanics": "false",
+        "ros_publish_tf": "true",
+        "ros_frame_id": "",
+        "ros_name": "",
+        "has_lights": "true",
+        "role_name": "ego_vehicle"
+      },
+      "xyz": [
+        -184.58114624023438,
+        -41.58570098876953,
+        0.053124770522117615
+      ],
+      "rpy": [
+        -0.032501220703125,
+        0.001263584941625595,
+        -90.01580810546875
+      ]
+    }
+  ],
+  "ego_id": 143,
+  "map_name": "Carla/Maps/Town05_Opt",
+  "world_id": 2444600325132803925,
+  "fixed_delta_seconds": 0.05,
+  "requested_input_mode": "ground_truth",
+  "error": "RuntimeError('set_bus_test_route: The planned route is empty.')",
+  "factor_message_counts": {},
+  "avoidance_reasons": {},
+  "rtc_observed_states": {},
+  "fixture_detection_samples": 0,
+  "collisions": []
+}

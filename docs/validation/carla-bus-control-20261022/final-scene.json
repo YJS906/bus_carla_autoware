@@ -1,0 +1,19 @@
+{
+  "ego_id": 149,
+  "blueprint": "vehicle.mitsubishi.fusorosa",
+  "station": "S01",
+  "speed_mps": 0.0,
+  "bbox_dimensions_m": [
+    10.272685050964355,
+    3.9441518783569336,
+    4.252848148345947
+  ],
+  "sensors": [
+    "sensor.camera.rgb",
+    "sensor.other.imu",
+    "sensor.other.gnss",
+    "sensor.lidar.ray_cast"
+  ],
+  "vehicles": 1,
+  "pedestrians": 0
+}

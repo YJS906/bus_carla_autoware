@@ -74,12 +74,22 @@ PY
 }
 
 case "${1:-start}" in
+  start-bus)
+    export CARLA_AUTOWARE_IMAGE="${CARLA_AUTOWARE_IMAGE:-selfcar-2026-carla:bus}"
+    export CARLA_VEHICLE_TYPE="vehicle.mitsubishi.fusorosa"
+    export CARLA_PERCEPTION_MODE="${CARLA_PERCEPTION_MODE:-ground_truth}"
+    export CARLA_USE_TRAFFIC_MANAGER="false"
+    export CARLA_EGO_SPAWN="${CARLA_EGO_SPAWN:--184.582565,-41.585705,0.1,0.0,0.0,-90.015793}"
+    export CARLA_SPECTATOR_DISTANCE=16
+    export CARLA_SPECTATOR_HEIGHT=8
+    "$0" start-town05
+    ;;
   start-town05)
     export AUTOWARE_MAP_DIR="${AUTOWARE_MAP_DIR:-/home/a/autoware_data/maps}"
     export AUTOWARE_MAP_NAME="${AUTOWARE_MAP_NAME:-Town05}"
     export CARLA_MAP_NAME="Town05_Opt"
     export CARLA_EGO_SPAWN="${CARLA_EGO_SPAWN:--145.5,-1.0,0.3,0.0,0.0,180.0}"
-    export CARLA_USE_TRAFFIC_MANAGER="true"
+    export CARLA_USE_TRAFFIC_MANAGER="${CARLA_USE_TRAFFIC_MANAGER:-true}"
     export CARLA_EXTRA_TRAFFIC_ENABLED="false"
     export CARLA_AUTOWARE_LOCALIZATION="false"
     export CARLA_DIRECT_LOCALIZATION="true"
@@ -114,6 +124,15 @@ case "${1:-start}" in
     fi
     if [[ "$(docker inspect -f '{{.State.Running}}' selfcar-carla-autoware 2>/dev/null || true)" == "true" ]]; then
       running_command="$(docker inspect -f '{{join .Config.Cmd " "}}' selfcar-carla-autoware)"
+      requested_vehicle="${CARLA_VEHICLE_TYPE:-vehicle.toyota.prius}"
+      running_vehicle="vehicle.toyota.prius"
+      if [[ "${running_command}" =~ carla_vehicle_type:=([^[:space:]]+) ]]; then
+        running_vehicle="${BASH_REMATCH[1]}"
+      fi
+      if [[ "${requested_vehicle}" != "${running_vehicle}" ]]; then
+        echo "Autoware is running with a different vehicle. Stop it before starting ${requested_vehicle}." >&2
+        exit 1
+      fi
       running_mode=sensor
       if [[ "${running_command}" == *"carla_perception_mode:=ground_truth"* ]]; then
         running_mode=ground_truth
@@ -178,7 +197,7 @@ PY
     docker compose -f "${compose_file}" logs -f --tail=120 autoware traffic spectator traffic_signals
     ;;
   *)
-    echo "usage: $0 {start|start-town05|start-hl-fma|stop|restart|status|logs}" >&2
+    echo "usage: $0 {start|start-bus|start-town05|start-hl-fma|stop|restart|status|logs}" >&2
     exit 2
     ;;
 esac

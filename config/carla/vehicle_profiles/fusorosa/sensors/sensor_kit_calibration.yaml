@@ -1,0 +1,65 @@
+# ROS extrinsics relative to bus rear-axle ground base_link; lidar clears the roof.
+sensor_kit_base_link:
+  CAM_FRONT/camera_link:
+    x: 7.40616482720529
+    y: -7.316637322674069e-06
+    z: 4.452848148345947
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+  CAM_FRONT_LEFT/camera_link:
+    x: 7.00616482720529
+    y: 2.072068622541144
+    z: 4.452848148345947
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.9599310885968813
+  CAM_FRONT_RIGHT/camera_link:
+    x: 7.00616482720529
+    y: -2.0720832558157896
+    z: 4.452848148345947
+    roll: 0.0
+    pitch: 0.0
+    yaw: -0.9599310885968813
+  CAM_BACK/camera_link:
+    x: -3.066520223759065
+    y: -7.316637322674069e-06
+    z: 4.452848148345947
+    roll: 0.0
+    pitch: 0.0
+    yaw: 3.141592653589793
+  CAM_BACK_LEFT/camera_link:
+    x: -2.6665202237590657
+    y: 2.072068622541144
+    z: 4.452848148345947
+    roll: 0.0
+    pitch: 0.0
+    yaw: 2.181661564992912
+  CAM_BACK_RIGHT/camera_link:
+    x: -2.6665202237590657
+    y: -2.0720832558157896
+    z: 4.452848148345947
+    roll: 0.0
+    pitch: 0.0
+    yaw: -2.181661564992912
+  velodyne_top_base_link:
+    x: 2.6150478087440625
+    y: 0.0
+    z: 4.452848148345947
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+  gnss_link:
+    x: 0.0
+    y: 0.0
+    z: 0.05
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0
+  tamagawa/imu_link:
+    x: 0.0
+    y: 0.0
+    z: 0.05
+    roll: 0.0
+    pitch: 0.0
+    yaw: 0.0

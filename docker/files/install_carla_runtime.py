@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Install the tracked CARLA configuration into the runtime image only."""
 import argparse
+import json
 import shutil
 from pathlib import Path
 import xml.etree.ElementTree as ET
@@ -40,7 +41,7 @@ def install_ground_truth_launch(root):
         tree.write(path, encoding="UTF-8", xml_declaration=True)
 
 
-def install(config, root):
+def install(config, root, vehicle_profile='prius'):
     def copy(source, destination):
         source = config / source
         target = root / destination.lstrip("/")
@@ -63,6 +64,41 @@ def install(config, root):
     copy("vehicle/vehicle_info.param.yaml", "/opt/autoware/sample_vehicle_description/share/sample_vehicle_description/config/vehicle_info.param.yaml")
     for source in (config / "sensors").glob("*.yaml"):
         copy(source.relative_to(config), "/opt/autoware/carla_sensor_kit_description/share/carla_sensor_kit_description/config/" + source.name)
+
+    active = {'profile': 'prius', 'blueprint': 'vehicle.toyota.prius'}
+    if vehicle_profile != 'prius':
+        profile_dir = config / 'vehicle_profiles' / vehicle_profile
+        active = json.loads((profile_dir / 'profile.json').read_text())
+        copy(profile_dir.relative_to(config) / 'vehicle_info.param.yaml',
+             '/opt/autoware/sample_vehicle_description/share/sample_vehicle_description/config/vehicle_info.param.yaml')
+        for source in (profile_dir / 'sensors').glob('*.yaml'):
+            copy(source.relative_to(config),
+                 '/opt/autoware/carla_sensor_kit_description/share/carla_sensor_kit_description/config/' + source.name)
+        for source in (profile_dir / 'calibration_maps').glob('*.csv'):
+            copy(source.relative_to(config), bridge_share + '/' + source.name)
+        converter = profile_dir / 'raw_vehicle_cmd_converter.param.yaml'
+        if converter.exists():
+            copy(converter.relative_to(config), bridge_share + '/config/' + converter.name)
+        pid = profile_dir / 'pid.param.yaml'
+        if pid.exists():
+            copy(pid.relative_to(config), launch_share + '/config/control/trajectory_follower/longitudinal/pid.param.yaml')
+        copy(profile_dir.relative_to(config) / 'vehicle.xacro',
+             '/opt/autoware/sample_vehicle_description/share/sample_vehicle_description/urdf/vehicle.xacro')
+        copy(profile_dir.relative_to(config) / 'planning_common.param.yaml',
+             launch_share + '/config/planning/scenario_planning/common/common.param.yaml')
+    active_path = root / 'opt/carla-config/active_vehicle_profile.json'
+    active_path.parent.mkdir(parents=True, exist_ok=True)
+    active_path.write_text(json.dumps(active, indent=2) + '\n')
+    for file, argument in [(launch_share + '/launch/e2e_simulator.launch.xml', 'carla_vehicle_type'),
+                           (bridge_share + '/launch/autoware_carla_interface.launch.xml', 'vehicle_type')]:
+        path = root / file.lstrip('/')
+        tree = ET.parse(path)
+        node = tree.getroot().find(f".//arg[@name='{argument}']")
+        if node is None:
+            raise RuntimeError('Missing CARLA vehicle selection argument: ' + argument)
+        node.set('default', active['blueprint'])
+        ET.indent(tree, space='  ')
+        tree.write(path, encoding='UTF-8', xml_declaration=True)
 
     # GT-specific AEB input is additive to the untouched real LiDAR cloud.
     copy("control/autonomous_emergency_braking/ground_truth.param.yaml",
@@ -119,5 +155,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, default=Path("/opt/carla-config"))
     parser.add_argument("--root", type=Path, default=Path("/"))
+    parser.add_argument("--vehicle-profile", choices=['prius', 'fusorosa'], default='prius')
     args = parser.parse_args()
-    install(args.config, args.root)
+    install(args.config, args.root, args.vehicle_profile)

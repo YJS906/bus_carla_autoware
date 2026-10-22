@@ -1,0 +1,7 @@
+{
+  "map": "Carla/Maps/Town05_Opt",
+  "sample_spacing_m": 5,
+  "waypoint_count": 5053,
+  "maximum_sampled_driving_lane_width_m": 3.5,
+  "minimum_sampled_driving_lane_width_m": 3.5
+}

@@ -1,0 +1,11 @@
+{
+  "profile": "fusorosa",
+  "blueprint": "vehicle.mitsubishi.fusorosa",
+  "measurement": "docs/validation/carla-bus-route-20261022/bus-geometry.json",
+  "base_offset_carla_m": [
+    -2.6150478087440625,
+    -7.316637322674069e-06,
+    0.0009262561798095703
+  ],
+  "initial_validation_speed_cap_kmh": 10
+}

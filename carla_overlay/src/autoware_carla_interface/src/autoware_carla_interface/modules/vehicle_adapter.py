@@ -62,6 +62,36 @@ def base_to_actor_sensor_transform(transform, base_offset):
     }
 
 
+def validate_vehicle_profile(actor, geometry, profile, tolerance=0.05):
+    """Reject a simulator/planner geometry mismatch before starting sensors.
+
+    Bounds are relative to the measured rear axle, including asymmetric lateral
+    offsets. Never shrink the physical envelope to make it fit a lane.
+    """
+    b = actor.bounding_box
+    x, y, _ = geometry.base_offset
+    measured = {
+        'wheel_base': geometry.wheelbase,
+        'front_overhang': b.location.x + b.extent.x - x - geometry.wheelbase,
+        'rear_overhang': x - b.location.x + b.extent.x,
+        'vehicle_height': 2 * b.extent.z,
+        'width': 2 * b.extent.y,
+        'left_extent': b.extent.y - b.location.y + y,
+        'right_extent': b.extent.y + b.location.y - y,
+        'max_steer_angle': geometry.max_steer_rad,
+    }
+    expected = dict(profile)
+    expected['width'] = profile['wheel_tread'] + profile['left_overhang'] + profile['right_overhang']
+    expected['left_extent'] = profile['wheel_tread']/2 + profile['left_overhang']
+    expected['right_extent'] = profile['wheel_tread']/2 + profile['right_overhang']
+    for key, actual in measured.items():
+        value = float(expected[key])
+        allowed = .01 if key == 'max_steer_angle' else tolerance
+        if not math.isfinite(value) or abs(actual-value) > allowed:
+            raise ValueError(f'Vehicle profile mismatch for {key}: CARLA={actual:.6f}, profile={value:.6f}')
+    return measured
+
+
 def base_world_position(actor_matrix, base_offset):
     """CARLA-world coordinates of the rear-axle base_link origin."""
     return (np.asarray(actor_matrix) @ np.array([*base_offset, 1.0]))[:3]
