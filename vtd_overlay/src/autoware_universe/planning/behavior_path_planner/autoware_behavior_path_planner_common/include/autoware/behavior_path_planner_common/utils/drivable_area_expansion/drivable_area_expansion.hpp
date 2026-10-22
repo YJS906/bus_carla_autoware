@@ -105,7 +105,8 @@ void apply_bound_change_rate_limit(
 std::vector<double> calculate_maximum_distance(
   const std::vector<Point> & bound, const SegmentRtree & uncrossable_lines,
   const std::vector<Polygon2d> & uncrossable_polygons,
-  const DrivableAreaExpansionParameters & params, const Side side);
+  const DrivableAreaExpansionParameters & params, const Side side,
+  const std::vector<Pose> & path_poses = {});
 
 /// @brief expand a bound by the given lateral distances away from the path
 /// @param [inout] bound bound points to expand

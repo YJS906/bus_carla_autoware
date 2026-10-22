@@ -184,6 +184,7 @@ public:
     const std::shared_ptr<autoware_utils::TimeKeeper> time_keeper_);
 
   std::optional<std::vector<TrajectoryPoint>> optimizeTrajectory(const PlannerData & planner_data);
+  std::optional<std::vector<TrajectoryPoint>> optimizeTrajectoryOnce(const PlannerData & planner_data);
   std::optional<std::vector<TrajectoryPoint>> getPrevOptimizedTrajectoryPoints() const;
 
   void initialize(const bool enable_debug_info, const TrajectoryParam & traj_param);
@@ -295,6 +296,10 @@ private:
     double avoidance_cost_band_length;
     double avoidance_cost_decrease_rate;
     double min_drivable_width;
+    bool preserve_input_bounds;
+    int refinement_iterations;
+    int solver_max_iterations;
+    int solver_rho_interval;
     double avoidance_lat_error_weight;
     double avoidance_yaw_error_weight;
     double avoidance_steer_input_weight;

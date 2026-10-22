@@ -196,11 +196,24 @@ Expansion calculate_expansion(
   Expansion expansion;
   expansion.min_lane_widths.resize(path_poses.size(), 0.0);
   expansion.curvatures = curvatures;
+  calculate_bound_index_mappings(expansion, path_poses, left_bound, LEFT);
+  calculate_bound_index_mappings(expansion, path_poses, right_bound, RIGHT);
   for (auto path_idx = 0UL; path_idx < path_poses.size(); ++path_idx) {
-    if (curvatures[path_idx] == 0.0) continue;
+    const auto original_width = expansion.left_projections[path_idx].distance +
+                                expansion.right_projections[path_idx].distance;
+    const bool vehicle_exceeds_lane = params.vehicle_info.vehicle_width_m > original_width;
+    if (curvatures[path_idx] == 0.0) {
+      // A bus wider than its reference lane still needs clearance on a straight.
+      // Dropping to zero here pinches the corridor as its rear exits a turn.
+      if (vehicle_exceeds_lane) {
+        expansion.min_lane_widths[path_idx] =
+          params.vehicle_info.vehicle_width_m + params.extra_width;
+      }
+      continue;
+    }
     const auto curvature_radius = 1 / std::abs(curvatures[path_idx]);
     auto effective_params = params;
-    if (curvatures[path_idx] >= -kTurnCurvatureThreshold) {
+    if (!vehicle_exceeds_lane && curvatures[path_idx] >= -kTurnCurvatureThreshold) {
       // The VTD-specific extra clearance is only needed on right turns. Keep Autoware's original
       // swept-width calculation on straight and left-turn sections.
       effective_params.extra_width = 0.0;
@@ -208,8 +221,6 @@ Expansion calculate_expansion(
     expansion.min_lane_widths[path_idx] =
       calculate_minimum_lane_width(curvature_radius, effective_params);
   }
-  calculate_bound_index_mappings(expansion, path_poses, left_bound, LEFT);
-  calculate_bound_index_mappings(expansion, path_poses, right_bound, RIGHT);
   return expansion;
 }
 
@@ -231,9 +242,12 @@ void apply_bound_change_rate_limit(
 std::vector<double> calculate_maximum_distance(
   const std::vector<Point> & bound, const SegmentRtree & uncrossable_segments,
   const std::vector<Polygon2d> & uncrossable_polygons,
-  const DrivableAreaExpansionParameters & params, const Side side)
+  const DrivableAreaExpansionParameters & params, const Side side,
+  const std::vector<Pose> & path_poses)
 {
   std::vector<double> maximum_distances(bound.size(), std::numeric_limits<double>::max());
+  LineString2d path_ls;
+  for (const auto & p : path_poses) path_ls.push_back(convert_point(p.position));
   LineString2d bound_ls;
   for (const auto & p : bound) bound_ls.push_back(convert_point(p));
   for (auto i = 0UL; i + 1 < bound_ls.size(); ++i) {
@@ -257,8 +271,37 @@ std::vector<double> calculate_maximum_distance(
     if (!query_result.empty()) {
       const auto bound_to_line_dist = boost::geometry::distance(segment_ls, query_result.front());
       const auto dist_limit = std::max(0.0, bound_to_line_dist - params.avoid_linestring_dist);
-      maximum_distances[i] = std::min(maximum_distances[i], dist_limit);
-      maximum_distances[i + 1] = std::min(maximum_distances[i + 1], dist_limit);
+      for (const auto idx : {i, i + 1}) {
+        auto point_limit = dist_limit;
+        const auto other_idx = idx == i ? i + 1 : i;
+        // A lane-corridor join can step laterally from the physical edge to an
+        // internal lane boundary. The edge endpoint must remain fixed, but its
+        // zero distance must not pin the internal endpoint too: that creates a
+        // one-point notch in an otherwise expanded turn corridor. Only relax
+        // this when the point expands back along the lateral connector.
+        // Its path projection can tilt slightly as a bus enters a curve.
+        if (bound_to_line_dist < 1e-6 && path_ls.size() > 1) {
+          const auto projection = point_to_linestring_projection(bound_ls[idx], path_ls);
+          const auto outward = bound_ls[idx] - projection.projected_point;
+          const auto toward_other = bound_ls[other_idx] - bound_ls[idx];
+          const auto outward_length = std::hypot(outward.x(), outward.y());
+          const auto connector_length = std::hypot(toward_other.x(), toward_other.y());
+          const auto dot = outward.x() * toward_other.x() + outward.y() * toward_other.y();
+          if (outward_length > 1e-6 && connector_length > 1e-6 &&
+              dot / (outward_length * connector_length) > 0.95) {
+            std::vector<Segment2d> nearest;
+            boost::geometry::index::query(
+              uncrossable_segments, boost::geometry::index::nearest(bound_ls[idx], 1),
+              std::back_inserter(nearest));
+            if (!nearest.empty()) {
+              point_limit = std::max(
+                0.0, std::min(connector_length, boost::geometry::distance(bound_ls[idx], nearest.front())) -
+                       params.avoid_linestring_dist);
+            }
+          }
+        }
+        maximum_distances[idx] = std::min(maximum_distances[idx], point_limit);
+      }
     }
     for (const auto & uncrossable_poly : uncrossable_polygons) {
       if (boost::geometry::intersects(uncrossable_poly.outer(), segment_ls)) {
@@ -472,9 +515,9 @@ void expand_drivable_area(
 
   stop_watch.tic("max_dist");
   const auto max_left_expansions = calculate_maximum_distance(
-    path.left_bound, uncrossable_segments, uncrossable_polygons, params, LEFT);
+    path.left_bound, uncrossable_segments, uncrossable_polygons, params, LEFT, path_poses);
   const auto max_right_expansions = calculate_maximum_distance(
-    path.right_bound, uncrossable_segments, uncrossable_polygons, params, RIGHT);
+    path.right_bound, uncrossable_segments, uncrossable_polygons, params, RIGHT, path_poses);
   const auto max_dist_ms = stop_watch.toc("max_dist");
 
   calculate_expansion_distances(expansion, max_left_expansions, max_right_expansions);

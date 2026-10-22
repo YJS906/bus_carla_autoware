@@ -192,6 +192,9 @@ MPTOptimizer::MPTParam::MPTParam(
   }
 
   use_acados = node->declare_parameter<bool>("mpt.use_acados");
+  refinement_iterations = node->declare_parameter<int>("mpt.option.refinement_iterations", 1);
+  solver_max_iterations = node->declare_parameter<int>("mpt.solver.max_iterations", 4000);
+  solver_rho_interval = node->declare_parameter<int>("mpt.solver.adaptive_rho_interval", 0);
   // Enable/disable the new MPT-style circle road-bound constraints in acados.
   // Default false so we can A/B test behavior safely.
   use_acados_circle_constraints =
@@ -243,6 +246,8 @@ MPTOptimizer::MPTParam::MPTParam(
     avoidance_cost_decrease_rate =
       node->declare_parameter<double>("mpt.avoidance.avoidance_cost_decrease_rate");
     min_drivable_width = node->declare_parameter<double>("mpt.avoidance.min_drivable_width");
+    preserve_input_bounds =
+      node->declare_parameter<bool>("mpt.avoidance.preserve_input_bounds", false);
 
     avoidance_lat_error_weight =
       node->declare_parameter<double>("mpt.avoidance.weight.lat_error_weight");
@@ -311,6 +316,9 @@ void MPTOptimizer::MPTParam::onParam(const std::vector<rclcpp::Parameter> & para
   update_param<double>(parameters, "mpt.common.delta_arc_length", delta_arc_length);
 
   update_param<bool>(parameters, "mpt.use_acados", use_acados);
+  update_param<int>(parameters, "mpt.option.refinement_iterations", refinement_iterations);
+  update_param<int>(parameters, "mpt.solver.max_iterations", solver_max_iterations);
+  update_param<int>(parameters, "mpt.solver.adaptive_rho_interval", solver_rho_interval);
   update_param<bool>(
     parameters, "mpt.use_acados_circle_constraints", use_acados_circle_constraints);
 
@@ -386,6 +394,7 @@ void MPTOptimizer::MPTParam::onParam(const std::vector<rclcpp::Parameter> & para
       max_longitudinal_margin_for_bound_violation);
     update_param<double>(parameters, "mpt.avoidance.max_bound_fixing_time", max_bound_fixing_time);
     update_param<double>(parameters, "mpt.avoidance.min_drivable_width", min_drivable_width);
+    update_param<bool>(parameters, "mpt.avoidance.preserve_input_bounds", preserve_input_bounds);
     update_param<double>(parameters, "mpt.avoidance.max_avoidance_cost", max_avoidance_cost);
     update_param<double>(parameters, "mpt.avoidance.avoidance_cost_margin", avoidance_cost_margin);
     update_param<double>(
@@ -498,6 +507,32 @@ void MPTOptimizer::onParam(const std::vector<rclcpp::Parameter> & parameters)
 std::optional<std::vector<TrajectoryPoint>> MPTOptimizer::optimizeTrajectory(
   const PlannerData & planner_data)
 {
+  auto iteration_data = planner_data;
+  std::optional<std::vector<TrajectoryPoint>> result;
+  const int count = mpt_param_.use_acados ? 1 : std::clamp(mpt_param_.refinement_iterations, 1, 4);
+  for (int iteration = 0; iteration < count; ++iteration) {
+    if (count > 1) {
+      // Preserve the previous path's fixed start in world coordinates. Scalar
+      // lateral/yaw deviations from an older reference frame cannot be reused
+      // after the reference is refined. The realized poses have zero deviation
+      // in this replacement reference, so the existing fixed-point logic can
+      // retain continuity without applying the old displacement a second time.
+      prev_ref_points_ptr_ = prev_optimized_traj_points_ptr_
+        ? std::make_shared<std::vector<ReferencePoint>>(
+            trajectory_utils::convertToReferencePoints(*prev_optimized_traj_points_ptr_))
+        : nullptr;
+    }
+    auto candidate = optimizeTrajectoryOnce(iteration_data);
+    if (!candidate) return result;
+    result = candidate;
+    iteration_data.traj_points = *candidate;
+  }
+  return result;
+}
+
+std::optional<std::vector<TrajectoryPoint>> MPTOptimizer::optimizeTrajectoryOnce(
+  const PlannerData & planner_data)
+{
   autoware_utils::ScopedTimeTrack st(__func__, *time_keeper_);
 
   const auto & p = planner_data;
@@ -539,6 +574,24 @@ std::optional<std::vector<TrajectoryPoint>> MPTOptimizer::optimizeTrajectory(
     return std::nullopt;
   }
 
+  if (enable_debug_info_ && mpt_traj_points) {
+    const auto idx = trajectory_utils::findEgoIndex(ref_points, p.ego_pose, ego_nearest_param_);
+    const auto & ref = ref_points.at(idx);
+    const auto & state = ref.optimized_kinematic_state;
+    double max_violation = 0.0;
+    for (size_t c = 0; c < vehicle_circle_radiuses_.size(); ++c) {
+      const double beta = ref.beta.at(c);
+      const double x = vehicle_circle_longitudinal_offsets_.at(c);
+      const double prediction =
+        std::cos(beta) * (state.lat + x * state.yaw) + x * std::sin(beta);
+      const double offset = vehicle_info_.vehicle_width_m / 2.0 - vehicle_circle_radiuses_.at(c);
+      max_violation = std::max({max_violation,
+        prediction - ref.bounds_on_constraints.at(c).upper_bound - offset,
+        ref.bounds_on_constraints.at(c).lower_bound - offset - prediction});
+    }
+    RCLCPP_INFO(logger_, "MPT ego idx=%zu lat=%.4f yaw=%.4f circle_violation=%.4f",
+      idx, state.lat, state.yaw, max_violation);
+  }
   std::optional<std::vector<TrajectoryPoint>> output_trajectory = mpt_traj_points;
 
   if (mpt_param_.use_acados) {
@@ -1296,7 +1349,12 @@ void MPTOptimizer::updateBounds(
   // NOTE: The drivable area's width is sometimes narrower than the vehicle width which means
   // infeasible to run especially when obstacles are extracted from the drivable area.
   //       In this case, the drivable area's width is forced to be wider.
-  keepMinimumBoundsWidth(ref_points);
+  // BPP can supply a verified multi-lane corridor for a wide vehicle. Widening
+  // its bounds again inside MPT can admit a curb-crossing solution that the
+  // final footprint check correctly stops. Preserve that corridor when asked.
+  if (!mpt_param_.preserve_input_bounds) {
+    keepMinimumBoundsWidth(ref_points);
+  }
 
   // extend violated bounds, where the input path is outside the drivable area
   ref_points = extendViolatedBounds(ref_points);
@@ -1549,7 +1607,9 @@ void MPTOptimizer::avoidSuddenSteering(
   std::vector<ReferencePoint> & ref_points, const geometry_msgs::msg::Pose & ego_pose,
   const double ego_vel) const
 {
-  if (!prev_ref_points_ptr_) {
+  if (!prev_ref_points_ptr_ || mpt_param_.refinement_iterations > 1) {
+    // Bounds are measured in the current reference frame. Recompute them when
+    // using world-coordinate fixed points for sequential refinements.
     return;
   }
   const size_t prev_ego_idx = trajectory_utils::findEgoIndex(
@@ -1584,6 +1644,7 @@ void MPTOptimizer::updateVehicleBounds(
     // NOTE: This clear is required.
     // It seems they sometimes already have previous values.
     ref_points.at(p_idx).bounds_on_constraints.clear();
+    ref_points.at(p_idx).pose_on_constraints.clear();
     ref_points.at(p_idx).beta.clear();
 
     for (const double lon_offset : vehicle_circle_longitudinal_offsets_) {
@@ -1611,7 +1672,7 @@ void MPTOptimizer::updateVehicleBounds(
         const size_t collision_check_idx = ref_points_spline.getOffsetIndex(p_idx, lon_offset);
 
         const size_t prev_idx = std::clamp(
-          collision_check_idx - 1, static_cast<size_t>(0),
+          collision_check_idx == 0 ? 0 : collision_check_idx - 1, static_cast<size_t>(0),
           static_cast<size_t>(ref_points_spline.getSize() - 2));
         const size_t next_idx = prev_idx + 1;
 
@@ -1805,9 +1866,9 @@ MPTOptimizer::ConstraintMatrix MPTOptimizer::calcConstraintMatrix(
   size_t A_rows = 0;
   A_rows += N_x;
   if (mpt_param_.soft_constraint) {
-    // NOTE: 3 means expecting slack variable constraints to be larger than lower bound,
-    //       smaller than upper bound, and positive.
-    A_rows += 3 * N_ref * N_collision_check;
+    // Each circle contributes upper/lower bounds. Slack positivity is added
+    // once per slack variable, not once per circle sharing an L-infinity slack.
+    A_rows += 2 * N_ref * N_collision_check + N_ref * N_slack;
   }
   if (mpt_param_.hard_constraint) {
     A_rows += N_ref * N_collision_check;
@@ -1863,7 +1924,7 @@ MPTOptimizer::ConstraintMatrix MPTOptimizer::calcConstraintMatrix(
 
     // soft constraints
     if (mpt_param_.soft_constraint) {
-      const size_t A_blk_rows = 3 * N_ref;
+      const size_t A_blk_rows = 2 * N_ref;
 
       // A := [C | O | ... | O | I | O | ...
       //      -C | O | ... | O | I | O | ...
@@ -1875,8 +1936,6 @@ MPTOptimizer::ConstraintMatrix MPTOptimizer::calcConstraintMatrix(
       const size_t local_A_offset_cols = N_x + N_u + (!mpt_param_.l_inf_norm ? N_ref * l_idx : 0);
       A_blk.block(0, local_A_offset_cols, N_ref, N_ref) = Eigen::MatrixXd::Identity(N_ref, N_ref);
       A_blk.block(N_ref, local_A_offset_cols, N_ref, N_ref) =
-        Eigen::MatrixXd::Identity(N_ref, N_ref);
-      A_blk.block(2 * N_ref, local_A_offset_cols, N_ref, N_ref) =
         Eigen::MatrixXd::Identity(N_ref, N_ref);
 
       // lb := [lower_bound - C
@@ -1905,6 +1964,13 @@ MPTOptimizer::ConstraintMatrix MPTOptimizer::calcConstraintMatrix(
 
       A_rows_end += A_blk_rows;
     }
+  }
+  if (mpt_param_.soft_constraint) {
+    const size_t slack_count = N_ref * N_slack;
+    A.block(A_rows_end, N_x + N_u, slack_count, slack_count) =
+      Eigen::MatrixXd::Identity(slack_count, slack_count);
+    lb.segment(A_rows_end, slack_count).setZero();
+    A_rows_end += slack_count;
   }
   time_keeper_->end_track("constraintMatrix_collisionFree");
 
@@ -2023,9 +2089,14 @@ std::optional<Eigen::VectorXd> MPTOptimizer::calcOptimizedSteerAngles(
     osqp_solver_ptr_->updateBounds(lower_bound, upper_bound);
   } else {
     RCLCPP_INFO_EXPRESSION(logger_, enable_debug_info_, "no warm start");
-    osqp_solver_ptr_ = std::make_unique<autoware::osqp_interface::OSQPInterface>(
-      P_csc, A_csc, f, lower_bound, upper_bound, osqp_epsilon_);
+    osqp_solver_ptr_ =
+      std::make_unique<autoware::osqp_interface::OSQPInterface>(osqp_epsilon_);
+    // Set the adaptive interval before problem initialization. A fixed interval
+    // avoids choosing it from machine-dependent setup/solve timing.
+    osqp_solver_ptr_->updateRhoInterval(std::max(0, mpt_param_.solver_rho_interval));
+    osqp_solver_ptr_->initializeProblem(P_csc, A_csc, f, lower_bound, upper_bound);
   }
+  osqp_solver_ptr_->updateMaxIter(std::max(1, mpt_param_.solver_max_iterations));
   prev_mat_n_ = H.rows();
   prev_mat_m_ = A.rows();
   time_keeper_->end_track("initOsqp");
@@ -2038,6 +2109,8 @@ std::optional<Eigen::VectorXd> MPTOptimizer::calcOptimizedSteerAngles(
   // check solution status
   const int solution_status = osqp_result.solution_status;
   prev_solution_status_ = solution_status;
+  RCLCPP_INFO_EXPRESSION(logger_, enable_debug_info_, "QP status=%d iterations=%d",
+    solution_status, osqp_result.iteration_status);
   if (solution_status != 1) {
     osqp_solver_ptr_->logUnsolvedStatus("[MPT]");
     return std::nullopt;

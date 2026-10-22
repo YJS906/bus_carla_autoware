@@ -303,3 +303,73 @@ TEST(DrivableAreaExpansion, ExpandsOuterBoundOnlyForRightTurns)
   EXPECT_DOUBLE_EQ(left_turn.left_distances.at(0), 0.25);
   EXPECT_DOUBLE_EQ(left_turn.right_distances.at(0), 0.25);
 }
+
+TEST(DrivableAreaExpansion, WideBusKeepsClearanceThroughStraightTurnExit)
+{
+  using namespace autoware::behavior_path_planner::drivable_area_expansion;
+  std::vector<geometry_msgs::msg::Pose> poses(3);
+  std::vector<geometry_msgs::msg::Point> left(2), right(2);
+  for (size_t i = 0; i < poses.size(); ++i) poses[i].position.x = i * 5.0;
+  left[0].y = left[1].y = 1.75;
+  right[0].y = right[1].y = -1.75;
+  left[1].x = right[1].x = 10.0;
+  DrivableAreaExpansionParameters params;
+  params.vehicle_info.vehicle_width_m = 4.04;
+  params.vehicle_info.wheel_base_m = 5.63;
+  params.vehicle_info.front_overhang_m = 1.68;
+  params.extra_width = 0.6;
+  auto expanded = calculate_expansion(poses, left, right, {0.0, 1e-8, -1e-8}, params);
+  for (const auto width : expanded.min_lane_widths) EXPECT_NEAR(width, 4.64, 1e-5);
+  // A real curb on the right must shift all extra space toward the inner lane.
+  calculate_expansion_distances(expanded, {2.0, 2.0}, {0.0, 0.0});
+  EXPECT_NEAR(expanded.left_distances[0], 1.14, 1e-5);
+  EXPECT_DOUBLE_EQ(expanded.right_distances[0], 0.0);
+  // If both sides are blocked, do not fabricate space beyond those limits.
+  calculate_expansion_distances(expanded, {0.0, 0.0}, {0.0, 0.0});
+  EXPECT_DOUBLE_EQ(expanded.left_distances[0], 0.0);
+  EXPECT_DOUBLE_EQ(expanded.right_distances[0], 0.0);
+  // Preserve the previous straight-road behavior for a car that fits its lane.
+  params.vehicle_info.vehicle_width_m = 2.0;
+  const auto car = calculate_expansion(poses, left, right, {0.0, 0.0, 0.0}, params);
+  for (const auto width : car.min_lane_widths) EXPECT_DOUBLE_EQ(width, 0.0);
+}
+
+TEST(DrivableAreaExpansion, LateralConnectorDoesNotPinItsInternalEndpoint)
+{
+  using namespace autoware::behavior_path_planner::drivable_area_expansion;
+  std::vector<Point> bound(4);
+  bound[0].x = 0.0; bound[0].y = 5.25;
+  bound[1].x = 10.0; bound[1].y = 5.25;
+  bound[2].x = 10.0; bound[2].y = 1.75;
+  bound[3].x = 20.0; bound[3].y = 1.75;
+  std::vector<Pose> path(2);
+  path[1].position.x = 30.0;
+  SegmentRtree protected_lines;
+  protected_lines.insert(Segment2d{Point2d{0.0, 5.25}, Point2d{10.0, 5.25}});
+  DrivableAreaExpansionParameters params;
+  params.avoid_linestring_dist = 0.1;
+  params.max_expansion_distance = 3.5;
+  const auto limits = calculate_maximum_distance(bound, protected_lines, {}, params, LEFT, path);
+  EXPECT_DOUBLE_EQ(limits[0], 0.0);
+  EXPECT_DOUBLE_EQ(limits[1], 0.0);
+  EXPECT_NEAR(limits[2], 3.4, 1e-6);
+  // A curved approach changes the projection direction. A small tilt must not
+  // recreate the pinned endpoint while the true road edge remains protected.
+  auto tilted_path = path;
+  tilted_path[1].position.y = 3.0;
+  const auto tilted =
+    calculate_maximum_distance(bound, protected_lines, {}, params, LEFT, tilted_path);
+  EXPECT_DOUBLE_EQ(tilted[1], 0.0);
+  EXPECT_NEAR(tilted[2], 3.4, 1e-6);
+  // A protected line in the middle of the connector still blocks expansion.
+  protected_lines.insert(Segment2d{Point2d{9.0, 3.0}, Point2d{11.0, 3.0}});
+  const auto blocked = calculate_maximum_distance(bound, protected_lines, {}, params, LEFT, path);
+  EXPECT_LE(blocked[2], 1.15 + 1e-6);
+  // No relaxation for a normal longitudinal road boundary.
+  std::vector<Point> straight(2);
+  straight[0].y = straight[1].y = 5.25;
+  straight[1].x = 10.0;
+  const auto fixed = calculate_maximum_distance(straight, protected_lines, {}, params, LEFT, path);
+  EXPECT_DOUBLE_EQ(fixed[0], 0.0);
+  EXPECT_DOUBLE_EQ(fixed[1], 0.0);
+}
