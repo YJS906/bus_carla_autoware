@@ -1,0 +1,33 @@
+ Container selfcar-carla-signals Stopping 
+ Container selfcar-carla-spectator Stopping 
+ Container selfcar-carla-signals Stopped 
+ Container selfcar-carla-signals Removing 
+ Container selfcar-carla-signals Removed 
+ Container selfcar-carla-spectator Stopped 
+ Container selfcar-carla-spectator Removing 
+ Container selfcar-carla-spectator Removed 
+ Container selfcar-carla-autoware Stopping 
+ Container selfcar-carla-autoware Stopped 
+ Container selfcar-carla-autoware Removing 
+ Container selfcar-carla-autoware Removed 
+cleared 5 stale dynamic actors
+Bus map: /home/a/autoware_data/maps/Town05Bus
+Town05 map, native lane changes and signal manifest already match; no files changed.
+cleared 0 stale dynamic actors
+ Container selfcar-carla-autoware Creating 
+ Container selfcar-carla-autoware Created 
+ Container selfcar-carla-signals Creating 
+ Container selfcar-carla-spectator Creating 
+ Container selfcar-carla-spectator Created 
+ Container selfcar-carla-signals Created 
+ Container selfcar-carla-autoware Starting 
+ Container selfcar-carla-autoware Started 
+ Container selfcar-carla-spectator Starting 
+ Container selfcar-carla-signals Starting 
+ Container selfcar-carla-spectator Started 
+ Container selfcar-carla-signals Started 
+ego_vehicle ready: id=223, map=Carla/Maps/Town05_Opt
+Autoware + CARLA Town05_Opt started.
+Object input mode: ground_truth
+Simulator object truth is active for planning/control validation.
+Direct CARLA localization is active. Set Goal Pose, then Engage in RViz.

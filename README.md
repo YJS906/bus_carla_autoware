@@ -10,12 +10,14 @@ CARLA 0.9.16 **Town05 / Fuso Rosa** 버스로 도심 → 순환로 → 도심 �
 - 버스 형상·물리 충돌체 측정, 전용 차량/센서/가감속 설정 완료.
 - 차량 폭으로 인한 경로 거부, 순환로 지도 태그 누락, 제동표 로딩 오류,
   목표 정지 후 기어가는 현상을 수정했다.
-- **빈 도로에서 Autoware 저속 직진·곡선·목표 정지 시험 통과.**
-  직진 약 59m, 곡선 약 177m, 목표 오차 약 0.75m/0.73m, 정지 유지 3초, 충돌 0건.
+- **현재 최고 속도 설정은 20km/h.** 빈 순환로의 곡선 포함 약 478m 주행과
+  목표 정지를 검증했다. 목표 정지와 STOP 모드 전환 후 제동 유지까지 확인했다. 충돌 0건.
+  이전 10km/h 직진·곡선 시험 기록도 보존한다.
 - **전체 노선 완주·교차로 신호 주행·조건부 정류장 정차·하차벨 UI는 후속 단계다.**
   기존 승용차 시험을 버스 검증 결과로 간주하지 않는다.
 
-[실제 주행 검증과 수정 근거](docs/validation/carla-bus-envelope-20261022/README.md) ·
+[최신 20km/h 검증](docs/validation/carla-bus-speed-20261022/README.md) ·
+[형상·경로·정지 문제 수정](docs/validation/carla-bus-envelope-20261022/README.md) ·
 [실행 방법](docs/carla-bus-operations.md) ·
 [미션 설계 및 진행 단계](docs/carla-bus-mission.md) ·
 [노선·정류장](scenarios/bus/README.md) ·
@@ -30,6 +32,7 @@ CARLA 0.9.16 **Town05 / Fuso Rosa** 버스로 도심 → 순환로 → 도심 �
 # 빈 도로에서만 실행: 시작 위치를 옮긴 뒤 실제 AUTO 주행/정지 시험
 ./scripts/carla/validate_bus_control straight
 ./scripts/carla/validate_bus_control curve
+./scripts/carla/validate_bus_control speed # 곡선 포함 긴 순환로 시험, 기본 20km/h
 ```
 
 CARLA 서버가 먼저 실행되어 있어야 한다. 시작 명령은 버스를 STOP 상태로 생성한다.

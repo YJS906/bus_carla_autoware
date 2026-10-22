@@ -1,0 +1,114 @@
+/control/vehicle_cmd_gate:
+  ros__parameters:
+    check_external_emergency_heartbeat: false
+    diagnostic_updater:
+      period: 1.0
+      use_fqn: false
+    emergency_acceleration: -6.0
+    enable_cmd_limit_filter: true
+    external_emergency_stop_heartbeat_timeout: 0.0
+    filter_activated_count_threshold: 5
+    filter_activated_velocity_threshold: 1.0
+    front_overhang: 1.6760634192820305
+    immediate_emergency_stop: true
+    left_overhang: 0.784613153347621
+    max_steer_angle: 1.2217303432379762
+    moderate_stop_service_acceleration: -3.4
+    nominal:
+      lat_acc_lim_for_steer_cmd:
+      - 5.0
+      - 5.0
+      - 5.0
+      - 4.0
+      lat_jerk_lim_for_steer_cmd:
+      - 7.0
+      - 7.0
+      - 7.0
+      - 6.0
+      lat_jerk_lim_for_steer_rate: 10.0
+      lon_acc_lim_for_lon_vel:
+      - 5.0
+      - 5.0
+      - 5.0
+      - 4.0
+      lon_jerk_lim_for_lon_acc:
+      - 80.0
+      - 3.5
+      - 3.5
+      - 2.8
+      reference_speed_points:
+      - 0.1
+      - 0.3
+      - 20.0
+      - 30.0
+      steer_cmd_diff_lim_from_current_steer:
+      - 1.0
+      - 1.0
+      - 1.0
+      - 0.8
+      steer_cmd_lim:
+      - 1.0
+      - 1.0
+      - 1.0
+      - 0.8
+      steer_rate_lim_for_steer_cmd:
+      - 1.0
+      - 1.0
+      - 1.0
+      - 0.8
+      vel_lim: 25.0
+    on_transition:
+      lat_acc_lim_for_steer_cmd:
+      - 2.0
+      - 1.8
+      lat_jerk_lim_for_steer_cmd:
+      - 7.0
+      - 6.0
+      lat_jerk_lim_for_steer_rate: 10.0
+      lon_acc_lim_for_lon_vel:
+      - 3.5
+      - 3.5
+      lon_jerk_lim_for_lon_acc:
+      - 0.5
+      - 0.4
+      reference_speed_points:
+      - 20.0
+      - 30.0
+      steer_cmd_diff_lim_from_current_steer:
+      - 1.0
+      - 0.8
+      steer_cmd_lim:
+      - 1.0
+      - 0.8
+      steer_rate_lim_for_steer_cmd:
+      - 1.0
+      - 0.8
+      vel_lim: 50.0
+    qos_overrides:
+      /clock:
+        subscription:
+          depth: 1
+          durability: volatile
+          history: keep_last
+          reliability: best_effort
+      /parameter_events:
+        publisher:
+          depth: 1000
+          durability: volatile
+          history: keep_last
+          reliability: reliable
+    rear_overhang: 2.9665202237590655
+    right_overhang: 0.6389555107900624
+    start_type_description_service: true
+    stop_check_duration: 1.0
+    stop_hold_acceleration: -3.4
+    system_emergency_heartbeat_timeout: 0.5
+    update_rate: 10.0
+    use_emergency_handling: true
+    use_sim_time: true
+    vehicle_height: 4.252848148345947
+    wheel_base: 5.630101407923259
+    wheel_radius: 0.63
+    wheel_tread: 2.61667973065866
+    wheel_width: 0.3
+

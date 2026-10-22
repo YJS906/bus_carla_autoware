@@ -32,8 +32,9 @@ class BusValidation(Validation):
         self.actuation_subscription=self.create_subscription(ActuationCommandStamped,
             '/control/command/actuation_cmd',self.on_actuation,10)
         self.actuation_received=0.
-        self.result.update(required_stop_hold_s=3.0,maximum_goal_error_m=1.5,
-                           maximum_centreline_error_m=1.0)
+        self.result.update(required_stop_hold_s=5.0,maximum_goal_error_m=1.5,
+                           maximum_centreline_error_m=1.0,
+                           minimum_peak_kmh=args.minimum_peak_kmh,required_cruise_hold_s=args.cruise_hold_s)
         self.base_offset=(-2.6150478087440625,-.000007316637322674069,.0009262561798095703)
 
     def on_actuation(self,message):
@@ -47,7 +48,8 @@ class BusValidation(Validation):
         self.until(lambda:'mode' in self.last and 'odom' in self.last,30,'mode and localization')
         self.stop()
         self.call(self.clear_client,ClearRoute.Request(),'clear_old_route')
-        s0,s1=(330.,390.) if self.args.case=='straight' else (130.,300.)
+        s0,s1={'straight':(330.,390.),'curve':(130.,300.),
+               'speed':(20.,490.)}[self.args.case]
         self.start_wp=self.wmap.get_waypoint_xodr(37,-2,s0)
         self.goal_wp=self.wmap.get_waypoint_xodr(37,-2,s1)
         t=self.start_wp.transform
@@ -96,6 +98,7 @@ class BusValidation(Validation):
         started=time.monotonic();sim_start=self.world.get_snapshot().timestamp.elapsed_seconds
         stopped_since=None;last_print=-5;last_position=self.rear_pose();distance=0.;peak=0.;max_error=0.
         start_yaw=self.ego.get_transform().rotation.yaw
+        cruise_since=None;max_cruise_hold=0.
         while time.monotonic()-started<self.args.duration:
             self.spin(.10)
             if self.carla.get_world().id!=self.world_id:raise RuntimeError('World changed')
@@ -108,6 +111,10 @@ class BusValidation(Validation):
             ref=self.wmap.get_waypoint_xodr(37,-2,native.s) if native.road_id==37 else None
             error=rear.distance(ref.transform.location) if ref else 999.
             max_error=max(max_error,error);peak=max(peak,v)
+            if v*3.6>=self.args.minimum_peak_kmh:
+                if cruise_since is None:cruise_since=now.timestamp.elapsed_seconds
+                max_cruise_hold=max(max_cruise_hold,now.timestamp.elapsed_seconds-cruise_since)
+            else:cruise_since=None
             control=self.ego.get_control();ros=self.last['odom'];pos=ros.pose.pose.position
             odom_error=math.dist((pos.x,-pos.y,pos.z),(rear.x,rear.y,rear.z))
             yaw=self.ego.get_transform().rotation.yaw
@@ -127,10 +134,15 @@ class BusValidation(Validation):
             if error>1:raise RuntimeError('Centreline tracking error exceeded 1m')
             if goal_distance<1.5 and v<.05 and peak>2.0:
                 if stopped_since is None:stopped_since=row['sim_s']
-                if row['sim_s']-stopped_since>=3:
+                if row['sim_s']-stopped_since>=5:
+                    if peak*3.6<self.args.minimum_peak_kmh or max_cruise_hold<self.args.cruise_hold_s:
+                        raise RuntimeError('Goal stopped but requested cruise speed/duration not reached')
                     self.result.update(success=True,result='goal_stop_pass',max_speed_mps=peak,
+                        cruise_hold_s=max_cruise_hold,duration_sim_s=row['sim_s'],
+                        duration_wall_s=time.monotonic()-started,
                         max_centreline_error_m=max_error,travel_distance_m=distance,final_goal_error_m=goal_distance,
-                        yaw_change_deg=turn,stop_hold_s=row['sim_s']-stopped_since)
+                        yaw_change_deg=turn,stop_hold_s=row['sim_s']-stopped_since,
+                        final_mode=self.last['mode'].mode)
                     break
             else:
                 stopped_since=None
@@ -146,11 +158,19 @@ class BusValidation(Validation):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--case',choices=['straight','curve'],required=True)
+    parser.add_argument('--case',choices=['straight','curve','speed'],required=True)
     parser.add_argument('--output',type=Path,required=True)
-    parser.add_argument('--speed-kmh',type=float,default=10)
-    parser.add_argument('--duration',type=float,default=180)
-    args=parser.parse_args();args.host='127.0.0.1';args.port=2000;args.input_mode='ground_truth'
+    parser.add_argument('--speed-kmh',type=float,default=20)
+    parser.add_argument('--duration',type=float,default=360)
+    parser.add_argument('--minimum-peak-kmh',type=float)
+    parser.add_argument('--cruise-hold-s',type=float,default=0)
+    args=parser.parse_args()
+    if not 0<args.speed_kmh<=20:parser.error('speed-kmh must be in (0,20] for the current validated profile')
+    if args.minimum_peak_kmh is None:
+        args.minimum_peak_kmh=args.speed_kmh*.95 if args.case=='speed' else 7.2
+    if not 0<=args.minimum_peak_kmh<=args.speed_kmh:parser.error('Invalid minimum cruise speed')
+    if args.cruise_hold_s<0:parser.error('Invalid cruise duration')
+    args.host='127.0.0.1';args.port=2000;args.input_mode='ground_truth'
     from rclpy.signals import SignalHandlerOptions
     rclpy.init(args=[], signal_handler_options=SignalHandlerOptions.NO)
     def interrupt(*_):raise RuntimeError('Test interrupted')

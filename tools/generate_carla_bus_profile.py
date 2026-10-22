@@ -57,7 +57,7 @@ def generate():
         'measurement':str(source.relative_to(ROOT)),'base_offset_carla_m':base.tolist(),
         'collision_measurement':str(physics_source.relative_to(ROOT)),
         'lateral_envelope':'union of reported mesh bounding box and measured wheel collision spheres',
-        'initial_validation_speed_cap_kmh':10}
+        'initial_validation_speed_cap_kmh':10,'operating_speed_cap_kmh':20}
     (out/'profile.json').write_text(json.dumps(manifest,indent=2)+'\n')
     print(json.dumps(profile,indent=2))
 

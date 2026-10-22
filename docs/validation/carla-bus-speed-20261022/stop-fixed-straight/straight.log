@@ -1,0 +1,11 @@
+{"event": "stop", "sim_time": 40.900000609, "status": {"success": true, "code": 60001, "message": "The mode is the same as the current."}}
+{"event": "clear_old_route", "sim_time": 41.00000061, "status": {"success": true, "code": 0, "message": ""}}
+{"event": "set_bus_test_route", "sim_time": 44.550000663, "status": {"success": true, "code": 0, "message": ""}}
+{"event": "engage_bus", "sim_time": 47.450000707, "status": {"success": true, "code": 0, "message": ""}}
+{"event": "bus_progress", "sim_time": 47.800000712, "speed_kmh": 0.029792553526535207, "distance_m": 0.0009222030639648438, "goal_distance_m": 60.0, "error_m": 0.12044703960418701}
+{"event": "bus_progress", "sim_time": 52.850000787, "speed_kmh": 9.889187362781923, "distance_m": 6.4703023582696915, "goal_distance_m": 53.533172607421875, "error_m": 0.12053263187408447}
+{"event": "bus_progress", "sim_time": 57.900000862, "speed_kmh": 19.055115432906693, "distance_m": 28.162338376045227, "goal_distance_m": 31.84122657775879, "error_m": 0.12104211747646332}
+{"event": "bus_progress", "sim_time": 63.000000938, "speed_kmh": 14.306938995051429, "distance_m": 54.45392119884491, "goal_distance_m": 5.550880432128906, "error_m": 0.15522688627243042}
+{"event": "bus_progress", "sim_time": 68.000001013, "speed_kmh": 3.725581839288183e-06, "distance_m": 59.25750748619339, "goal_distance_m": 0.796400249004364, "error_m": 0.12351779639720917}
+{"event": "stop", "sim_time": 70.350001048, "status": {"success": true, "code": 60001, "message": "The mode is the same as the current."}}
+{"event": "clear_test_route", "sim_time": 70.850001055, "status": {"success": true, "code": 0, "message": ""}}

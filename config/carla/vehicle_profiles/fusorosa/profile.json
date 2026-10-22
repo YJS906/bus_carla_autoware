@@ -9,5 +9,6 @@
   ],
   "collision_measurement": "docs/validation/carla-bus-envelope-20261022/physics-asset.json",
   "lateral_envelope": "union of reported mesh bounding box and measured wheel collision spheres",
-  "initial_validation_speed_cap_kmh": 10
+  "initial_validation_speed_cap_kmh": 10,
+  "operating_speed_cap_kmh": 20
 }

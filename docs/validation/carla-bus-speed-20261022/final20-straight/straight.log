@@ -1,0 +1,12 @@
+{"event": "stop", "sim_time": 24.650000367, "status": {"success": true, "code": 60001, "message": "The mode is the same as the current."}}
+{"event": "clear_old_route", "sim_time": 24.700000368, "status": {"success": true, "code": 0, "message": ""}}
+{"event": "set_bus_test_route", "sim_time": 28.25000042, "status": {"success": true, "code": 0, "message": ""}}
+{"event": "engage_bus", "sim_time": 31.100000463, "status": {"success": true, "code": 0, "message": ""}}
+{"event": "bus_progress", "sim_time": 31.400000467, "speed_kmh": 0.033894814305962806, "distance_m": 0.0009746551513671875, "goal_distance_m": 60.0, "error_m": 0.1204351931810379}
+{"event": "bus_progress", "sim_time": 36.450000543, "speed_kmh": 9.862654881652567, "distance_m": 6.556934135500342, "goal_distance_m": 53.44718551635742, "error_m": 0.12050914764404297}
+{"event": "bus_progress", "sim_time": 41.450000617, "speed_kmh": 18.998939128315254, "distance_m": 28.17447985941544, "goal_distance_m": 31.82969856262207, "error_m": 0.12092670798301697}
+{"event": "bus_progress", "sim_time": 46.500000692, "speed_kmh": 14.786907004871656, "distance_m": 54.255355464760214, "goal_distance_m": 5.750044345855713, "error_m": 0.15569184720516205}
+{"event": "bus_progress", "sim_time": 51.550000768, "speed_kmh": 0.24970837775827695, "distance_m": 59.37268480575949, "goal_distance_m": 0.6738817691802979, "error_m": 0.12545374035835266}
+RuntimeError('Left AUTO before reaching goal')
+{"event": "stop", "sim_time": 51.600000768, "status": {"success": true, "code": 60001, "message": "The mode is the same as the current."}}
+{"event": "clear_test_route", "sim_time": 52.050000775, "status": {"success": true, "code": 0, "message": ""}}

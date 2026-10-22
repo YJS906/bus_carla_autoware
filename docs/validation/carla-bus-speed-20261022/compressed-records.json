@@ -1,0 +1,10 @@
+{
+  "20kmh/speed.json": {
+    "sha256": "7a6489514fdad602c377d958768d7af7c394546d25385a83f8add35474c10a99",
+    "bytes": 1457483
+  },
+  "final20-straight/straight.json": {
+    "sha256": "b34d166d5a7ef73268c0391121c518ca39855f9c5efdd158025c3ed6469b1c14",
+    "bytes": 313646
+  }
+}

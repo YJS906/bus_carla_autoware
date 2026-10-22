@@ -1,0 +1,94 @@
+/planning/scenario_planning/velocity_smoother:
+  ros__parameters:
+    algorithm_type: JerkFiltered
+    curvature_calculation_distance: 2.0
+    curvature_threshold: 0.02
+    decel_distance_after_curve: 1.4
+    decel_distance_before_curve: 5.6
+    dense_min_interval_distance: 0.1
+    dense_resample_dt: 0.2
+    ego_nearest_dist_threshold: 3.0
+    ego_nearest_yaw_threshold: 1.046
+    enable_lateral_acc_limit: true
+    enable_steering_rate_limit: true
+    engage_acceleration: 0.5
+    engage_exit_ratio: 0.5
+    engage_velocity: 0.25
+    extract_ahead_dist: 200.0
+    extract_behind_dist: 5.0
+    front_overhang: 1.6760634192820305
+    jerk_filter_ds: 0.1
+    jerk_weight: 0.07
+    lateral_acceleration_limits:
+    - 0.455
+    - 0.455
+    - 0.455
+    - 0.455
+    left_overhang: 0.784613153347621
+    margin_to_insert_external_velocity_limit: 0.3
+    max_steer_angle: 1.2217303432379762
+    max_trajectory_length: 200.0
+    max_vel: 5.5555555556
+    min_curve_velocity: 1.5
+    min_decel_for_lateral_acc_lim_filter: -5.0
+    min_trajectory_length: 180.0
+    normal:
+      max_acc: 0.7
+      max_jerk: 1.0
+      min_acc: -3.0
+      min_jerk: -2.0
+    over_a_weight: 500.0
+    over_j_weight: 200.0
+    over_stop_velocity_warn_thr: 1.389
+    over_v_weight: 10000.0
+    plan_from_ego_speed_on_manual_mode: true
+    post_dense_min_interval_distance: 0.1
+    post_dense_resample_dt: 0.1
+    post_max_trajectory_length: 300.0
+    post_min_trajectory_length: 30.0
+    post_resample_time: 10.0
+    post_sparse_min_interval_distance: 1.0
+    post_sparse_resample_dt: 0.1
+    publish_debug_trajs: false
+    qos_overrides:
+      /clock:
+        subscription:
+          depth: 1
+          durability: volatile
+          history: keep_last
+          reliability: best_effort
+      /parameter_events:
+        publisher:
+          depth: 1000
+          durability: volatile
+          history: keep_last
+          reliability: reliable
+    rear_overhang: 2.9665202237590655
+    replan_vel_deviation: 5.53
+    resample_ds: 0.1
+    resample_time: 2.0
+    right_overhang: 0.6389555107900624
+    sparse_min_interval_distance: 4.0
+    sparse_resample_dt: 0.5
+    start_type_description_service: true
+    steering_angle_rate_limits:
+    - 8.05
+    - 8.05
+    - 7.35
+    - 2.45
+    stop_decel: 0.0
+    stop_dist_to_prohibit_engage: 0.5
+    stopping_distance: 0.0
+    stopping_velocity: 2.778
+    use_sim_time: true
+    vehicle_height: 4.252848148345947
+    velocity_thresholds:
+    - 0.1
+    - 0.3
+    - 20.0
+    - 30.0
+    wheel_base: 5.630101407923259
+    wheel_radius: 0.63
+    wheel_tread: 2.61667973065866
+    wheel_width: 0.3
+

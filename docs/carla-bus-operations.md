@@ -17,7 +17,7 @@ CARLA 0.9.16, Docker/NVIDIA 실행 환경, 기존 Autoware 이미지, Town05 지
 ./scripts/carla/carla_autoware start-bus
 ```
 
-`start-bus`는 Fuso Rosa 한 대, GT 물체 입력, direct localization, 10km/h 계획 상한,
+`start-bus`는 Fuso Rosa 한 대, GT 물체 입력, direct localization, 20km/h 계획 상한,
 신호 브리지와 버스 추적 카메라로 시작한다. 자동으로 Engage하지 않는다.
 `prepare_bus_map`을 호출해 원본 Town05를 보존한 별도 Town05Bus 지도를 사용한다.
 첫 생성/지도 업그레이드는 Autoware를 정지한 상태에서 한다.
@@ -41,12 +41,16 @@ CARLA 0.9.16, Docker/NVIDIA 실행 환경, 기존 Autoware 이미지, Town05 지
 ```bash
 ./scripts/carla/validate_bus_control straight
 ./scripts/carla/validate_bus_control curve
+./scripts/carla/validate_bus_control speed # 기본 20km/h, 곡선 포함 약 478m
 # 결과 폴더를 직접 정할 수도 있다.
-./scripts/carla/validate_bus_control straight /tmp/bus-straight
+./scripts/carla/validate_bus_control straight /tmp/bus-straight 20
 ```
 
-직진은 road 37/lane -2의 s=330→390, 곡선은 s=130→300을 사용한다.
-목표 오차 1.5m 미만, 속도 0.05m/s 미만 3초 유지, 최고 속도 2m/s 초과,
+직진은 road 37/lane -2의 s=330→390, 곡선은 s=130→300, 긴 속도 시험은
+s=20→490을 사용한다. 기본 속도는 20km/h이고 세 번째 인자로 더 낮은 상한을
+지정할 수 있다. `speed` 시험은 상한의 95% 이상을 연속 5초 유지해야 통과한다.
+현 단계 검증 도구는 20km/h 초과 입력을 거부한다.
+목표 오차 1.5m 미만, 속도 0.05m/s 미만 5초 유지, 최고 속도 2m/s 초과,
 중심선 거리 1m 이하와 충돌 없음이 통과 조건이다. 중심선 거리는 rear axle의
 3차원 위치 차이이므로 도로 높이 오차도 포함한다. 결과 JSON/로그는 기본적으로
 `log/bus-control-날짜시각/`에 저장하며, 성공/실패 후 STOP과 경로 해제를 확인한다.
@@ -76,12 +80,16 @@ CARLA_BASE_IMAGE=selfcar-2026-carla:local ./scripts/carla/build_bus_image
 필요하면 `CARLA_ROOT`, `CARLA_PYTHON`, `AUTOWARE_MAP_DIR`,
 `AUTOWARE_ML_MODELS_DIR`를 해당 스크립트에 맞게 설정한다.
 
+최신 수치는 [20km/h 검증 기록](validation/carla-bus-speed-20261022/README.md)을 따른다.
+
 ## 보존 기준
 
 - 미션 전환 전: `backup/pre-bus-mission-20261022-151442` (`7d65001`).
 - 버스 제어 전: `backup/before-bus-control-20261022` (`ab997a6`).
 - 로컬 전체 백업: `/home/a/autoware-task-backups/pre-bus-mission-20261022-151442/`.
   `RESTORE.md`와 `manifest.json`에 복원 절차와 파일 해시가 있다.
+- 10km/h 버스 기준: `backup/bus-10kmh-20261022`, 로컬 이미지
+  `selfcar-2026-carla:bus-10kmh-20261022`.
 - 원본 Town05 지도와 Prius 이미지 태그는 이번 버스 수정으로 덮어쓰지 않았다.
 
 다음 단계는 전체 고정 노선의 교차로·바깥 차로 접근 검증이다. 기본 시험 통과만으로

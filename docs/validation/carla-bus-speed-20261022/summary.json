@@ -1,0 +1,70 @@
+{
+  "recorded_at": "2026-10-22T09:06:32.579218+00:00",
+  "operating_speed_cap_kmh": 20,
+  "tests": [
+    {
+      "file": "stop-fixed-straight/straight.json",
+      "case": "straight",
+      "speed_cap_kmh": 20.0,
+      "max_speed_mps": 5.427031109057489,
+      "travel_distance_m": 59.25750748619339,
+      "max_centreline_error_m": 0.15724405646324158,
+      "final_goal_error_m": 0.796400249004364,
+      "stop_hold_s": 5.100000075995922,
+      "cruise_hold_s": 13.350000198930502,
+      "final_mode": 1,
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "duration_sim_s": 22.600000336766243,
+      "duration_wall_s": 22.59512180100137
+    },
+    {
+      "file": "final20-speed/speed.json",
+      "case": "speed",
+      "speed_cap_kmh": 20.0,
+      "max_speed_mps": 5.64015908935032,
+      "travel_distance_m": 477.93954242774635,
+      "max_centreline_error_m": 0.21941959857940674,
+      "final_goal_error_m": 0.705420970916748,
+      "stop_hold_s": 5.050000075250864,
+      "cruise_hold_s": 68.15000101551414,
+      "final_mode": 1,
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "duration_sim_s": 97.25000144913793,
+      "duration_wall_s": 97.38919438199991
+    }
+  ],
+  "image_id": "sha256:6208a5b547078dd65b326235840c57a2b13511449bb001dd3c39992ae5d87b6d",
+  "source_sha256": {
+    "config/carla/vehicle_profiles/fusorosa/profile.json": "197c61299c9c533fdfee1baa9b97bbb08498a889590a8eea13b51851b3cae9a3",
+    "config/carla/vehicle_profiles/fusorosa/raw_vehicle_cmd_converter.param.yaml": "a686d04999cf65c6a9a7d7aa7c05782fd6c8a36ade4125f49d0e4a02e555f262",
+    "config/carla/vehicle_profiles/fusorosa/vehicle.xacro": "990c20527fa8be3b6ce0c86eac7fcdfda59e34d5af3b30d823d4902f2f5c130f",
+    "config/carla/vehicle_profiles/fusorosa/planning_common.param.yaml": "ac3adcff0aef35f838a1de863dee486c2bc993af24c503519ad10916a73468ae",
+    "config/carla/vehicle_profiles/fusorosa/vehicle_info.param.yaml": "3fff5b94edbbfbecbc7c8b6fc31dc7b9e238d200d1adda399f7c7dce44a0c6a3",
+    "config/carla/vehicle_profiles/fusorosa/pid.param.yaml": "11cb7f36592e193a0e9b067ae9d27a08e7150f71a163cf5dd60e9cc36cb027c7",
+    "config/carla/vehicle_profiles/fusorosa/sensors/sensors_calibration.yaml": "53e8ff8292972e7074c982c9f3718dd6d4e2e19a813b41d63e065e432a658edc",
+    "config/carla/vehicle_profiles/fusorosa/sensors/sensor_kit_calibration.yaml": "c2b343ac537a5ef1d6ada8f6a13d7876e8a0b14c8102769119ef67c99970c645",
+    "config/carla/vehicle_profiles/fusorosa/calibration_maps/brake_map.csv": "fc6f1ae85e66f6be6e778e3d7df979ef5a2774e3f31fe9a5cc5017a392f27ba3",
+    "config/carla/vehicle_profiles/fusorosa/calibration_maps/accel_map.csv": "884860f21a4dca34c62dbeece6b03ac9647c1d7254e49df7bd50bc583f6d0bc3",
+    "config/carla/vehicle_profiles/fusorosa/control/vehicle_cmd_gate/vehicle_cmd_gate.param.yaml": "83efcb4570aecc5ca872d136388c41843937cecede0f0af35c47c9002fb066b1",
+    "config/carla/vehicle_profiles/fusorosa/planning/scenario_planning/lane_driving/motion_planning/motion_velocity_planner/obstacle_stop.param.yaml": "6d392b7922f7f277fc9ce41a0cb52318f922d904cafd2827eb434d315dea5692",
+    "config/carla/vehicle_profiles/fusorosa/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/drivable_area_expansion.param.yaml": "cd5db434e7408b9033c592cd018bbfd69c75f324e611c8fc482cbbf7f776bd0d",
+    "config/carla/vehicle_profiles/fusorosa/planning/scenario_planning/lane_driving/behavior_planning/behavior_path_planner/autoware_behavior_path_static_obstacle_avoidance_module/static_obstacle_avoidance.param.yaml": "9b4cad5152b36940eccff38a6a2217d41398c44f50e35120f75743669ca747a4",
+    "config/carla/vehicle_profiles/fusorosa/planning/mission_planning/mission_planner/mission_planner.param.yaml": "bcb491733ac8195fc881a52c3a58c3d348a92687e48068041407f76f59dfcc62",
+    "docker/files/install_carla_runtime.py": "13c023e91b1a2eba7ca9bcc6b08fe2667dabf8ac4694999d1020656771400261",
+    "scripts/carla/validate_bus_control": "8f6fe7ec0f1f871934245ee737b707703211f7096d709a32a7c69c16f58c5761",
+    "tools/carla_bus_control_validation.py": "04a83948526e0c0cffea5eba8494cb3cd97122af0555c65a507e1de5890e6524",
+    "tools/generate_carla_bus_profile.py": "7ba621e3e78ba046bd8873cd29db37a8a5cf1b3b351bccc96e7f3b168e7332c5"
+  },
+  "map_sha256": "f4039b2f94bd863b5d7dd0aba68ffe5df6b0341f591f5785de5703e053544834",
+  "scope": "empty-road 20 km/h straight and curved road37 tests; not full city route or conditional bus-stop mission"
+}
