@@ -7,16 +7,16 @@
     dynamic_expansion:
       enabled: true
       print_runtime: false
-      max_expansion_distance: 0.75
+      max_expansion_distance: 3.5
       min_bound_interval: 1.0
       smoothing:
         curvature_average_window: 3
         max_bound_rate: 1.0
-        arc_length_range: 2.0
+        arc_length_range: 8.0
       ego:
         extra_wheelbase: 0.0
         extra_front_overhang: 0.5
-        extra_width: 0.6
+        extra_width: 1.0
       object_exclusion:
         exclude_static: true
         exclude_dynamic: true

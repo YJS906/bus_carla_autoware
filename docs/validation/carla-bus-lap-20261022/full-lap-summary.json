@@ -1,0 +1,105 @@
+{
+  "full_lap_completed": true,
+  "run": 20,
+  "image": "sha256:22c0d5f5c830869dd99afa03cf7283b1799d3a7c775ce4bff394182b5d890cf9",
+  "speed_cap_kmh": 20.0,
+  "total_distance_m": 1989.8347655541043,
+  "elapsed_sim_seconds": 1416.550021108,
+  "average_kmh": 5.0569376649274185,
+  "peak_kmh": 18.65057088451789,
+  "final_goal_error_m": 0.9335307478904724,
+  "ordered_anchors": [
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R06",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S01"
+  ],
+  "visited_stops": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S01"
+  ],
+  "leg_distances_m": [
+    1904.7963052246023,
+    85.03846032950196
+  ],
+  "collision_sensor_events": [],
+  "cleanup": {
+    "stop_verified": true,
+    "test_speed_limit_clear_sent": true,
+    "route_cleared": true,
+    "errors": []
+  },
+  "transient_emergency_intervals": [
+    {
+      "start_sim_time": 152.900002278,
+      "end_sim_time": 154.900002308,
+      "duration_s": 2.000000030000024
+    },
+    {
+      "start_sim_time": 319.800004765,
+      "end_sim_time": 319.900004766,
+      "duration_s": 0.10000000100001216
+    },
+    {
+      "start_sim_time": 805.800012007,
+      "end_sim_time": 805.900012008,
+      "duration_s": 0.10000000100001216
+    },
+    {
+      "start_sim_time": 1046.500015594,
+      "end_sim_time": 1046.600015595,
+      "duration_s": 0.10000000100012585
+    },
+    {
+      "start_sim_time": 1213.700018085,
+      "end_sim_time": 1215.500018112,
+      "duration_s": 1.8000000269998964
+    },
+    {
+      "start_sim_time": 1217.700018145,
+      "end_sim_time": 1219.600018173,
+      "duration_s": 1.9000000280000222
+    },
+    {
+      "start_sim_time": 1430.200021311,
+      "end_sim_time": 1430.700021319,
+      "duration_s": 0.5000000079999154
+    }
+  ],
+  "red_light_stop_ids": [
+    88,
+    103,
+    105,
+    111,
+    114,
+    117,
+    133,
+    134,
+    135
+  ],
+  "service_stop_logic_enabled": false,
+  "npc_traffic_enabled": false,
+  "initial_teleport_only": true,
+  "sha256": "80bd8029c03bd2242f67e181b318ba4ee6026690e183bb5eb93d70f8f32c6af1"
+}

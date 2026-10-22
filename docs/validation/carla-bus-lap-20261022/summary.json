@@ -1,0 +1,419 @@
+{
+  "full_lap_completed": true,
+  "speed_cap_kmh": 20,
+  "runtime_parameters_restored_by_restart": true,
+  "map_modified": true,
+  "service_stop_logic_enabled": false,
+  "runs": [
+    {
+      "run": 1,
+      "circle_count": 3,
+      "collision_weight": 1,
+      "expansion_limit_m": 0.75,
+      "hard_constraint": false,
+      "initial_inward_offset_m": 0.65,
+      "distance_m": 0.0,
+      "peak_kmh": 9.442882578247477e-06,
+      "result": "RuntimeError('Lap interrupted')",
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null,
+      "collision_sensor_events": [],
+      "sha256": "a1407a721550e7b2cc76d06ccfee4747d52d51f500b86e98b13576dc636a9269"
+    },
+    {
+      "run": 2,
+      "circle_count": 3,
+      "collision_weight": 1,
+      "expansion_limit_m": 0.75,
+      "hard_constraint": false,
+      "initial_inward_offset_m": 0.35,
+      "distance_m": 1.5644352262461325,
+      "peak_kmh": 4.801298276920325,
+      "result": "RuntimeError('Lap interrupted')",
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null,
+      "collision_sensor_events": [],
+      "sha256": "1e577324ce295ed797cbb55a47bf86af6c349aefb0f32e6e3b63eeeeb419b3e3"
+    },
+    {
+      "run": 3,
+      "circle_count": 10,
+      "collision_weight": 100,
+      "expansion_limit_m": 0.75,
+      "hard_constraint": false,
+      "initial_inward_offset_m": 0.35,
+      "distance_m": 35.4339059073327,
+      "peak_kmh": 10.758916434400529,
+      "result": "RuntimeError('Lap interrupted')",
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null,
+      "collision_sensor_events": [],
+      "sha256": "d24bcf25f6e3fa1746e8859f3474da1a6331ebd5e5676058e9a133b9a5ddf62a"
+    },
+    {
+      "run": 4,
+      "circle_count": 10,
+      "collision_weight": 1000,
+      "expansion_limit_m": 2,
+      "hard_constraint": false,
+      "initial_inward_offset_m": 0.35,
+      "distance_m": 0.0,
+      "peak_kmh": 7.965771391553697e-06,
+      "result": "RuntimeError('Lap interrupted')",
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null,
+      "collision_sensor_events": [],
+      "sha256": "faa169308e009f1b3ff5683a2a639b2f8e5fed6c52f5866178ea12ccde6c1f82"
+    },
+    {
+      "run": 5,
+      "circle_count": 10,
+      "collision_weight": 100,
+      "expansion_limit_m": 2,
+      "hard_constraint": false,
+      "initial_inward_offset_m": 0.35,
+      "distance_m": 52.06521344887733,
+      "peak_kmh": 17.911354773016722,
+      "result": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "cleanup": {
+        "stop_verified": true
+      },
+      "cleanup_error": "RuntimeError('Lap interrupted')",
+      "collision_sensor_events": null,
+      "sha256": "2e100fc04660f7256839c0df29e6d85d9c516040aef14b3ab549d5e37add8092"
+    },
+    {
+      "run": 6,
+      "circle_count": 10,
+      "collision_weight": 100,
+      "expansion_limit_m": 2,
+      "hard_constraint": true,
+      "initial_inward_offset_m": 0.35,
+      "distance_m": 0.0,
+      "peak_kmh": 1.308157458363591e-05,
+      "result": "RuntimeError('Lap interrupted')",
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null,
+      "collision_sensor_events": [],
+      "sha256": "3444fa4204a2d143a27898abbfa018ca497740ac2f30123896272403fd54c89d"
+    },
+    {
+      "run": 7,
+      "distance_m": 0.0,
+      "peak_kmh": 0.0,
+      "result": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "visited_stops": [
+        "S01"
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "collision_sensor_events": [],
+      "sha256": "0ee6f6c35b497da773702808c5e018e3f15195eb2ebbb856e8f7fb14317165ae"
+    },
+    {
+      "run": 8,
+      "distance_m": 0.0,
+      "peak_kmh": 0.0,
+      "result": "RuntimeError('Lap interrupted')",
+      "visited_stops": [
+        "S01"
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "collision_sensor_events": [],
+      "sha256": "8450bf7acb40e59312ac41fa8d4d1d9306b9e0bc077be9da8ecad7aac3a44bb8"
+    },
+    {
+      "run": 9,
+      "distance_m": 0.0,
+      "peak_kmh": 0.0,
+      "result": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "visited_stops": [
+        "S01"
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "collision_sensor_events": [],
+      "sha256": "51f6f0fdd12b5b1bd65365f89ef352cd889c4eee00ccf07446fc074dc356630e"
+    },
+    {
+      "run": 10,
+      "distance_m": 108.4289329044168,
+      "peak_kmh": 17.091029581587097,
+      "result": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "visited_stops": [
+        "S01",
+        "S02"
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "collision_sensor_events": [],
+      "sha256": "fdfa61327822fee5134f18bfe4f5063870b813939babb2859a50581d31d5bbc4"
+    },
+    {
+      "run": 11,
+      "distance_m": 23.823971090511805,
+      "peak_kmh": 8.722915633490553,
+      "result": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "visited_stops": [
+        "S01"
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "collision_sensor_events": [],
+      "sha256": "d8e307f3297010cf397bf9ee8c29aa5429e9fab8bc1e5c8002af9933d91819d1"
+    },
+    {
+      "run": 12,
+      "distance_m": 92.71748336034398,
+      "peak_kmh": 18.068416870961627,
+      "visited_stops": [
+        "S01",
+        "S02"
+      ],
+      "collision_sensor_events": [],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "result": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "sha256": "89b3fef57f8a7f7e4720a5f7eefa30c24e816e67249e87cc6e9fc37cb7fa40d6"
+    },
+    {
+      "run": 13,
+      "distance_m": 1.200170707428697,
+      "peak_kmh": 6.810831315919935,
+      "result": "RuntimeError('Lap interrupted')",
+      "visited_stops": [
+        "S01"
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "collision_sensor_events": [],
+      "sha256": "9454aaae6535e2eacbcbb03f0a18da1569a5347deb18f837c4d75dfc68dd698e"
+    },
+    {
+      "run": 14,
+      "distance_m": 143.68334947537824,
+      "peak_kmh": 9.035877050199462,
+      "result": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03"
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "collision_sensor_events": [],
+      "sha256": "4d0a3e958651ed8f464da8b9e09a22102c04c33e5c0a9b6eed0e738d359ccf6c"
+    },
+    {
+      "run": 15,
+      "distance_m": 162.49450442259877,
+      "peak_kmh": 18.09693243810777,
+      "result": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03"
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "collision_sensor_events": [],
+      "sha256": "9861e261af8bd9feafd5eee2d7d8314505fece163a0e448c2c383b88a0340791"
+    },
+    {
+      "run": 16,
+      "distance_m": 531.7379256324239,
+      "peak_kmh": 18.08593957647208,
+      "result": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "collision_sensor_events": [],
+      "sha256": "a9778fa8a9f013ce58e1cdd24da4b0f1573cbe728289af52387af9db45140cfc"
+    },
+    {
+      "run": 17,
+      "distance_m": 319.22244141815554,
+      "peak_kmh": 11.381451901074167,
+      "result": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03",
+        "S04"
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "collision_sensor_events": [],
+      "sha256": "4b34b29b0f39afed09fcbcb428b97438e4f3dd795a97f33f71582cdeba7dfd60"
+    },
+    {
+      "run": 18,
+      "full_course": false,
+      "start_anchor": "S04",
+      "completed_leg_distance_m": 1691.0485016404728,
+      "peak_kmh": 18.77008871345432,
+      "result": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "visited_stops": [
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10"
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "collision_sensor_events": [],
+      "sha256": "3a343200e13daf6d40f20784363687116e8a6e595f71eb26da9adead601ad873"
+    },
+    {
+      "run": 19,
+      "full_course": false,
+      "start_anchor": "S10",
+      "completed_leg_distance_m": 85.01183611685155,
+      "peak_kmh": 14.08457649658539,
+      "result": "section_completed",
+      "visited_stops": [
+        "S10",
+        "S01"
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "collision_sensor_events": [],
+      "sha256": "16885ec962cdf5347a3b70be4075e43b132a32b452845c74c4822628acf22ffc",
+      "initial_pose_retained": true,
+      "runtime_parameter_overrides": {
+        "start_planner.th_distance_to_middle_of_the_road": 1.0
+      }
+    },
+    {
+      "run": 20,
+      "full_course": true,
+      "distance_m": 1989.8347655541043,
+      "peak_kmh": 18.65057088451789,
+      "result": "lap_completed",
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S01"
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "collision_sensor_events": [],
+      "sha256": "80bd8029c03bd2242f67e181b318ba4ee6026690e183bb5eb93d70f8f32c6af1"
+    }
+  ],
+  "map_change": "212 nonjunction boundary tags; native geometry unchanged",
+  "latest_run": 12,
+  "turn_fixture_refinement_comparison": {
+    "fixture": "path-capture12.json.gz",
+    "iterations_1": {
+      "nearest_raw_velocity_mps": 0,
+      "boundary_stop_distance_m": -0.2968212962150574
+    },
+    "iterations_3": {
+      "nearest_raw_velocity_mps": 13.88888931274414,
+      "boundary_stop_distance_m": 63.74106979370117
+    },
+    "both_qp_solvers_succeeded": true,
+    "note": "Raw optimizer velocity precedes the 20 km/h velocity smoother cap; replay sends no vehicle commands."
+  },
+  "final_full_lap": "full-lap-summary.json"
+}

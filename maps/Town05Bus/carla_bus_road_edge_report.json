@@ -1,0 +1,4431 @@
+{
+  "source_sha256": "f4039b2f94bd863b5d7dd0aba68ffe5df6b0341f591f5785de5703e053544834",
+  "output_sha256": "5b7fb0dda6c507ae8a36545793e5064e17d122cb883353f1bd07c510b1d5af7b",
+  "xodr_sha256": "7edc53b0be840e177598da7a4ed9571146d7b2595ce280d154c90f92e8a48851",
+  "geometry_modified": false,
+  "added": [
+    {
+      "way": 110,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 111,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              0,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 8.858571573814177e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 166,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 167,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              0,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 5.15714216649413e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 222,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 224,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 9.87277728802402e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 280,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 281,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 8.05316141759727e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 383,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 384,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              1,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 9.770811419014271e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 435,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 436,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              1,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 1.0376540841739336e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 487,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 489,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              1,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 1.1292540980313546e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 541,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 542,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              1,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 8.239886175468205e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 614,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 615,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              2,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 6.788293118127643e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 651,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 652,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              2,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 6.782431144877821e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 688,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 690,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              2,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 6.783551302261827e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 727,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 728,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              2,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 6.788221648538338e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 842,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 843,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              3,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 7.629958907866108e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 900,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 901,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              3,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 8.859233092212867e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 958,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 960,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              3,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 3.933505871760053e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1018,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 1019,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              3,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 3.9379151721881285e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1071,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 1072,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              4,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 7.263219464593473e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1098,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 1099,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              4,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 8.894378734866428e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1125,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 1127,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              4,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 6.10404749361334e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1154,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 1155,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              4,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 7.965917981380215e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1259,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 1260,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              5,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 1.2043131814902456e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1312,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 1313,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              5,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 1.294619160438599e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1365,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 1367,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              5,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 8.79038382807933e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1420,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 1421,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              5,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 1.2053188720259832e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1533,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 1534,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              6,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 7.338706798021482e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1590,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 1591,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              6,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 1.087551563532873e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1647,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 1649,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              6,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 1.070783836580686e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1706,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 1707,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              6,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 9.36867150167505e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1801,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 1802,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              7,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 1.0501326610950416e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1849,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 1850,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              7,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 1.0388735322600892e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1897,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 1899,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              7,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 6.087352535473463e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 1947,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 1948,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              7,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 1.0259041312074592e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2016,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 2017,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              8,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 7.940867826838957e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2051,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 2052,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              8,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 1.1388282930246455e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2086,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 2088,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              8,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 8.028626438856903e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2123,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 2124,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              8,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 9.263538619215272e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2370,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 2371,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              9,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.3011881224549882,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2494,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 2495,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              9,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.10357700580824837,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2618,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 2620,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              9,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.07068734843690627,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2744,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 2745,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              9,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.24997876042526213,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2767,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 2768,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              9,
+              0,
+              -2
+            ],
+            [
+              10,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.01712914568605265,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2779,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 2780,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              9,
+              0,
+              -1
+            ],
+            [
+              10,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.005754932885765572,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2791,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 2793,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              10,
+              0,
+              1
+            ],
+            [
+              9,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.009438841904469917,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2805,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 2806,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              10,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.028332768784147755,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2820,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 2821,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              11,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.02917098663236504,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2828,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 2829,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              11,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.009719144361204909,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2836,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 2838,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              11,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.008197084977224987,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2846,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 2847,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              11,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.020934300574189373,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2899,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 2900,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              12,
+              0,
+              -3
+            ]
+          ],
+          "match_error_m": 0.2325656305466756,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 2953,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 2954,
+          "side": "left",
+          "kind": "edge",
+          "native": [
+            [
+              12,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.04596033282084924,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3005,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 3007,
+          "side": "left",
+          "kind": "edge",
+          "native": [
+            [
+              12,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.10607300481257441,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3062,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 3063,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              12,
+              0,
+              4
+            ]
+          ],
+          "match_error_m": 0.24113508916586823,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3097,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 3098,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              13,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 7.864105846815714e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3115,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 3116,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              13,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 5.792527697817197e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3133,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 3135,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              13,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 6.8640143127192395e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3153,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 3154,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              13,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 8.323611399628794e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3220,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 3221,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              14,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 5.755116193388182e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3254,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 3255,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              14,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 1.6011996740427363e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3288,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 3290,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              14,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 2.1755459577939724e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3324,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 3325,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              14,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 6.481197847465135e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3333,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 3334,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              14,
+              0,
+              -2
+            ],
+            [
+              15,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 4.123618279739061e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3338,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 3339,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              14,
+              0,
+              -1
+            ],
+            [
+              15,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 7.79488724402287e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3343,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 3345,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              15,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 3.3731404949720343e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3350,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 3351,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              15,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 5.2161163110187375e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3447,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 3448,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              16,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 9.215096619498745e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3496,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 3497,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              16,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 4.387254827718271e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3545,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 3547,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              16,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 1.083497972387294e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3596,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 3597,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              16,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 7.742277593717383e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3623,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 3624,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              17,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 2.546859580029426e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3637,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 3638,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              17,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 2.6710958609055358e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3651,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 3653,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              17,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.0002076197939476746,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3667,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 3668,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              17,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.0006198436765087594,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3714,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 3715,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              18,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.13561741616712705,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3738,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 3739,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              18,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.04575170050597899,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3762,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 3764,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              18,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.044147583185446954,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 3788,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 3789,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              18,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.13404003953546403,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 4222,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 4224,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              19,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.054378000481671386,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 4223,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 4224,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              19,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.054378000481671386,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 4441,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 4443,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              19,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.0697361356870502,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 4442,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 4443,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              19,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.0697361356870502,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 4874,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 4876,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              20,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.05310099912720887,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 4875,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 4876,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              20,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.05310099912720887,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 5092,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 5094,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              20,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.06875962466892493,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 5093,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 5094,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              20,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.06875962466892493,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 5204,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 5205,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              21,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 6.808570927009397e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 5260,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 5261,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              21,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 6.865896461800487e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 5316,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 5318,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              21,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 6.07359338576713e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 5374,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 5375,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              21,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 7.832291937130082e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 5471,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 5472,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              22,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 1.2062408956805902e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 5520,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 5521,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              22,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 1.0616288375402697e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 5569,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 5571,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              22,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 1.1903398356552339e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 5620,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 5621,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              22,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 1.1116545057848414e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 5689,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 5690,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              23,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 7.193015837956614e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 5724,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 5725,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              23,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 8.249050697189995e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 5759,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 5761,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              23,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 8.348034790387704e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 5796,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 5797,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              23,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 8.249112029753054e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6053,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 6054,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              24,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.17922771821404473,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6182,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 6183,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              24,
+              0,
+              -1
+            ],
+            [
+              11,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.0931755663564759,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6311,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 6313,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              11,
+              0,
+              -1
+            ],
+            [
+              24,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.1016731230764344,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6442,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 6443,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              11,
+              0,
+              -2
+            ],
+            [
+              24,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.25426226766167004,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6481,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 6482,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              16,
+              0,
+              -2
+            ],
+            [
+              25,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.11345982020852242,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6501,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 6502,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              16,
+              0,
+              -1
+            ],
+            [
+              25,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.037265294058243456,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6521,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 6523,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              25,
+              0,
+              1
+            ],
+            [
+              16,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.040407554226561664,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6543,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 6544,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              25,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.12034434341980363,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6582,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 6583,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              26,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.044820439777179075,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6602,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 6603,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              26,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.014968368791077774,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6622,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 6624,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              26,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.014527159100530223,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6644,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 6645,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              26,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.04378976339476352,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6691,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 6692,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              27,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 7.073762750419773e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6715,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 6716,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              27,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 6.3284804504227114e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6739,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 6741,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              27,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 6.2638931612975054e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6765,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 6766,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              27,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 6.242635890915487e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6824,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 6825,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              28,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 1.160154537859558e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6854,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 6855,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              28,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 5.176672347864765e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6884,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 6886,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              28,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 5.532134036813463e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 6916,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 6917,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              28,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 1.6763283990906802e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7011,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 7012,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              29,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 6.148132749241945e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7059,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 7060,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              29,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 4.07858031515574e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7107,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 7109,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              29,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 5.370293900754213e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7157,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 7158,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              29,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 4.644615607040861e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7388,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 7389,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              30,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.2096180625349323,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7504,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 7505,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              30,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.07211880271112443,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7620,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 7622,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              30,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.05178980328681059,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7738,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 7739,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              30,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.20177326140855217,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7745,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 7746,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              30,
+              0,
+              -2
+            ],
+            [
+              31,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.10001514656622001,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7749,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 7750,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              30,
+              0,
+              -1
+            ],
+            [
+              31,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.033306832061501576,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7753,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 7755,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              31,
+              0,
+              1
+            ],
+            [
+              30,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 3.4325600736863265e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7759,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 7760,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              31,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 2.567641182550549e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7766,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 7767,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              32,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 3.814933592146328e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7770,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 7771,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              32,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 3.814644529197755e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7774,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 7776,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              32,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 3.0533015178305924e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 7780,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 7781,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              32,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 3.822117736225765e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 8013,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 8014,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              32,
+              0,
+              -2
+            ],
+            [
+              33,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.23447347455140607,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 8130,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 8131,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              32,
+              0,
+              -1
+            ],
+            [
+              33,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.07684889877544071,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 8247,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 8249,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              33,
+              0,
+              1
+            ],
+            [
+              32,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.03489421503647708,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 8366,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 8367,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              33,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.20278341333296035,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 8923,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 8924,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              12,
+              0,
+              -3
+            ],
+            [
+              34,
+              0,
+              -3
+            ]
+          ],
+          "match_error_m": 0.33641652485759854,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 9481,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 9482,
+          "side": "left",
+          "kind": "edge",
+          "native": [
+            [
+              12,
+              0,
+              -1
+            ],
+            [
+              34,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.06778830231701394,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 10037,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 10039,
+          "side": "left",
+          "kind": "edge",
+          "native": [
+            [
+              34,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.19719812160853278,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 10598,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 10599,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              34,
+              0,
+              4
+            ]
+          ],
+          "match_error_m": 0.4110001366552512,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 10645,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 10646,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              34,
+              0,
+              -3
+            ],
+            [
+              35,
+              0,
+              -3
+            ]
+          ],
+          "match_error_m": 0.1000064209491974,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 10693,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 10694,
+          "side": "left",
+          "kind": "edge",
+          "native": [
+            [
+              34,
+              0,
+              -1
+            ],
+            [
+              35,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.035152153299264584,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 10739,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 10741,
+          "side": "left",
+          "kind": "edge",
+          "native": [
+            [
+              35,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 1.2261051332792324e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 10790,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 10791,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              35,
+              0,
+              4
+            ]
+          ],
+          "match_error_m": 1.4759501891698722e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 10819,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 10820,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              36,
+              0,
+              -3
+            ]
+          ],
+          "match_error_m": 3.1151908462108933e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 10849,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 10850,
+          "side": "left",
+          "kind": "edge",
+          "native": [
+            [
+              36,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 8.739937794514582e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 10877,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 10879,
+          "side": "left",
+          "kind": "edge",
+          "native": [
+            [
+              36,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 1.0901988430151815e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 10910,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 10911,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              36,
+              0,
+              4
+            ]
+          ],
+          "match_error_m": 1.0903091133394012e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 12543,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 12544,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              36,
+              0,
+              -3
+            ],
+            [
+              37,
+              0,
+              -3
+            ]
+          ],
+          "match_error_m": 0.3575268985900309,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 14177,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 14178,
+          "side": "left",
+          "kind": "edge",
+          "native": [
+            [
+              36,
+              0,
+              -1
+            ],
+            [
+              37,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.07154030337602078,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 15809,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 15811,
+          "side": "left",
+          "kind": "edge",
+          "native": [
+            [
+              37,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.20269617298043477,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 17446,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 17447,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              37,
+              0,
+              4
+            ]
+          ],
+          "match_error_m": 0.4376909334614764,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 18051,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 18052,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              38,
+              0,
+              -3
+            ]
+          ],
+          "match_error_m": 0.3344328876745785,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 18657,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 18658,
+          "side": "left",
+          "kind": "edge",
+          "native": [
+            [
+              38,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.06857175123446733,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 19261,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 19263,
+          "side": "left",
+          "kind": "edge",
+          "native": [
+            [
+              12,
+              0,
+              2
+            ],
+            [
+              38,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.1912460220400529,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 19870,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 19871,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              12,
+              0,
+              4
+            ],
+            [
+              38,
+              0,
+              4
+            ]
+          ],
+          "match_error_m": 0.4190205684406084,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 19967,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 19968,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              39,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 8.903061056835483e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 20016,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 20017,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              39,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 5.563669245830935e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 20065,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 20067,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              39,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 6.03995008179146e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 20116,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 20117,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              39,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 1.0615213626103636e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 20199,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 20200,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              18,
+              0,
+              -2
+            ],
+            [
+              40,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.13562623310587957,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 20241,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 20242,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              18,
+              0,
+              -1
+            ],
+            [
+              40,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.045757634319097164,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 20283,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 20285,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              40,
+              0,
+              1
+            ],
+            [
+              18,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 6.7690806159758444e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 20327,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 20328,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              40,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 1.0333969048529468e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 20506,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 20507,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              41,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.21400232774232741,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 20596,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 20597,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              41,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.08069013469351803,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 20686,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 20688,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              41,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.08926589308347802,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 20778,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 20779,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              41,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.27008690010450026,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 20941,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 20942,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              42,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.1888775480166558,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 21023,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 21024,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              42,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.0605198748757497,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 21105,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 21107,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              42,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.05561440661072599,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 21189,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 21190,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              42,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.16460524588598002,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 21310,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 21311,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              43,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 6.830227091337779e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 21371,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 21372,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              43,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 7.565269130860603e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 21432,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 21434,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              43,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 1.2008285972485871e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 21495,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 21496,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              43,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 1.2421312586291714e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 21622,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 21623,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              44,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 1.520440346531982e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 21686,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 21687,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              44,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 1.5204857389133809e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 21750,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 21752,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              44,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 1.0311300801748801e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 21816,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 21817,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              44,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 1.1492394258669981e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 21959,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 21960,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              45,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.14325703204243118,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22031,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 22032,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              45,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.05316009507099335,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22103,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 22105,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              45,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.05640982183631113,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22177,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 22178,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              45,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.1700340163481348,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22328,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 22329,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              46,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.21305789502787023,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22404,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 22405,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              46,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.07859383830188736,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22480,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 22482,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              46,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.08478155513532436,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22558,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 22559,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              46,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.2554815519689318,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22665,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 22666,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              47,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 5.7013168084903126e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22719,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 22720,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              47,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 5.216651866154551e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22773,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 22775,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              17,
+              0,
+              1
+            ],
+            [
+              47,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.00020534680550030708,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22829,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 22830,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              17,
+              0,
+              2
+            ],
+            [
+              47,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.000618745719118447,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22889,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 22891,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              48,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 2.2380183529451577e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22890,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 22891,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              48,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 2.2380183529451577e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22921,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 22923,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              48,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 1.6022566276853042e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22922,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 22923,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              48,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 1.6022566276853042e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22953,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 22954,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              5,
+              0,
+              -2
+            ],
+            [
+              49,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.06375802407670665,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22969,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 22970,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              5,
+              0,
+              -1
+            ],
+            [
+              49,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.02104056131995135,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 22985,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 22987,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              49,
+              0,
+              1
+            ],
+            [
+              5,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.022316890800480587,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 23003,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 23004,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              49,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.06675263752709824,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 23034,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 23035,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              50,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 0.028525871382117058,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 23050,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 23051,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              50,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 0.009517285174126837,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 23066,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 23068,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              50,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.008204231106819868,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 23084,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 23085,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              50,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.021871699361783736,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 23155,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 23156,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              51,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 1.0110387329489897e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 23191,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 23192,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              51,
+              0,
+              -1
+            ]
+          ],
+          "match_error_m": 1.3913931055823348e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 23227,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 23229,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              51,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 1.3488815483129666e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 23265,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 23266,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              51,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 1.3693756984556069e-05,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 23366,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 23367,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              52,
+              0,
+              -2
+            ]
+          ],
+          "match_error_m": 6.6103379133095616e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 23417,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 23418,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              52,
+              0,
+              -1
+            ],
+            [
+              50,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 9.214873434458167e-06,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 23468,
+      "kind": "divider",
+      "proof": [
+        {
+          "lanelet": 23470,
+          "side": "left",
+          "kind": "divider",
+          "native": [
+            [
+              50,
+              0,
+              -1
+            ],
+            [
+              52,
+              0,
+              1
+            ]
+          ],
+          "match_error_m": 0.009515529671032173,
+          "rejection": null
+        }
+      ]
+    },
+    {
+      "way": 23521,
+      "kind": "edge",
+      "proof": [
+        {
+          "lanelet": 23522,
+          "side": "right",
+          "kind": "edge",
+          "native": [
+            [
+              50,
+              0,
+              -2
+            ],
+            [
+              52,
+              0,
+              2
+            ]
+          ],
+          "match_error_m": 0.02852495517130583,
+          "rejection": null
+        }
+      ]
+    }
+  ],
+  "skipped": {
+    "internal_or_unproven": 586
+  }
+}

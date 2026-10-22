@@ -55,6 +55,21 @@ s=20→490을 사용한다. 기본 속도는 20km/h이고 세 번째 인자로 �
 3차원 위치 차이이므로 도로 높이 오차도 포함한다. 결과 JSON/로그는 기본적으로
 `log/bus-control-날짜시각/`에 저장하며, 성공/실패 후 STOP과 경로 해제를 확인한다.
 
+## 정류장 노선 한 바퀴 시험
+
+```bash
+./scripts/carla/run_bus_lap
+# 선택: 실패 구간 진단. 전체 완주 결과로 처리하지 않는다.
+./scripts/carla/run_bus_lap /tmp/bus-suffix --start-anchor S04
+```
+
+S01에 최초 배치한 뒤 S01→S10, S10→S01 두 경로로 운행한다. 같은 시작 lanelet을
+한 경로에 중복할 수 없는 제약 때문에 S10에서 정지·경로 전환 후 재출발한다.
+정류장과 순환로 경유점의 순서, 충돌 없음, 입력 최신성, 목표 오차 1.5m 미만과
+정지 유지 5초를 확인한다. 무진행 120초·충돌·입력 단절 시 중단하고 STOP 처리한다.
+서비스 정차나 모든 정류장의 바깥 차로 정렬을 검증하는 도구는 아니다.
+속도 상한은 20km/h지만 실제 속도는 곡선·신호·계획 결과에 따라 낮아진다.
+
 ## 새 PC와 외부 자산
 
 이 저장소에는 소스, 버스 설정, 노선/정류장, 검증한 압축 Lanelet2 지도·신호 설정,
@@ -80,7 +95,8 @@ CARLA_BASE_IMAGE=selfcar-2026-carla:local ./scripts/carla/build_bus_image
 필요하면 `CARLA_ROOT`, `CARLA_PYTHON`, `AUTOWARE_MAP_DIR`,
 `AUTOWARE_ML_MODELS_DIR`를 해당 스크립트에 맞게 설정한다.
 
-최신 수치는 [20km/h 검증 기록](validation/carla-bus-speed-20261022/README.md)을 따른다.
+노선 완주 수치와 남은 문제는 [전체 노선 검증](validation/carla-bus-lap-20261022/README.md),
+별도 20km/h 순항 기준은 [속도 시험](validation/carla-bus-speed-20261022/README.md)을 따른다.
 
 ## 보존 기준
 
@@ -92,5 +108,6 @@ CARLA_BASE_IMAGE=selfcar-2026-carla:local ./scripts/carla/build_bus_image
   `selfcar-2026-carla:bus-10kmh-20261022`.
 - 원본 Town05 지도와 Prius 이미지 태그는 이번 버스 수정으로 덮어쓰지 않았다.
 
-다음 단계는 전체 고정 노선의 교차로·바깥 차로 접근 검증이다. 기본 시험 통과만으로
-10개 정류장 완주, 다른 차량/보행자 대응, 하차벨 정차 동작이 완료됐다고 보지 않는다.
+빈 도로의 전체 노선 경유 완주는 확인했다. 다음 단계는 일시적 계획/제어 진단과
+속도 개선, 정류장별 바깥 차로 접근·정차·재출발, 하차벨·승객 판단 통합이다.
+전체 노선 경유 결과를 다른 차량/보행자 대응이나 서비스 정차 검증으로 보지 않는다.

@@ -6,16 +6,29 @@ USER root
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 COPY carla_overlay/src/autoware_carla_interface /opt/carla-bus-build/src/autoware_carla_interface
 COPY vtd_overlay/src/autoware_universe/planning/autoware_mission_planner_universe /opt/carla-bus-build/src/autoware_mission_planner_universe
+COPY vtd_overlay/src/autoware_universe/planning/behavior_path_planner/autoware_behavior_path_planner_common /opt/carla-bus-build/src/autoware_behavior_path_planner_common
 RUN source /opt/ros/jazzy/setup.bash && \
     source /opt/autoware/setup.bash && source /opt/selfcar_overlay/setup.bash && \
     source /opt/carla_overlay/setup.bash && \
     CMAKE_BUILD_PARALLEL_LEVEL=2 MAKEFLAGS=-j2 colcon --log-base /opt/carla-bus-build/log build \
-      --base-paths /opt/carla-bus-build/src --packages-select autoware_carla_interface autoware_mission_planner_universe \
+      --base-paths /opt/carla-bus-build/src --packages-select autoware_carla_interface autoware_mission_planner_universe autoware_behavior_path_planner_common \
       --executor sequential --merge-install --install-base /opt/carla_overlay \
       --build-base /opt/carla-bus-build/build \
       --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON && \
     source /opt/carla_overlay/setup.bash && \
     LD_LIBRARY_PATH=/opt/carla_overlay/lib:${LD_LIBRARY_PATH} /opt/carla-bus-build/build/autoware_mission_planner_universe/test_autoware_mission_planner_universe --gtest_filter='*Bus*' && \
+    LD_LIBRARY_PATH=/opt/carla_overlay/lib:${LD_LIBRARY_PATH} /opt/carla-bus-build/build/autoware_behavior_path_planner_common/test_autoware_behavior_path_planner_common_drivable_area_expansion && \
+    find /opt/carla-bus-build/src -type f -not -path '*/__pycache__/*' -print0 | \
+      sort -z | xargs -0 sha256sum > /opt/carla-bus-build/source-manifest.sha256
+COPY vtd_overlay/src/autoware_universe/planning/autoware_path_optimizer /opt/carla-bus-build/src/autoware_path_optimizer
+RUN source /opt/ros/jazzy/setup.bash && source /opt/autoware/setup.bash && \
+    source /opt/selfcar_overlay/setup.bash && source /opt/carla_overlay/setup.bash && \
+    CMAKE_BUILD_PARALLEL_LEVEL=2 MAKEFLAGS=-j2 colcon --log-base /opt/carla-bus-build/log build \
+      --base-paths /opt/carla-bus-build/src --packages-select autoware_path_optimizer \
+      --executor sequential --merge-install --install-base /opt/carla_overlay \
+      --build-base /opt/carla-bus-build/build \
+      --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON && \
+    LD_LIBRARY_PATH=/opt/carla_overlay/lib:${LD_LIBRARY_PATH} /opt/carla-bus-build/build/autoware_path_optimizer/test_boundary_cold_retry && \
     find /opt/carla-bus-build/src -type f -not -path '*/__pycache__/*' -print0 | \
       sort -z | xargs -0 sha256sum > /opt/carla-bus-build/source-manifest.sha256
 COPY config/carla /opt/carla-config

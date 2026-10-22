@@ -39,3 +39,7 @@ if not target.exists():
 print('Bus map:', target)
 PY
 AUTOWARE_TOWN05_MAP_DIR="${target_dir}" "${script_dir}/prepare_town05_map"
+PYTHONDONTWRITEBYTECODE=1 "${CARLA_PYTHON:-/home/a/CARLA/venv-0.9.16/bin/python}" \
+  "${script_dir}/../../tools/map/install_town05_bus_edges.py" \
+  --map-dir "${target_dir}" \
+  --xodr "${CARLA_ROOT:-/home/a/CARLA/0.9.16}/CarlaUE4/Content/Carla/Maps/OpenDrive/Town05_Opt.xodr"

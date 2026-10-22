@@ -13,10 +13,14 @@ CARLA 0.9.16 **Town05 / Fuso Rosa** 버스로 도심 → 순환로 → 도심 �
 - **현재 최고 속도 설정은 20km/h.** 빈 순환로의 곡선 포함 약 478m 주행과
   목표 정지를 검증했다. 목표 정지와 STOP 모드 전환 후 제동 유지까지 확인했다. 충돌 0건.
   이전 10km/h 직진·곡선 시험 기록도 보존한다.
-- **전체 노선 완주·교차로 신호 주행·조건부 정류장 정차·하차벨 UI는 후속 단계다.**
+- **빈 도로에서 정류장 10개 경유 후 S01 복귀 한 바퀴 완주: 1,989.83m, 충돌 0건.**
+  S10 정지·재출발과 S01 목표 정지를 확인했다. 상한 20km/h, 실제 최고 18.65km/h,
+  대기 포함 평균 5.06km/h다. 일시적 안전 진단 7회는 자동 회복했으며 개선 대상으로 남는다.
+- **조건부 정류장 정차·항상 바깥 차로 접근·하차벨 UI·NPC 교통 대응은 아직 미검증이다.**
   기존 승용차 시험을 버스 검증 결과로 간주하지 않는다.
 
-[최신 20km/h 검증](docs/validation/carla-bus-speed-20261022/README.md) ·
+[정류장 노선 완주 결과](docs/validation/carla-bus-lap-20261022/README.md) ·
+[20km/h 순환로 검증](docs/validation/carla-bus-speed-20261022/README.md) ·
 [형상·경로·정지 문제 수정](docs/validation/carla-bus-envelope-20261022/README.md) ·
 [실행 방법](docs/carla-bus-operations.md) ·
 [미션 설계 및 진행 단계](docs/carla-bus-mission.md) ·
@@ -33,6 +37,7 @@ CARLA 0.9.16 **Town05 / Fuso Rosa** 버스로 도심 → 순환로 → 도심 �
 ./scripts/carla/validate_bus_control straight
 ./scripts/carla/validate_bus_control curve
 ./scripts/carla/validate_bus_control speed # 곡선 포함 긴 순환로 시험, 기본 20km/h
+./scripts/carla/run_bus_lap # 정류장 10개 경유 코스, 서비스 정차 없이 한 바퀴
 ```
 
 CARLA 서버가 먼저 실행되어 있어야 한다. 시작 명령은 버스를 STOP 상태로 생성한다.
@@ -152,8 +157,8 @@ self-hosted NVIDIA runner.
 [도심 정류장 10개와 서부 순환 노선](scenarios/bus/README.md)을 생성했다.
 차로 중앙 정차, 하차벨·대기 승객 조건, 구현 단계는
 [버스 미션 설계](docs/carla-bus-mission.md)를 따른다.
-버스의 저속 직진·곡선·목표 정지까지 검증했다. 조건부 정차 UI와 전체 노선 통합은
-후속 단계이며, 버스용 최신 결과는 위의 검증 보고서를 따른다.
+버스의 직진·곡선·목표 정지와 빈 도로의 전체 노선 경유 완주를 검증했다.
+조건부 정차·하차벨 UI는 후속 단계이며, 상세 조건과 남은 문제는 위의 검증 보고서를 따른다.
 
 The current city setup is Town05. The latest [behavior repair and AUTO validation report](docs/carla-behavior-repair-20260922.md)
 records three parked-car avoidance runs, three pedestrian-stop runs, and two

@@ -1671,11 +1671,17 @@
     "stop_sign_lane_regulations": 8,
     "unmapped_scene_stop_triggers": 25
   },
-  "map_sha256": "f4039b2f94bd863b5d7dd0aba68ffe5df6b0341f591f5785de5703e053544834",
+  "map_sha256": "5b7fb0dda6c507ae8a36545793e5064e17d122cb883353f1bd07c510b1d5af7b",
   "lane_change_source": "carla_town05_lane_change_v1",
   "stop_line_adjustment": {
     "report": "carla_stop_line_report.json",
     "center_offset_m": 3.0,
     "moved_stop_lines": 57
+  },
+  "bus_road_edge_classification": {
+    "source_sha256": "f4039b2f94bd863b5d7dd0aba68ffe5df6b0341f591f5785de5703e053544834",
+    "report": "carla_bus_road_edge_report.json",
+    "added_count": 212,
+    "geometry_modified": false
   }
 }
