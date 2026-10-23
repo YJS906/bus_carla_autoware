@@ -1,4 +1,4 @@
-# CARLA + Autoware 수요 기반 자율주행 버스
+# CARLA + Autoware 기반 자율주행 버스
 
 CARLA 0.9.16 **Town05 / Fuso Rosa** 버스로 도심 → 순환로 → 도심 노선을 주행하고,
 하차벨과 대기 승객에 따라 정류장 정차 여부를 결정하는 프로젝트다.
