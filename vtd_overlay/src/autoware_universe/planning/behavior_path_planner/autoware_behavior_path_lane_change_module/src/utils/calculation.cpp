@@ -274,7 +274,8 @@ std::vector<double> calc_min_lane_change_lengths(
   const auto min_lc_length = [&](const auto shift_interval) {
     const auto t = calc_lateral_shift_time(
       shift_interval, lc_param_ptr->trajectory, max_lat_acc);
-    const auto length = min_vel * t;
+    const auto length = std::max(min_vel * t,
+      std::abs(shift_interval) > eps ? lc_param_ptr->trajectory.minimum_lane_change_length : 0.0);
     if (lc_param_ptr->trajectory.enable_lateral_acceleration_limit &&
         lc_param_ptr->trajectory.enable_lateral_jerk_limit) return length;
     return std::max(length, utils::minimumGeometricShiftLength(
@@ -322,6 +323,10 @@ std::vector<double> calc_max_lane_change_lengths(
     // lane changing section
     const auto [min_lat_acc, max_lat_acc] = params.lat_acc_map.find(vel);
     auto t_lane_changing = calc_lateral_shift_time(shift_interval, params, max_lat_acc);
+    if (std::abs(shift_interval) > eps) {
+      t_lane_changing = std::max(
+        t_lane_changing, params.minimum_lane_change_length / std::max(vel, eps));
+    }
     if (!params.enable_lateral_acceleration_limit || !params.enable_lateral_jerk_limit) {
       t_lane_changing = std::max(t_lane_changing, 3.0 * utils::minimumGeometricShiftLength(
         shift_interval, common_data_ptr->bpp_param_ptr->vehicle_info) / std::max(vel, eps));
@@ -829,8 +834,9 @@ std::vector<PhaseMetrics> calc_shift_phase_metrics(
       : std::vector<double>{1.0, 1.5, 2.0, 2.5, 3.0};
   for (const double lat_acc : lateral_samples) {
     const auto minimum_duration = calc_lateral_shift_time(shift_length, trajectory, lat_acc);
-    const auto geometric_length = utils::minimumGeometricShiftLength(
-      shift_length, common_data_ptr->bpp_param_ptr->vehicle_info);
+    const auto geometric_length = std::max(
+      utils::minimumGeometricShiftLength(shift_length, common_data_ptr->bpp_param_ptr->vehicle_info),
+      std::abs(shift_length) > eps ? trajectory.minimum_lane_change_length : 0.0);
     // Length and duration must agree at the sampled speed. Do not accelerate merely to make
     // a short-duration spline steerable. A small bounded set also covers curved references.
     // With comfort limits off, sample from geometry alone, including longer steerable paths.

@@ -19,7 +19,7 @@
     common:
       # output
       output_delta_arc_length: 0.5     #  delta arc length for output trajectory [m]
-      output_backward_traj_length: 5.0  # backward length for backward trajectory from base_link [m]
+      output_backward_traj_length: 20.0  # keep reference/history seam behind bus and curvature-filter window [m]
 
       vehicle_stop_margin_outside_drivable_area: 0.0 # vehicle stop margin to let the vehicle stop before the calculated stop point if it is calculated outside the drivable area [m] .
                                                      # This margin will be realized with delta_arc_length_for_mpt_points m precision.
@@ -54,7 +54,7 @@
         enable_optimization_validation: false
 
       common:
-        num_points: 60        # number of points for optimization [-]
+        num_points: 90        # number of points for optimization [-]
         delta_arc_length: 1.0  # delta arc length for optimization [m]
 
       # kinematics:
@@ -68,6 +68,7 @@
         hard_clearance_from_road: 0.0 # clearance from road boundary[m]
         # if collision_free_constraints.option.soft_constraint is true
         soft_clearance_from_road: 0.3 # clearance from road boundary[m]
+        straight_soft_clearance_from_road: 0.1 # extra margin only; full physical footprint retained
 
       # weight parameter for optimization
       weight:
@@ -76,6 +77,7 @@
 
         # tracking error
         lat_error_weight: 1.0       # weight for lateral error
+        straight_reference_weight: 10.0 # retain original central reference across refinements; zero in bends
         yaw_error_weight: 0.0       # weight for yaw error
         yaw_error_rate_weight: 0.0  # weight for yaw error rate
         steer_input_weight: 0.70 # {OVERRIDE: 70 percent of pre-half value; simulator comfort profile}

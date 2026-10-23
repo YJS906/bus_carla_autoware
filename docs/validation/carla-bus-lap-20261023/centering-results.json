@@ -1,0 +1,196 @@
+{
+  "date": "2026-10-23",
+  "full_lap_revalidated": false,
+  "comparison_interval": {
+    "native_road": 37,
+    "s_m": [
+      345,
+      375
+    ],
+    "minimum_speed_mps": 2,
+    "statistic": "median absolute horizontal lateral error"
+  },
+  "vehicle_dimensions_changed": false,
+  "lane_geometry_changed": false,
+  "verified_paved_boundaries": 40,
+  "native_ring_curve_vertices_with_zero_extra_margin": 619,
+  "image_id": "sha256:81e5f17c75e20046bd1a8902a9efae930d42621337dd9830c6dbb468aebaeb7f",
+  "runs": {
+    "before-outer-planned": {
+      "success": true,
+      "result": "goal_stop_pass",
+      "native_start": {
+        "road": 37,
+        "lane": -3,
+        "s": 330.0
+      },
+      "native_goal": {
+        "road": 37,
+        "lane": -3,
+        "s": 390.0
+      },
+      "travel_distance_m": 59.3254809090995,
+      "final_goal_error_m": 1.0434032678604126,
+      "duration_sim_s": 20.35000030323863,
+      "max_speed_mps": 8.143623820772804,
+      "collisions": 0,
+      "source": "log/bus-centering-20261023/before-outer-planned/straight.json",
+      "comparison_samples": 43,
+      "signed_lateral_median_abs_error_m": 0.6903438236111441,
+      "planned_lateral_median_abs_error_m": 0.7005527003971146
+    },
+    "before-inner": {
+      "success": true,
+      "result": "goal_stop_pass",
+      "native_start": {
+        "road": 37,
+        "lane": -1,
+        "s": 330.0
+      },
+      "native_goal": {
+        "road": 37,
+        "lane": -1,
+        "s": 390.0
+      },
+      "travel_distance_m": 59.2437586224205,
+      "final_goal_error_m": 1.1198283433914185,
+      "duration_sim_s": 20.250000301748514,
+      "max_speed_mps": 8.120191417866854,
+      "collisions": 0,
+      "source": "log/bus-centering-20261023/before-inner/straight.json",
+      "comparison_samples": 42,
+      "signed_lateral_median_abs_error_m": 0.7330358327754336
+    },
+    "final2-outer": {
+      "success": true,
+      "result": "goal_stop_pass",
+      "native_start": {
+        "road": 37,
+        "lane": -3,
+        "s": 330.0
+      },
+      "native_goal": {
+        "road": 37,
+        "lane": -3,
+        "s": 390.0
+      },
+      "travel_distance_m": 59.69125191843159,
+      "final_goal_error_m": 0.7125380039215088,
+      "duration_sim_s": 22.000000327825546,
+      "max_speed_mps": 8.1319273932736,
+      "collisions": 0,
+      "source": "log/bus-centering-20261023/final2-outer/straight.json",
+      "comparison_samples": 43,
+      "signed_lateral_median_abs_error_m": 0.015623422948230825,
+      "planned_lateral_median_abs_error_m": 0.045304897678317246
+    },
+    "final2-inner": {
+      "success": true,
+      "result": "goal_stop_pass",
+      "native_start": {
+        "road": 37,
+        "lane": -1,
+        "s": 330.0
+      },
+      "native_goal": {
+        "road": 37,
+        "lane": -1,
+        "s": 390.0
+      },
+      "travel_distance_m": 60.45213554604834,
+      "final_goal_error_m": 0.6759040355682373,
+      "duration_sim_s": 25.7500003837049,
+      "max_speed_mps": 7.588931875800329,
+      "collisions": 0,
+      "source": "log/bus-centering-20261023/final2-inner/straight.json",
+      "comparison_samples": 47,
+      "signed_lateral_median_abs_error_m": 0.0626343528776303,
+      "planned_lateral_median_abs_error_m": 0.05535507053973632
+    },
+    "before-curve": {
+      "success": true,
+      "result": "goal_stop_pass",
+      "native_start": {
+        "road": 37,
+        "lane": -2,
+        "s": 130.0
+      },
+      "native_goal": {
+        "road": 37,
+        "lane": -2,
+        "s": 300.0
+      },
+      "travel_distance_m": 177.0895335755904,
+      "final_goal_error_m": 0.6629236340522766,
+      "duration_sim_s": 43.35000064596534,
+      "max_speed_mps": 5.592641016332388,
+      "collisions": 0,
+      "source": "log/bus-centering-20261023/before-curve/curve.json"
+    },
+    "final2-curve": {
+      "success": true,
+      "result": "goal_stop_pass",
+      "native_start": {
+        "road": 37,
+        "lane": -2,
+        "s": 130.0
+      },
+      "native_goal": {
+        "road": 37,
+        "lane": -2,
+        "s": 300.0
+      },
+      "travel_distance_m": 177.2792444604056,
+      "final_goal_error_m": 0.7066860198974609,
+      "duration_sim_s": 43.35000064596534,
+      "max_speed_mps": 5.5870618584995375,
+      "collisions": 0,
+      "source": "log/bus-centering-20261023/final2-curve/curve.json"
+    },
+    "final2-outer-long": {
+      "success": true,
+      "result": "goal_stop_pass",
+      "native_start": {
+        "road": 37,
+        "lane": -3,
+        "s": 330.0
+      },
+      "native_goal": {
+        "road": 37,
+        "lane": -3,
+        "s": 490.0
+      },
+      "travel_distance_m": 159.21579965391902,
+      "final_goal_error_m": 0.9279406070709229,
+      "duration_sim_s": 43.950000654906034,
+      "max_speed_mps": 8.198563424559069,
+      "collisions": 0,
+      "source": "log/bus-centering-20261023/final2-outer-long/straight.json",
+      "comparison_samples": 42,
+      "signed_lateral_median_abs_error_m": 0.03600208063677357,
+      "planned_lateral_median_abs_error_m": 0.06038212061698367,
+      "short_bend_transition_min_kmh": 5.543203995206083,
+      "note": "A short bend and centering transition still slow below the cruise cap; this is not a 50 km/h cruise or full-lap validation. Wrapper result copy recovered after a concurrent usage-text edit; simulation cleanup and JSON report completed."
+    },
+    "final2-urban": {
+      "success": true,
+      "result": "goal_stop_pass",
+      "native_start": {
+        "road": 44,
+        "lane": -2,
+        "s": 10.0
+      },
+      "native_goal": {
+        "road": 44,
+        "lane": -2,
+        "s": 50.0
+      },
+      "travel_distance_m": 39.269213684087845,
+      "final_goal_error_m": 1.0689393281936646,
+      "duration_sim_s": 20.90000031143427,
+      "max_speed_mps": 5.181103068705116,
+      "collisions": 0,
+      "source": "log/bus-centering-20261023/final2-urban/straight.json"
+    }
+  }
+}

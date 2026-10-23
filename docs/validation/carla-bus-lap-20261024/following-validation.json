@@ -1,0 +1,2595 @@
+{
+  "status": "strict_traffic_lap_passed_with_two_transient_diagnostics",
+  "baseline": {
+    "run": "log/bus-traffic-fix-20261024/contact-baseline",
+    "ego_collision_events": 0,
+    "npc_sensor_contacts_with_bus": 482,
+    "first_contact": {
+      "actor_id": 811,
+      "other_id": 788,
+      "other_type": "vehicle.mitsubishi.fusorosa",
+      "frame": 3268587,
+      "impulse": [
+        -385.9093933105469,
+        -4990.7421875,
+        -0.019763538613915443
+      ]
+    },
+    "result": "error",
+    "error": "RuntimeError('Lap interrupted')"
+  },
+  "scope": "Town05 full course with all 16 NPCs retained, finite NPC controls, two-sided collision sensors, stop-line signal audit, wider corridor and per-vertex connector repair. Non-service lap; bell, passenger logic and all-station outer-lane stopping remain separate.",
+  "guard_only_section": {
+    "success": true,
+    "result": "section_completed",
+    "distance_m": 255.57762349511358,
+    "visited_stops": [
+      "S03",
+      "S04",
+      "S05"
+    ],
+    "spawned": 14,
+    "minimum_bbox_clearance_m": 6.053160829247538,
+    "npc_bus_contact_events": 0,
+    "ego_collision_events": 0,
+    "following_cap_samples": 585,
+    "signal_crossings": [
+      [
+        "Green",
+        false
+      ],
+      [
+        "Green",
+        false
+      ],
+      [
+        "Green",
+        false
+      ]
+    ]
+  },
+  "tests": {
+    "python_following_route_ring": 16,
+    "current_lane_follower_cpp": 5,
+    "speed_preparation_cpp": 13,
+    "traffic_signal_cpp": 35,
+    "map_manifest_hashes": 11,
+    "drivable_area_cpp": 23
+  },
+  "traffic_lap": {
+    "runtime_image": "sha256:24c903bf346579a4e8b87529763bd1497cebb335f04c4107fa8b866ddabced63",
+    "run": "log/bus-traffic-fix-20261024/traffic16-following",
+    "success": true,
+    "result": "lap_completed",
+    "distance_m": 2006.70761001924,
+    "visited_stops": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07",
+      "S08",
+      "S09",
+      "S10",
+      "S01"
+    ],
+    "ego_collision_events": 0,
+    "npc_sensor_bus_contact_events": 0,
+    "minimum_bbox_clearance_m": 0.47539101414348445,
+    "spawned": 16,
+    "last_visible_npcs": 16,
+    "encounters": [
+      {
+        "actor_id": 878,
+        "direction": "same",
+        "first_sim_time": 25.400000378,
+        "minimum_bbox_clearance_m": 3.5781936465150013,
+        "maximum_npc_speed_kmh": 19.474761908316726,
+        "last_sim_time": 1177.500017546
+      },
+      {
+        "actor_id": 880,
+        "direction": "opposite",
+        "first_sim_time": 25.400000378,
+        "minimum_bbox_clearance_m": 1.8718641208705866,
+        "maximum_npc_speed_kmh": 21.42442210591907,
+        "last_sim_time": 860.850012827
+      },
+      {
+        "actor_id": 878,
+        "direction": "crossing",
+        "first_sim_time": 41.00000061,
+        "minimum_bbox_clearance_m": 6.194137548734243,
+        "maximum_npc_speed_kmh": 19.719368954532705,
+        "last_sim_time": 1173.10001748
+      },
+      {
+        "actor_id": 884,
+        "direction": "crossing",
+        "first_sim_time": 137.150002043,
+        "minimum_bbox_clearance_m": 15.687503238103465,
+        "maximum_npc_speed_kmh": 22.45974780030292,
+        "last_sim_time": 151.200002253
+      },
+      {
+        "actor_id": 882,
+        "direction": "same",
+        "first_sim_time": 154.300002299,
+        "minimum_bbox_clearance_m": 14.829713427806185,
+        "maximum_npc_speed_kmh": 19.472522519299822,
+        "last_sim_time": 196.750002931
+      },
+      {
+        "actor_id": 902,
+        "direction": "crossing",
+        "first_sim_time": 179.550002675,
+        "minimum_bbox_clearance_m": 15.833232137460772,
+        "maximum_npc_speed_kmh": 19.68233168140992,
+        "last_sim_time": 207.700003094
+      },
+      {
+        "actor_id": 900,
+        "direction": "same",
+        "first_sim_time": 183.450002733,
+        "minimum_bbox_clearance_m": 0.47539101414348445,
+        "maximum_npc_speed_kmh": 21.80660220240549,
+        "last_sim_time": 274.50000409
+      },
+      {
+        "actor_id": 888,
+        "direction": "same",
+        "first_sim_time": 186.950002785,
+        "minimum_bbox_clearance_m": 1.0145190377330724,
+        "maximum_npc_speed_kmh": 19.613868611983452,
+        "last_sim_time": 400.050005961
+      },
+      {
+        "actor_id": 882,
+        "direction": "crossing",
+        "first_sim_time": 197.000002935,
+        "minimum_bbox_clearance_m": 15.427602517069577,
+        "maximum_npc_speed_kmh": 17.958956619237842,
+        "last_sim_time": 207.40000309
+      },
+      {
+        "actor_id": 888,
+        "direction": "crossing",
+        "first_sim_time": 197.000002935,
+        "minimum_bbox_clearance_m": 10.579784496874893,
+        "maximum_npc_speed_kmh": 15.614418140831376,
+        "last_sim_time": 416.450006205
+      },
+      {
+        "actor_id": 900,
+        "direction": "crossing",
+        "first_sim_time": 197.200002938,
+        "minimum_bbox_clearance_m": 2.141653370958775,
+        "maximum_npc_speed_kmh": 22.36844376070596,
+        "last_sim_time": 1173.10001748
+      },
+      {
+        "actor_id": 902,
+        "direction": "same",
+        "first_sim_time": 198.500002957,
+        "minimum_bbox_clearance_m": 16.87300538545142,
+        "maximum_npc_speed_kmh": 19.624724385277876,
+        "last_sim_time": 204.900003053
+      },
+      {
+        "actor_id": 898,
+        "direction": "opposite",
+        "first_sim_time": 236.300003521,
+        "minimum_bbox_clearance_m": 6.375092799143771,
+        "maximum_npc_speed_kmh": 19.560077689379924,
+        "last_sim_time": 249.850003723
+      },
+      {
+        "actor_id": 880,
+        "direction": "crossing",
+        "first_sim_time": 244.30000364,
+        "minimum_bbox_clearance_m": 2.2220995336935636,
+        "maximum_npc_speed_kmh": 22.48153760324495,
+        "last_sim_time": 289.750004317
+      },
+      {
+        "actor_id": 904,
+        "direction": "crossing",
+        "first_sim_time": 250.500003732,
+        "minimum_bbox_clearance_m": 3.0678342381747914,
+        "maximum_npc_speed_kmh": 22.22363183732278,
+        "last_sim_time": 297.000004425
+      },
+      {
+        "actor_id": 896,
+        "direction": "crossing",
+        "first_sim_time": 387.450005773,
+        "minimum_bbox_clearance_m": 5.972080156402445,
+        "maximum_npc_speed_kmh": 21.87925371280634,
+        "last_sim_time": 1148.500017113
+      },
+      {
+        "actor_id": 890,
+        "direction": "same",
+        "first_sim_time": 391.750005837,
+        "minimum_bbox_clearance_m": 9.456762052140993,
+        "maximum_npc_speed_kmh": 19.478868794897874,
+        "last_sim_time": 1218.900018163
+      },
+      {
+        "actor_id": 890,
+        "direction": "crossing",
+        "first_sim_time": 400.250005964,
+        "minimum_bbox_clearance_m": 6.915841319619711,
+        "maximum_npc_speed_kmh": 19.12698372177541,
+        "last_sim_time": 1173.10001748
+      },
+      {
+        "actor_id": 896,
+        "direction": "opposite",
+        "first_sim_time": 402.050005991,
+        "minimum_bbox_clearance_m": 1.300853288852659,
+        "maximum_npc_speed_kmh": 37.979408507694934,
+        "last_sim_time": 1058.650015775
+      },
+      {
+        "actor_id": 896,
+        "direction": "same",
+        "first_sim_time": 509.100007586,
+        "minimum_bbox_clearance_m": 3.6822236556381345,
+        "maximum_npc_speed_kmh": 22.24570158547969,
+        "last_sim_time": 1206.050017971
+      },
+      {
+        "actor_id": 878,
+        "direction": "opposite",
+        "first_sim_time": 572.050008524,
+        "minimum_bbox_clearance_m": 3.473946965564604,
+        "maximum_npc_speed_kmh": 38.33907536203628,
+        "last_sim_time": 1077.350016053
+      },
+      {
+        "actor_id": 894,
+        "direction": "opposite",
+        "first_sim_time": 633.450009439,
+        "minimum_bbox_clearance_m": 10.84801175104506,
+        "maximum_npc_speed_kmh": 38.877782581763434,
+        "last_sim_time": 805.650012005
+      },
+      {
+        "actor_id": 886,
+        "direction": "opposite",
+        "first_sim_time": 697.100010387,
+        "minimum_bbox_clearance_m": 16.931621364502867,
+        "maximum_npc_speed_kmh": 38.56377340919761,
+        "last_sim_time": 701.200010448
+      },
+      {
+        "actor_id": 908,
+        "direction": "opposite",
+        "first_sim_time": 698.750010412,
+        "minimum_bbox_clearance_m": 10.225924161354001,
+        "maximum_npc_speed_kmh": 37.97907771870422,
+        "last_sim_time": 703.050010476
+      },
+      {
+        "actor_id": 882,
+        "direction": "opposite",
+        "first_sim_time": 759.450011316,
+        "minimum_bbox_clearance_m": 6.279905435746515,
+        "maximum_npc_speed_kmh": 38.45951115709394,
+        "last_sim_time": 973.650014508
+      },
+      {
+        "actor_id": 906,
+        "direction": "same",
+        "first_sim_time": 763.05001137,
+        "minimum_bbox_clearance_m": 1.1944471761299724,
+        "maximum_npc_speed_kmh": 38.85009993631478,
+        "last_sim_time": 767.000011429
+      },
+      {
+        "actor_id": 886,
+        "direction": "crossing",
+        "first_sim_time": 858.100012786,
+        "minimum_bbox_clearance_m": 22.72634613070819,
+        "maximum_npc_speed_kmh": 18.023963753441112,
+        "last_sim_time": 874.300013028
+      },
+      {
+        "actor_id": 890,
+        "direction": "opposite",
+        "first_sim_time": 1074.100016005,
+        "minimum_bbox_clearance_m": 4.398860187134035,
+        "maximum_npc_speed_kmh": 9.613106366197887e-07,
+        "last_sim_time": 1087.150016199
+      },
+      {
+        "actor_id": 902,
+        "direction": "opposite",
+        "first_sim_time": 1125.200016766,
+        "minimum_bbox_clearance_m": 6.5318008445570355,
+        "maximum_npc_speed_kmh": 19.871486992274413,
+        "last_sim_time": 1137.400016948
+      },
+      {
+        "actor_id": 900,
+        "direction": "opposite",
+        "first_sim_time": 1173.300017483,
+        "minimum_bbox_clearance_m": 8.74427344462503,
+        "maximum_npc_speed_kmh": 19.761988184237573,
+        "last_sim_time": 1176.45001753
+      },
+      {
+        "actor_id": 898,
+        "direction": "crossing",
+        "first_sim_time": 1180.050017584,
+        "minimum_bbox_clearance_m": 24.649884426982563,
+        "maximum_npc_speed_kmh": 19.970037807021246,
+        "last_sim_time": 1182.800017625
+      }
+    ],
+    "following_cap_samples": 1674,
+    "emergency_episodes": 19,
+    "signal_crossings": [
+      {
+        "group_id": 35817,
+        "opendrive_id": "2376",
+        "stop_line_id": 35804,
+        "frame": 3287719,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -142.81076049804688,
+          -85.3738021850586
+        ]
+      },
+      {
+        "group_id": 36025,
+        "opendrive_id": "2390",
+        "stop_line_id": 36012,
+        "frame": 3289776,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -130.0504608154297,
+          -13.554595947265625
+        ]
+      },
+      {
+        "group_id": 36249,
+        "opendrive_id": "2404",
+        "stop_line_id": 36236,
+        "frame": 3291356,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -63.11684036254883,
+          6.534141540527344
+        ]
+      },
+      {
+        "group_id": 36265,
+        "opendrive_id": "2405",
+        "stop_line_id": 36252,
+        "frame": 3293866,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          16.349224090576172,
+          3.580756664276123
+        ]
+      },
+      {
+        "group_id": 36153,
+        "opendrive_id": "2398",
+        "stop_line_id": 36140,
+        "frame": 3295297,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          36.60972595214844,
+          -75.16281127929688
+        ]
+      },
+      {
+        "group_id": 36599,
+        "opendrive_id": "2431",
+        "stop_line_id": 36595,
+        "frame": 3296560,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          35.637290954589844,
+          -133.79603576660156
+        ]
+      },
+      {
+        "group_id": 36473,
+        "opendrive_id": "2421",
+        "stop_line_id": 36460,
+        "frame": 3297703,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          36.598323822021484,
+          -175.91847229003906
+        ]
+      },
+      {
+        "group_id": 36615,
+        "opendrive_id": "2432",
+        "stop_line_id": 36602,
+        "frame": 3302518,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          9.610194206237793,
+          202.40359497070312
+        ]
+      },
+      {
+        "group_id": 36537,
+        "opendrive_id": "2426",
+        "stop_line_id": 36524,
+        "frame": 3304956,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          35.35577392578125,
+          103.5782470703125
+        ]
+      },
+      {
+        "group_id": 36281,
+        "opendrive_id": "2406",
+        "stop_line_id": 36268,
+        "frame": 3306265,
+        "state": "Yellow",
+        "previous_state": "Yellow",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          32.653961181640625,
+          14.04610824584961
+        ]
+      },
+      {
+        "group_id": 36217,
+        "opendrive_id": "2402",
+        "stop_line_id": 36204,
+        "frame": 3307794,
+        "state": "Yellow",
+        "previous_state": "Yellow",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -35.87198257446289,
+          -1.3381693363189697
+        ]
+      },
+      {
+        "group_id": 35897,
+        "opendrive_id": "2381",
+        "stop_line_id": 35884,
+        "frame": 3309161,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -53.92900085449219,
+          75.13982391357422
+        ]
+      },
+      {
+        "group_id": 36377,
+        "opendrive_id": "2412",
+        "stop_line_id": 36364,
+        "frame": 3310119,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -108.08732604980469,
+          84.28123474121094
+        ]
+      },
+      {
+        "group_id": 35993,
+        "opendrive_id": "2388",
+        "stop_line_id": 35980,
+        "frame": 3311297,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -184.30482482910156,
+          15.854232788085938
+        ]
+      }
+    ],
+    "peak_kmh_by_zone": {
+      "urban": 26.732386454756423,
+      "ring_road": 48.80802795755129
+    },
+    "duration_sim_s": 1267.600018889,
+    "cleanup": {
+      "stop_verified": true,
+      "test_speed_limit_clear_sent": true,
+      "route_cleared": true,
+      "errors": []
+    },
+    "bounds_audit": {
+      "moving_fresh_samples": 833,
+      "skipped_stopped_stale_or_empty": 496,
+      "invalid_polygon_samples": 11,
+      "outside_area_over_0_1_m2_samples": 10,
+      "worst_samples": [
+        {
+          "sim_time": 877.000013068,
+          "valid_polygon": true,
+          "outside_area_m2": 2.2549505402146894,
+          "x": 34.157161712646484,
+          "y": -158.1929168701172,
+          "speed_mps": 0.461732417345047
+        },
+        {
+          "sim_time": 875.000013038,
+          "valid_polygon": true,
+          "outside_area_m2": 2.2178682711054085,
+          "x": 34.156455993652344,
+          "y": -158.2879180908203,
+          "speed_mps": 0.3009403645992279
+        },
+        {
+          "sim_time": 279.650004167,
+          "valid_polygon": true,
+          "outside_area_m2": 2.1051156229898456,
+          "x": -53.42018127441406,
+          "y": -6.144670009613037,
+          "speed_mps": 1.9714380502700806
+        },
+        {
+          "sim_time": 878.000013083,
+          "valid_polygon": true,
+          "outside_area_m2": 1.5367929467177375,
+          "x": 34.1839485168457,
+          "y": -157.20030212402344,
+          "speed_mps": 1.4696943759918213
+        },
+        {
+          "sim_time": 879.000013098,
+          "valid_polygon": true,
+          "outside_area_m2": 0.7778134879136893,
+          "x": 34.359458923339844,
+          "y": -155.16201782226562,
+          "speed_mps": 2.4061360359191895
+        },
+        {
+          "sim_time": 570.950008507,
+          "valid_polygon": true,
+          "outside_area_m2": 0.3862816069516806,
+          "x": 35.64567565917969,
+          "y": 143.036865234375,
+          "speed_mps": 0.5052062273025513
+        },
+        {
+          "sim_time": 880.000013113,
+          "valid_polygon": true,
+          "outside_area_m2": 0.30247763890650614,
+          "x": 34.65507507324219,
+          "y": -152.38385009765625,
+          "speed_mps": 3.0973329544067383
+        },
+        {
+          "sim_time": 287.700004287,
+          "valid_polygon": true,
+          "outside_area_m2": 0.264098991135042,
+          "x": -42.084861755371094,
+          "y": -5.951905727386475,
+          "speed_mps": 2.083918571472168
+        }
+      ]
+    },
+    "limitations": [
+      "19 temporary emergency episodes; completed automatically without manual recovery",
+      "12 green and 2 yellow crossings; no red/unknown crossing detected",
+      "Non-service lap; outer-lane stopping at every station and bell logic remain separate",
+      "NPC defensive following enabled; not an unmodified Traffic Manager validation",
+      "Post-run audit found 233 non-finite NPC control samples; this historical run predates strict finite-control validation."
+    ],
+    "post_run_nonfinite_control_samples": 233,
+    "accepted_under_current_strict_checks": false
+  },
+  "speed_refinement": {
+    "candidate_image": "sha256:3a03445290222caaf990281fd1886d5a621d832f5ac5797e3a2789b0cc3dd430",
+    "minimum_normal_lane_change_length_m": 30,
+    "lateral_acceleration_max_mps2": 0.693,
+    "lateral_jerk_max_mps3": 0.4,
+    "speed_preparation_tests": 13,
+    "live_validation": "strict_full_lap_passed",
+    "section": {
+      "result": "section_completed",
+      "success": true,
+      "distance_m": 255.65501973785626,
+      "duration_sim_s": 287.30000428100004,
+      "npc_sensor_bus_contact_events": 0,
+      "ego_collision_events": 0,
+      "minimum_bbox_clearance_m": 1.8082934272461615,
+      "emergency_episodes": 1,
+      "signals": [
+        [
+          "Green",
+          false
+        ],
+        [
+          "Green",
+          false
+        ],
+        [
+          "Green",
+          false
+        ]
+      ]
+    },
+    "validated_runtime_image": "sha256:4b92e95b6214b76fdc0db12b7b7d4a0208123450037aa244b7aaadabe9c0dbfe",
+    "validated_run": "log/bus-traffic-fix-20261024/traffic16-vertex"
+  },
+  "corridor_refinement": {
+    "runtime_image": "sha256:04a7db0c0566adc499e7fb378cf07f12bb62794167d934862d31eed0f08b87b3",
+    "dynamic_expansion_ego_extra_width_m": 1.4,
+    "previous_extra_width_m": 1.0,
+    "run": "log/bus-traffic-fix-20261024/traffic16-spatial-corridor",
+    "live_validation": "strict_full_lap_passed",
+    "scope": "Requests 0.4 m more total corridor width subject to existing road/curb/central-boundary and object limits; does not move map coordinates or guarantee equal expansion on both sides.",
+    "validated_runtime_image": "sha256:4b92e95b6214b76fdc0db12b7b7d4a0208123450037aa244b7aaadabe9c0dbfe",
+    "validated_run": "log/bus-traffic-fix-20261024/traffic16-vertex"
+  },
+  "corridor_attempt": {
+    "runtime_image": "sha256:04a7db0c0566adc499e7fb378cf07f12bb62794167d934862d31eed0f08b87b3",
+    "run": "log/bus-traffic-fix-20261024/traffic16-spatial-corridor",
+    "success": false,
+    "result": "error",
+    "error": "RuntimeError('Red/unknown signal stop-line crossing')",
+    "distance_m": 1655.1221157894815,
+    "visited_stops": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07"
+    ],
+    "ego_collision_events": 0,
+    "npc_sensor_bus_contact_events": 0,
+    "all_npc_collision_events": 0,
+    "minimum_bbox_clearance_m": 0.23325094984675349,
+    "spawned": 16,
+    "last_visible_npcs": 16,
+    "following_cap_samples": 492,
+    "emergency_episodes": 6,
+    "emergency_details": [
+      {
+        "start_sim_time": 68.300001017,
+        "end_sim_time": 68.400001019,
+        "diagnostics": [
+          {
+            "level": "\u0002",
+            "name": "planning_validator: trajectory_validation_trajectory_shift",
+            "message": "detected sudden shift in trajectory",
+            "hardware_id": "planning_validator",
+            "values": []
+          }
+        ]
+      },
+      {
+        "start_sim_time": 260.800003886,
+        "end_sim_time": 260.900003887,
+        "diagnostics": [
+          {
+            "level": "\u0002",
+            "name": "planning_validator: trajectory_validation_trajectory_shift",
+            "message": "detected sudden shift in trajectory",
+            "hardware_id": "planning_validator",
+            "values": []
+          }
+        ]
+      },
+      {
+        "start_sim_time": 634.500009454,
+        "end_sim_time": 636.300009481,
+        "diagnostics": [
+          {
+            "level": "\u0002",
+            "name": "planning_validator: trajectory_validation_trajectory_shift",
+            "message": "detected sudden shift in trajectory",
+            "hardware_id": "planning_validator",
+            "values": []
+          },
+          {
+            "level": "\u0003",
+            "name": "service_log_checker: response_status",
+            "message": "OK",
+            "hardware_id": "service_log_checker",
+            "values": []
+          }
+        ]
+      },
+      {
+        "start_sim_time": 701.500010453,
+        "end_sim_time": 701.800010457,
+        "diagnostics": [
+          {
+            "level": "\u0002",
+            "name": "planning_validator: trajectory_validation_trajectory_shift",
+            "message": "detected sudden shift in trajectory",
+            "hardware_id": "planning_validator",
+            "values": []
+          }
+        ]
+      },
+      {
+        "start_sim_time": 704.800010502,
+        "end_sim_time": 705.000010505,
+        "diagnostics": [
+          {
+            "level": "\u0002",
+            "name": "planning_validator: trajectory_validation_trajectory_shift",
+            "message": "detected sudden shift in trajectory",
+            "hardware_id": "planning_validator",
+            "values": []
+          }
+        ]
+      },
+      {
+        "start_sim_time": 716.600010678,
+        "end_sim_time": 717.850010696,
+        "diagnostics": [
+          {
+            "level": "\u0002",
+            "name": "controller_node_exe: control_state",
+            "message": "emergency occurred due to ",
+            "hardware_id": "trajectory_follower_node",
+            "values": [
+              {
+                "key": "control_state",
+                "value": "3"
+              }
+            ]
+          },
+          {
+            "level": "\u0003",
+            "name": "service_log_checker: response_status",
+            "message": "OK",
+            "hardware_id": "service_log_checker",
+            "values": []
+          }
+        ]
+      }
+    ],
+    "signal_crossings": [
+      {
+        "group_id": 35817,
+        "opendrive_id": "2376",
+        "stop_line_id": 35804,
+        "frame": 3333045,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -143.17190551757812,
+          -85.33639526367188
+        ]
+      },
+      {
+        "group_id": 36025,
+        "opendrive_id": "2390",
+        "stop_line_id": 36012,
+        "frame": 3333850,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -129.2200469970703,
+          -13.464258193969727
+        ]
+      },
+      {
+        "group_id": 36249,
+        "opendrive_id": "2404",
+        "stop_line_id": 36236,
+        "frame": 3335377,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -63.155181884765625,
+          6.548455715179443
+        ]
+      },
+      {
+        "group_id": 36265,
+        "opendrive_id": "2405",
+        "stop_line_id": 36252,
+        "frame": 3336571,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          16.503000259399414,
+          3.5167298316955566
+        ]
+      },
+      {
+        "group_id": 36153,
+        "opendrive_id": "2398",
+        "stop_line_id": 36140,
+        "frame": 3338099,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          36.596046447753906,
+          -75.02628326416016
+        ]
+      },
+      {
+        "group_id": 36599,
+        "opendrive_id": "2431",
+        "stop_line_id": 36595,
+        "frame": 3338748,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          35.369361877441406,
+          -133.7796630859375
+        ]
+      },
+      {
+        "group_id": 36473,
+        "opendrive_id": "2421",
+        "stop_line_id": 36460,
+        "frame": 3339591,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          36.61347198486328,
+          -175.9059600830078
+        ]
+      },
+      {
+        "group_id": 36615,
+        "opendrive_id": "2432",
+        "stop_line_id": 36602,
+        "frame": 3343515,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          9.589197158813477,
+          202.40802001953125
+        ]
+      },
+      {
+        "group_id": 36537,
+        "opendrive_id": "2426",
+        "stop_line_id": 36524,
+        "frame": 3345343,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          35.36244583129883,
+          103.68843078613281
+        ]
+      },
+      {
+        "group_id": 36281,
+        "opendrive_id": "2406",
+        "stop_line_id": 36268,
+        "frame": 3346534,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          32.648887634277344,
+          14.025571823120117
+        ]
+      },
+      {
+        "group_id": 36217,
+        "opendrive_id": "2402",
+        "stop_line_id": 36204,
+        "frame": 3347028,
+        "state": "Red",
+        "previous_state": "Red",
+        "phase_transition": false,
+        "violation": true,
+        "front_xy": [
+          -35.72165298461914,
+          -1.3185609579086304
+        ]
+      }
+    ],
+    "signal_states": {
+      "Green": 10,
+      "Red": 1
+    },
+    "signal_violations": 1,
+    "peak_kmh_by_zone": {
+      "ring_road": 43.25246020570979,
+      "urban": 23.069920081622204
+    },
+    "duration_sim_s": 729.3500108679999,
+    "cleanup": {
+      "stop_verified": true,
+      "test_speed_limit_clear_sent": true,
+      "route_cleared": true,
+      "errors": []
+    },
+    "encounters": [
+      {
+        "actor_id": 950,
+        "direction": "same",
+        "first_sim_time": 45.350000675,
+        "minimum_bbox_clearance_m": 3.466754899527919,
+        "maximum_npc_speed_kmh": 16.96080041678822,
+        "last_sim_time": 61.650000918
+      },
+      {
+        "actor_id": 952,
+        "direction": "opposite",
+        "first_sim_time": 45.350000675,
+        "minimum_bbox_clearance_m": 0.23325094984675349,
+        "maximum_npc_speed_kmh": 21.429023588620755,
+        "last_sim_time": 88.700001321
+      },
+      {
+        "actor_id": 950,
+        "direction": "crossing",
+        "first_sim_time": 61.850000921,
+        "minimum_bbox_clearance_m": 5.914471817155749,
+        "maximum_npc_speed_kmh": 19.996241744277235,
+        "last_sim_time": 72.850001085
+      },
+      {
+        "actor_id": 956,
+        "direction": "crossing",
+        "first_sim_time": 73.700001098,
+        "minimum_bbox_clearance_m": 0.4530462643049257,
+        "maximum_npc_speed_kmh": 19.786818364234094,
+        "last_sim_time": 611.450009111
+      },
+      {
+        "actor_id": 952,
+        "direction": "crossing",
+        "first_sim_time": 80.750001203,
+        "minimum_bbox_clearance_m": 1.2515351958721055,
+        "maximum_npc_speed_kmh": 20.92051437539422,
+        "last_sim_time": 767.600011438
+      },
+      {
+        "actor_id": 956,
+        "direction": "opposite",
+        "first_sim_time": 85.050001267,
+        "minimum_bbox_clearance_m": 0.39320091958003495,
+        "maximum_npc_speed_kmh": 21.62023963424959,
+        "last_sim_time": 628.400009363
+      },
+      {
+        "actor_id": 976,
+        "direction": "crossing",
+        "first_sim_time": 99.35000148,
+        "minimum_bbox_clearance_m": 23.323351189236234,
+        "maximum_npc_speed_kmh": 21.89563088997519,
+        "last_sim_time": 101.750001516
+      },
+      {
+        "actor_id": 976,
+        "direction": "same",
+        "first_sim_time": 102.000001519,
+        "minimum_bbox_clearance_m": 24.201577544861724,
+        "maximum_npc_speed_kmh": 19.377281033541138,
+        "last_sim_time": 102.850001532
+      },
+      {
+        "actor_id": 974,
+        "direction": "opposite",
+        "first_sim_time": 116.550001736,
+        "minimum_bbox_clearance_m": 13.170893588446367,
+        "maximum_npc_speed_kmh": 2.511552604748581e-06,
+        "last_sim_time": 122.450001824
+      },
+      {
+        "actor_id": 974,
+        "direction": "crossing",
+        "first_sim_time": 122.650001827,
+        "minimum_bbox_clearance_m": 10.46953575115516,
+        "maximum_npc_speed_kmh": 2.4432208541978324e-06,
+        "last_sim_time": 139.950002085
+      },
+      {
+        "actor_id": 970,
+        "direction": "opposite",
+        "first_sim_time": 227.850003395,
+        "minimum_bbox_clearance_m": 3.8543439697205764,
+        "maximum_npc_speed_kmh": 19.588356394317756,
+        "last_sim_time": 240.600003585
+      },
+      {
+        "actor_id": 968,
+        "direction": "crossing",
+        "first_sim_time": 235.300003506,
+        "minimum_bbox_clearance_m": 6.895823144725271,
+        "maximum_npc_speed_kmh": 21.665142122820736,
+        "last_sim_time": 758.800011307
+      },
+      {
+        "actor_id": 968,
+        "direction": "same",
+        "first_sim_time": 240.800003588,
+        "minimum_bbox_clearance_m": 23.08714448221164,
+        "maximum_npc_speed_kmh": 19.716359487540725,
+        "last_sim_time": 241.6500036
+      },
+      {
+        "actor_id": 964,
+        "direction": "opposite",
+        "first_sim_time": 300.900004483,
+        "minimum_bbox_clearance_m": 21.29443852343699,
+        "maximum_npc_speed_kmh": 22.35415037233276,
+        "last_sim_time": 302.200004503
+      },
+      {
+        "actor_id": 964,
+        "direction": "crossing",
+        "first_sim_time": 302.400004506,
+        "minimum_bbox_clearance_m": 17.884121472403905,
+        "maximum_npc_speed_kmh": 19.796838839109242,
+        "last_sim_time": 307.950004588
+      },
+      {
+        "actor_id": 962,
+        "direction": "crossing",
+        "first_sim_time": 333.850004974,
+        "minimum_bbox_clearance_m": 13.201818306690118,
+        "maximum_npc_speed_kmh": 19.657862603198794,
+        "last_sim_time": 740.550011035
+      },
+      {
+        "actor_id": 966,
+        "direction": "crossing",
+        "first_sim_time": 376.450005609,
+        "minimum_bbox_clearance_m": 0.9183914672643889,
+        "maximum_npc_speed_kmh": 19.617067951558134,
+        "last_sim_time": 774.700011543
+      },
+      {
+        "actor_id": 980,
+        "direction": "opposite",
+        "first_sim_time": 510.650007609,
+        "minimum_bbox_clearance_m": 10.378467250182473,
+        "maximum_npc_speed_kmh": 37.9787832887462,
+        "last_sim_time": 513.550007652
+      },
+      {
+        "actor_id": 978,
+        "direction": "same",
+        "first_sim_time": 518.200007721,
+        "minimum_bbox_clearance_m": 0.36507760585806287,
+        "maximum_npc_speed_kmh": 40.11927392751649,
+        "last_sim_time": 601.250008959
+      },
+      {
+        "actor_id": 952,
+        "direction": "same",
+        "first_sim_time": 646.200009629,
+        "minimum_bbox_clearance_m": 6.063899805745656,
+        "maximum_npc_speed_kmh": 21.14824579957275,
+        "last_sim_time": 711.750010605
+      },
+      {
+        "actor_id": 958,
+        "direction": "opposite",
+        "first_sim_time": 658.150009807,
+        "minimum_bbox_clearance_m": 26.93411629952404,
+        "maximum_npc_speed_kmh": 19.253323365859938,
+        "last_sim_time": 658.150009807
+      },
+      {
+        "actor_id": 958,
+        "direction": "crossing",
+        "first_sim_time": 658.35000981,
+        "minimum_bbox_clearance_m": 26.842793949464028,
+        "maximum_npc_speed_kmh": 19.635471562574487,
+        "last_sim_time": 659.250009823
+      },
+      {
+        "actor_id": 968,
+        "direction": "opposite",
+        "first_sim_time": 759.000011309,
+        "minimum_bbox_clearance_m": 1.1689229454614531,
+        "maximum_npc_speed_kmh": 3.158581396347214e-06,
+        "last_sim_time": 773.300011523
+      }
+    ],
+    "lap_json_sha256": "e541136e9556cb5d52bef5be801b233d3c0807d9e27389a7a74f023cbe40d613",
+    "bounds_audit": {
+      "moving_fresh_samples": 499,
+      "skipped_stopped_stale_or_empty": 266,
+      "invalid_polygon_samples": 3,
+      "outside_area_over_0_1_m2_samples": 2,
+      "worst_samples": [
+        {
+          "sim_time": 86.000001281,
+          "valid_polygon": true,
+          "outside_area_m2": 0.4685371737363213,
+          "x": -132.07150268554688,
+          "y": 80.48851776123047,
+          "speed_mps": 1.8029240369796753
+        },
+        {
+          "sim_time": 85.000001266,
+          "valid_polygon": true,
+          "outside_area_m2": 0.3271980914631298,
+          "x": -133.13987731933594,
+          "y": 81.62751770019531,
+          "speed_mps": 1.2432808876037598
+        },
+        {
+          "sim_time": 87.000001296,
+          "valid_polygon": true,
+          "outside_area_m2": 0.08749491087507448,
+          "x": -131.1633758544922,
+          "y": 78.99635314941406,
+          "speed_mps": 1.6575324535369873
+        },
+        {
+          "sim_time": 84.000001251,
+          "valid_polygon": true,
+          "outside_area_m2": 0.04772441448835531,
+          "x": -133.6780548095703,
+          "y": 82.1067123413086,
+          "speed_mps": 0.30788180232048035
+        },
+        {
+          "sim_time": 374.950005587,
+          "valid_polygon": true,
+          "outside_area_m2": 0.003341697759588272,
+          "x": 34.96208190917969,
+          "y": 152.57862854003906,
+          "speed_mps": 1.4306321144104004
+        },
+        {
+          "sim_time": 48.000000715,
+          "valid_polygon": true,
+          "outside_area_m2": 0.0,
+          "x": -185.03414916992188,
+          "y": 41.94316101074219,
+          "speed_mps": 1.371418833732605
+        },
+        {
+          "sim_time": 49.00000073,
+          "valid_polygon": true,
+          "outside_area_m2": 0.0,
+          "x": -185.0177764892578,
+          "y": 43.84553527832031,
+          "speed_mps": 2.2214932441711426
+        },
+        {
+          "sim_time": 50.000000745,
+          "valid_polygon": true,
+          "outside_area_m2": 0.0,
+          "x": -184.93472290039062,
+          "y": 46.36787414550781,
+          "speed_mps": 2.732355833053589
+        }
+      ]
+    },
+    "limitations": [
+      "Single non-service traffic lap; outer-lane stopping at every station, bell logic and pedestrians are separate tasks",
+      "Owned NPC defensive following enabled; not an unmodified Traffic Manager validation",
+      "Temporary planning/control diagnostic episodes and global boundary shape issues remain as reported",
+      "Signal audit checks front-bumper centre crossing mapped stop lines, not every traffic rule"
+    ]
+  },
+  "yellow_phase_fix": {
+    "status": "strict_full_lap_passed",
+    "evidence": "Three consecutive yellow-pass warnings preceded the red crossing; control stop distance jumped from 13.27 m to 59.33 m before the crossing. Both collision sensor sets recorded zero contacts.",
+    "correction": "Conservative remaining yellow time from the last confirmed green stamp; no assumed full phase when first observed yellow; reachability includes the configured stop margin to the physical line.",
+    "runtime_image": "sha256:a8b94322237976f3711434666ae4d2b44685dc09b6f38f61b6bd7b117fdab8d8",
+    "section": {
+      "run": "log/bus-traffic-fix-20261024/yellow-window-section",
+      "success": true,
+      "result": "section_completed",
+      "distance_m": 180.5393101933148,
+      "visited_stops": [
+        "S06",
+        "S07",
+        "S08"
+      ],
+      "ego_collision_events": 0,
+      "npc_sensor_bus_contact_events": 0,
+      "spawned": 14,
+      "signal_crossings": [
+        {
+          "group_id": 36281,
+          "opendrive_id": "2406",
+          "stop_line_id": 36268,
+          "frame": 3359257,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            32.360408782958984,
+            13.989133834838867
+          ]
+        },
+        {
+          "group_id": 36217,
+          "opendrive_id": "2402",
+          "stop_line_id": 36204,
+          "frame": 3360748,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -35.497066497802734,
+            -1.4017592668533325
+          ]
+        }
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "red_stop_evidence": {
+        "group_id": 36217,
+        "signal_yellow_first_observed_sim_s": 97.700001455,
+        "signal_red_first_observed_sim_s": 100.800001502,
+        "stationary_red_samples": 368,
+        "minimum_front_distance_to_line_m": 5.742766402471688,
+        "first_stationary_red_sim_s": 105.100001566,
+        "last_stationary_red_sim_s": 144.900002159
+      }
+    },
+    "deployed_source_sha256": {
+      "src/scene.cpp": "b1afe41538f65ac5e572fdf72623c95ff084c0c7700dd2112e26b8d2ccbb6f6a",
+      "src/scene.hpp": "43d10374115ff483f16b9de1822439fce8414063e81033ac25cc90dada20bfcb",
+      "src/experimental/scene.cpp": "4d4a7336a7e33d3630656b3d30361f55e77c473d71f39b7e996d0e6383807638",
+      "src/experimental/scene.hpp": "98db25466a3d7a1c2f2eba1bfd4fb8d23c00d03d02c3c04d18ca1eda7b38c8bf",
+      "src/traffic_signal_policy.hpp": "55ac23fae9a58e63d150a6dcefae7e1d628d935d8cb853f2897250da227acfa2"
+    }
+  },
+  "side_car_wait_observation": {
+    "run": "log/bus-traffic-fix-20261024/traffic16-yellow-window",
+    "snapshot_sim_time": 752.600011214,
+    "road": 2306,
+    "lane": 1,
+    "bounds": {
+      "bus_pose": [
+        35.27056121826172,
+        157.13421630859375,
+        88.06566619873048
+      ],
+      "bounds_polygon_valid": true,
+      "nearby_ros_objects": [
+        {
+          "uuid_prefix": "dd61fe",
+          "distance": 24.604108911494635
+        },
+        {
+          "uuid_prefix": "8e0a1e",
+          "distance": 4.026898362684905
+        }
+      ],
+      "object_stamp": {
+        "sec": 752,
+        "nanosec": 600011214
+      },
+      "ego_bbox_outside_bounds_area_m2": 0.739558910224733,
+      "ros_stamp": {
+        "sec": 752,
+        "nanosec": 600011214
+      }
+    },
+    "planning_factors": [
+      "traffic_light stop 6.24 m ahead",
+      "path_optimizer outside_drivable_area stop 0.16 m ahead"
+    ],
+    "recovery": "Correction after full-log audit: adjacent actor 1035 disappeared at sim 760.25, then the bus resumed. This is not normal traffic recovery.",
+    "limitation": "Valid boundary polygon can still narrow against an adjacent vehicle and exclude part of the current bus footprint; long conservative waits remain. Widening desired corridor does not disable object clearance.",
+    "plot": "side-car-wait.png"
+  },
+  "yellow_window_attempt": {
+    "runtime_image": "sha256:a8b94322237976f3711434666ae4d2b44685dc09b6f38f61b6bd7b117fdab8d8",
+    "run": "log/bus-traffic-fix-20261024/traffic16-yellow-window",
+    "success": true,
+    "result": "lap_completed",
+    "error": null,
+    "distance_m": 2005.6290085745422,
+    "visited_stops": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07",
+      "S08",
+      "S09",
+      "S10",
+      "S01"
+    ],
+    "ego_collision_events": 0,
+    "npc_sensor_bus_contact_events": 0,
+    "all_npc_collision_events": 0,
+    "minimum_bbox_clearance_m": 0.3109472903654089,
+    "spawned": 16,
+    "last_visible_npcs": 15,
+    "following_cap_samples": 1057,
+    "emergency_episodes": 6,
+    "emergency_details": [
+      {
+        "start_sim_time": 380.800005674,
+        "end_sim_time": 382.000005692,
+        "diagnostics": [
+          {
+            "level": "\u0002",
+            "name": "controller_node_exe: control_state",
+            "message": "emergency occurred due to ",
+            "hardware_id": "trajectory_follower_node",
+            "values": [
+              {
+                "key": "control_state",
+                "value": "3"
+              }
+            ]
+          },
+          {
+            "level": "\u0003",
+            "name": "service_log_checker: response_status",
+            "message": "OK",
+            "hardware_id": "service_log_checker",
+            "values": []
+          }
+        ]
+      },
+      {
+        "start_sim_time": 517.000007703,
+        "end_sim_time": 519.000007733,
+        "diagnostics": [
+          {
+            "level": "\u0003",
+            "name": "service_log_checker: response_status",
+            "message": "OK",
+            "hardware_id": "service_log_checker",
+            "values": []
+          },
+          {
+            "level": "\u0002",
+            "name": "planning_validator: trajectory_validation_trajectory_shift",
+            "message": "detected sudden shift in trajectory",
+            "hardware_id": "planning_validator",
+            "values": []
+          }
+        ]
+      },
+      {
+        "start_sim_time": 552.900008238,
+        "end_sim_time": 553.100008241,
+        "diagnostics": [
+          {
+            "level": "\u0002",
+            "name": "planning_validator: trajectory_validation_trajectory_shift",
+            "message": "detected sudden shift in trajectory",
+            "hardware_id": "planning_validator",
+            "values": []
+          }
+        ]
+      },
+      {
+        "start_sim_time": 966.300014398,
+        "end_sim_time": 968.200014427,
+        "diagnostics": [
+          {
+            "level": "\u0002",
+            "name": "planning_validator: trajectory_validation_trajectory_shift",
+            "message": "detected sudden shift in trajectory",
+            "hardware_id": "planning_validator",
+            "values": []
+          },
+          {
+            "level": "\u0003",
+            "name": "service_log_checker: response_status",
+            "message": "OK",
+            "hardware_id": "service_log_checker",
+            "values": []
+          }
+        ]
+      },
+      {
+        "start_sim_time": 994.400014817,
+        "end_sim_time": 994.60001482,
+        "diagnostics": [
+          {
+            "level": "\u0002",
+            "name": "planning_validator: trajectory_validation_trajectory_shift",
+            "message": "detected sudden shift in trajectory",
+            "hardware_id": "planning_validator",
+            "values": []
+          }
+        ]
+      },
+      {
+        "start_sim_time": 998.000014871,
+        "end_sim_time": 998.300014875,
+        "diagnostics": [
+          {
+            "level": "\u0003",
+            "name": "service_log_checker: response_status",
+            "message": "OK",
+            "hardware_id": "service_log_checker",
+            "values": []
+          },
+          {
+            "level": "\u0002",
+            "name": "planning_validator: trajectory_validation_trajectory_shift",
+            "message": "detected sudden shift in trajectory",
+            "hardware_id": "planning_validator",
+            "values": []
+          }
+        ]
+      }
+    ],
+    "signal_crossings": [
+      {
+        "group_id": 35817,
+        "opendrive_id": "2376",
+        "stop_line_id": 35804,
+        "frame": 3364974,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -143.0579833984375,
+          -85.33938598632812
+        ]
+      },
+      {
+        "group_id": 36025,
+        "opendrive_id": "2390",
+        "stop_line_id": 36012,
+        "frame": 3365888,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -129.6279296875,
+          -13.395122528076172
+        ]
+      },
+      {
+        "group_id": 36249,
+        "opendrive_id": "2404",
+        "stop_line_id": 36236,
+        "frame": 3367413,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -63.236351013183594,
+          6.562657833099365
+        ]
+      },
+      {
+        "group_id": 36265,
+        "opendrive_id": "2405",
+        "stop_line_id": 36252,
+        "frame": 3368594,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          16.357149124145508,
+          2.9676713943481445
+        ]
+      },
+      {
+        "group_id": 36153,
+        "opendrive_id": "2398",
+        "stop_line_id": 36140,
+        "frame": 3370127,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          36.61976623535156,
+          -75.07801055908203
+        ]
+      },
+      {
+        "group_id": 36599,
+        "opendrive_id": "2431",
+        "stop_line_id": 36595,
+        "frame": 3370750,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          35.318702697753906,
+          -133.8814239501953
+        ]
+      },
+      {
+        "group_id": 36473,
+        "opendrive_id": "2421",
+        "stop_line_id": 36460,
+        "frame": 3373434,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          36.65731430053711,
+          -175.88204956054688
+        ]
+      },
+      {
+        "group_id": 36615,
+        "opendrive_id": "2432",
+        "stop_line_id": 36602,
+        "frame": 3376512,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          9.681852340698242,
+          202.40350341796875
+        ]
+      },
+      {
+        "group_id": 36537,
+        "opendrive_id": "2426",
+        "stop_line_id": 36524,
+        "frame": 3377375,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          35.36101531982422,
+          103.65748596191406
+        ]
+      },
+      {
+        "group_id": 36281,
+        "opendrive_id": "2406",
+        "stop_line_id": 36268,
+        "frame": 3378565,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          32.54719161987305,
+          13.84730339050293
+        ]
+      },
+      {
+        "group_id": 36217,
+        "opendrive_id": "2402",
+        "stop_line_id": 36204,
+        "frame": 3380110,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -35.485050201416016,
+          -4.2001051902771
+        ]
+      },
+      {
+        "group_id": 35897,
+        "opendrive_id": "2381",
+        "stop_line_id": 35884,
+        "frame": 3381586,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -53.89338684082031,
+          75.20647430419922
+        ]
+      },
+      {
+        "group_id": 36377,
+        "opendrive_id": "2412",
+        "stop_line_id": 36364,
+        "frame": 3382509,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -108.00157928466797,
+          84.26351928710938
+        ]
+      },
+      {
+        "group_id": 35993,
+        "opendrive_id": "2388",
+        "stop_line_id": 35980,
+        "frame": 3383709,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -184.3046875,
+          15.931841850280762
+        ]
+      }
+    ],
+    "signal_states": {
+      "Green": 14
+    },
+    "signal_violations": 0,
+    "peak_kmh_by_zone": {
+      "urban": 23.473713448444993,
+      "ring_road": 48.72940279749042
+    },
+    "duration_sim_s": 1038.050015468,
+    "cleanup": {
+      "stop_verified": true,
+      "test_speed_limit_clear_sent": true,
+      "route_cleared": true,
+      "errors": []
+    },
+    "encounters": [
+      {
+        "actor_id": 1017,
+        "direction": "same",
+        "first_sim_time": 292.000004351,
+        "minimum_bbox_clearance_m": 6.010154402828898,
+        "maximum_npc_speed_kmh": 19.496024595207647,
+        "last_sim_time": 1254.200018689
+      },
+      {
+        "actor_id": 1019,
+        "direction": "opposite",
+        "first_sim_time": 292.000004351,
+        "minimum_bbox_clearance_m": 3.4927220186825814,
+        "maximum_npc_speed_kmh": 21.37952102298362,
+        "last_sim_time": 298.850004453
+      },
+      {
+        "actor_id": 1017,
+        "direction": "crossing",
+        "first_sim_time": 307.200004577,
+        "minimum_bbox_clearance_m": 5.9746096099307575,
+        "maximum_npc_speed_kmh": 19.980869190819462,
+        "last_sim_time": 1203.250017929
+      },
+      {
+        "actor_id": 1023,
+        "direction": "crossing",
+        "first_sim_time": 316.750004719,
+        "minimum_bbox_clearance_m": 4.120495463261651,
+        "maximum_npc_speed_kmh": 22.562378290712264,
+        "last_sim_time": 378.200005635
+      },
+      {
+        "actor_id": 1023,
+        "direction": "same",
+        "first_sim_time": 357.70000533,
+        "minimum_bbox_clearance_m": 8.44283610552006,
+        "maximum_npc_speed_kmh": 19.40028386302847,
+        "last_sim_time": 369.950005512
+      },
+      {
+        "actor_id": 1035,
+        "direction": "opposite",
+        "first_sim_time": 453.300006754,
+        "minimum_bbox_clearance_m": 3.7131127078711033,
+        "maximum_npc_speed_kmh": 22.363965914357443,
+        "last_sim_time": 586.200008735
+      },
+      {
+        "actor_id": 1035,
+        "direction": "crossing",
+        "first_sim_time": 454.550006773,
+        "minimum_bbox_clearance_m": 1.875018448555731,
+        "maximum_npc_speed_kmh": 19.84592724997767,
+        "last_sim_time": 669.250009972
+      },
+      {
+        "actor_id": 1021,
+        "direction": "same",
+        "first_sim_time": 490.300007306,
+        "minimum_bbox_clearance_m": 13.653693214512066,
+        "maximum_npc_speed_kmh": 19.473886551990166,
+        "last_sim_time": 502.750007491
+      },
+      {
+        "actor_id": 1031,
+        "direction": "opposite",
+        "first_sim_time": 593.800008848,
+        "minimum_bbox_clearance_m": 21.511210863357526,
+        "maximum_npc_speed_kmh": 22.354334589396437,
+        "last_sim_time": 595.100008867
+      },
+      {
+        "actor_id": 1031,
+        "direction": "crossing",
+        "first_sim_time": 595.30000887,
+        "minimum_bbox_clearance_m": 17.841850340917944,
+        "maximum_npc_speed_kmh": 19.83057533629101,
+        "last_sim_time": 600.850008953
+      },
+      {
+        "actor_id": 1035,
+        "direction": "same",
+        "first_sim_time": 669.500009976,
+        "minimum_bbox_clearance_m": 0.7517335508358153,
+        "maximum_npc_speed_kmh": 18.961531841865185,
+        "last_sim_time": 760.050011325
+      },
+      {
+        "actor_id": 1019,
+        "direction": "same",
+        "first_sim_time": 733.200010925,
+        "minimum_bbox_clearance_m": 0.725030314802242,
+        "maximum_npc_speed_kmh": 38.278876706983525,
+        "last_sim_time": 829.400012359
+      },
+      {
+        "actor_id": 1019,
+        "direction": "crossing",
+        "first_sim_time": 793.800011828,
+        "minimum_bbox_clearance_m": 5.535953517589754,
+        "maximum_npc_speed_kmh": 21.743322549312303,
+        "last_sim_time": 801.800011947
+      },
+      {
+        "actor_id": 1047,
+        "direction": "opposite",
+        "first_sim_time": 802.850011963,
+        "minimum_bbox_clearance_m": 4.668536904321911,
+        "maximum_npc_speed_kmh": 38.196863697753635,
+        "last_sim_time": 946.95001411
+      },
+      {
+        "actor_id": 1021,
+        "direction": "opposite",
+        "first_sim_time": 866.40001291,
+        "minimum_bbox_clearance_m": 17.056482107065047,
+        "maximum_npc_speed_kmh": 38.563845044752455,
+        "last_sim_time": 870.45001297
+      },
+      {
+        "actor_id": 1029,
+        "direction": "opposite",
+        "first_sim_time": 894.850013334,
+        "minimum_bbox_clearance_m": 16.45420462063328,
+        "maximum_npc_speed_kmh": 38.54593559167034,
+        "last_sim_time": 897.200013369
+      },
+      {
+        "actor_id": 1047,
+        "direction": "crossing",
+        "first_sim_time": 947.200014114,
+        "minimum_bbox_clearance_m": 9.8599607692438,
+        "maximum_npc_speed_kmh": 22.442458960291354,
+        "last_sim_time": 955.950014244
+      },
+      {
+        "actor_id": 1033,
+        "direction": "crossing",
+        "first_sim_time": 976.800014555,
+        "minimum_bbox_clearance_m": 0.7903594323918598,
+        "maximum_npc_speed_kmh": 19.531057717230684,
+        "last_sim_time": 1322.1000197
+      },
+      {
+        "actor_id": 1037,
+        "direction": "crossing",
+        "first_sim_time": 1018.450015176,
+        "minimum_bbox_clearance_m": 14.3337344084886,
+        "maximum_npc_speed_kmh": 0.0,
+        "last_sim_time": 1051.65001567
+      },
+      {
+        "actor_id": 1037,
+        "direction": "same",
+        "first_sim_time": 1052.000015676,
+        "minimum_bbox_clearance_m": 0.3109472903654089,
+        "maximum_npc_speed_kmh": 20.668054124203977,
+        "last_sim_time": 1122.300016723
+      },
+      {
+        "actor_id": 1041,
+        "direction": "crossing",
+        "first_sim_time": 1203.050017926,
+        "minimum_bbox_clearance_m": 10.87884056326804,
+        "maximum_npc_speed_kmh": 19.473899703335604,
+        "last_sim_time": 1213.100018076
+      }
+    ],
+    "lap_json_sha256": "b796ae26f5af8f1eb9a0f9431c62923aa6b389167cec7a351d140ab497794c6a",
+    "bounds_audit": {
+      "moving_fresh_samples": 634,
+      "skipped_stopped_stale_or_empty": 441,
+      "invalid_polygon_samples": 2,
+      "outside_area_over_0_1_m2_samples": 9,
+      "worst_samples": [
+        {
+          "sim_time": 542.450008083,
+          "valid_polygon": true,
+          "outside_area_m2": 4.762445331991098,
+          "x": 4.964898586273193,
+          "y": -3.1007091999053955,
+          "speed_mps": 0.9310156106948853
+        },
+        {
+          "sim_time": 668.750009965,
+          "valid_polygon": true,
+          "outside_area_m2": 2.1656259311657946,
+          "x": 35.2622184753418,
+          "y": 157.01185607910156,
+          "speed_mps": 1.6435261964797974
+        },
+        {
+          "sim_time": 667.75000995,
+          "valid_polygon": true,
+          "outside_area_m2": 1.4112661476816275,
+          "x": 35.118865966796875,
+          "y": 155.00613403320312,
+          "speed_mps": 2.0373470783233643
+        },
+        {
+          "sim_time": 543.450008098,
+          "valid_polygon": true,
+          "outside_area_m2": 1.2769954708812146,
+          "x": 6.3287882804870605,
+          "y": -2.682652235031128,
+          "speed_mps": 1.7589051723480225
+        },
+        {
+          "sim_time": 968.950014438,
+          "valid_polygon": true,
+          "outside_area_m2": 0.6214452631948185,
+          "x": 34.098243713378906,
+          "y": -139.40145874023438,
+          "speed_mps": 0.4202389419078827
+        },
+        {
+          "sim_time": 1121.000016704,
+          "valid_polygon": true,
+          "outside_area_m2": 0.561807045213219,
+          "x": -29.392919540405273,
+          "y": 2.5046043395996094,
+          "speed_mps": 1.528602123260498
+        },
+        {
+          "sim_time": 521.45000777,
+          "valid_polygon": true,
+          "outside_area_m2": 0.34518198266056643,
+          "x": 3.3694891929626465,
+          "y": -3.613187789916992,
+          "speed_mps": 2.08467698097229
+        },
+        {
+          "sim_time": 997.95001487,
+          "valid_polygon": true,
+          "outside_area_m2": 0.32664995498515026,
+          "x": 34.90968322753906,
+          "y": -80.35686492919922,
+          "speed_mps": 1.5870200395584106
+        }
+      ]
+    },
+    "limitations": [
+      "Single non-service traffic lap; outer-lane stopping at every station, bell logic and pedestrians are separate tasks",
+      "Owned NPC defensive following enabled; not an unmodified Traffic Manager validation",
+      "Temporary planning/control diagnostic episodes and global boundary shape issues remain as reported",
+      "Signal audit checks front-bumper centre crossing mapped stop lines, not every traffic rule",
+      "Actor 1035 disappeared at sim 760.25 after near-zero/NaN control beside the bus; clearance after its disappearance is not accepted as normal traffic recovery.",
+      "Post-run audit found 519 non-finite NPC control samples; this historical run predates strict finite-control validation."
+    ],
+    "accepted_traffic_validation": false,
+    "post_run_nonfinite_control_samples": 519
+  },
+  "npc_validation_refinement": {
+    "status": "strict_full_lap_passed",
+    "corrections": [
+      "Require lateral overlap in both car and bus heading frames so an angled adjacent vehicle is not treated as a follower solely by projecting the long bus",
+      "Use finite near-zero TM target 0.01 km/h instead of literal zero to avoid 0/0 in CARLA 0.9.16 velocity_deviation",
+      "Fail validation if any owned NPC disappears or sampled throttle/brake/steer is non-finite"
+    ],
+    "source": "https://raw.githubusercontent.com/carla-simulator/carla/0.9.16/LibCarla/source/carla/trafficmanager/MotionPlanStage.cpp"
+  },
+  "strict_attempt": {
+    "run": "log/bus-traffic-fix-20261024/traffic16-strict",
+    "success": false,
+    "error": "RuntimeError('Owned traffic actor 1076 disappeared during validation')",
+    "distance_m": 154.66025225058456,
+    "unexpected_actor_loss": [
+      {
+        "actor_id": 1076,
+        "sim_time": 1830.850027281
+      }
+    ],
+    "nonfinite_controls": [],
+    "ego_collision_events": 0,
+    "npc_collision_events": 0,
+    "analysis": "Bus stalled at a valid but pinched corridor join near S03; its waiting follower was subsequently removed by Traffic Manager. Test correctly failed."
+  },
+  "vertex_allocation_fix": {
+    "status": "strict_full_lap_passed",
+    "problem": "The minimum expansion limit of the two endpoints of a lateral corridor connector pins its movable internal endpoint to the fixed physical-edge endpoint. Smaller later requests also overwrote shared-vertex swept-width requests.",
+    "correction": "Allocate desired width using available endpoint limits, cap every vertex by its own proven road/object limit, and retain the maximum request across adjacent path samples. Final smoothing still reapplies all per-vertex limits.",
+    "tests_added": 2,
+    "runtime_image": "sha256:4b92e95b6214b76fdc0db12b7b7d4a0208123450037aa244b7aaadabe9c0dbfe",
+    "run": "log/bus-traffic-fix-20261024/traffic16-vertex",
+    "live_join_comparison": {
+      "before": {
+        "join_vertices_xy": [
+          [
+            -133.811752319,
+            12.8926429749
+          ],
+          [
+            -130.311813354,
+            12.9114227295
+          ]
+        ],
+        "ego_stamp": {
+          "sec": 1820,
+          "nanosec": 450027126
+        },
+        "speed_mps": 4.372453066281423e-09,
+        "plot": "join-before.png"
+      },
+      "after": {
+        "join_vertices_xy": [
+          [
+            -133.811752319,
+            12.8926429749
+          ],
+          [
+            -132.0572528153467,
+            12.902057159105475
+          ]
+        ],
+        "ego_stamp": {
+          "sec": 153,
+          "nanosec": 650002289
+        },
+        "speed_mps": 2.96451473236084,
+        "plot": "join-after.png"
+      }
+    },
+    "comparison_note": "Snapshots are 0.477 m apart in ego position with different traffic phases; this is a geometry inspection, not a controlled timing benchmark."
+  },
+  "final_traffic_lap": {
+    "runtime_image": "sha256:4b92e95b6214b76fdc0db12b7b7d4a0208123450037aa244b7aaadabe9c0dbfe",
+    "run": "log/bus-traffic-fix-20261024/traffic16-vertex",
+    "success": true,
+    "result": "lap_completed",
+    "error": null,
+    "distance_m": 2005.3299799037063,
+    "visited_stops": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07",
+      "S08",
+      "S09",
+      "S10",
+      "S01"
+    ],
+    "ego_collision_events": 0,
+    "npc_sensor_bus_contact_events": 0,
+    "all_npc_collision_events": 0,
+    "minimum_bbox_clearance_m": 1.2817843571026974,
+    "spawned": 16,
+    "last_visible_npcs": 16,
+    "following_cap_samples": 304,
+    "emergency_episodes": 2,
+    "emergency_details": [
+      {
+        "start_sim_time": 634.400009453,
+        "end_sim_time": 635.650009471,
+        "diagnostics": [
+          {
+            "level": "\u0002",
+            "name": "planning_validator: trajectory_validation_trajectory_shift",
+            "message": "detected sudden shift in trajectory",
+            "hardware_id": "planning_validator",
+            "values": []
+          },
+          {
+            "level": "\u0002",
+            "name": "controller_node_exe: control_state",
+            "message": "emergency occurred due to ",
+            "hardware_id": "trajectory_follower_node",
+            "values": [
+              {
+                "key": "control_state",
+                "value": "3"
+              }
+            ]
+          },
+          {
+            "level": "\u0003",
+            "name": "service_log_checker: response_status",
+            "message": "OK",
+            "hardware_id": "service_log_checker",
+            "values": []
+          }
+        ]
+      },
+      {
+        "start_sim_time": 668.500009961,
+        "end_sim_time": 670.300009988,
+        "diagnostics": [
+          {
+            "level": "\u0002",
+            "name": "planning_validator: trajectory_validation_trajectory_shift",
+            "message": "detected sudden shift in trajectory",
+            "hardware_id": "planning_validator",
+            "values": []
+          },
+          {
+            "level": "\u0003",
+            "name": "service_log_checker: response_status",
+            "message": "OK",
+            "hardware_id": "service_log_checker",
+            "values": []
+          }
+        ]
+      }
+    ],
+    "signal_crossings": [
+      {
+        "group_id": 35817,
+        "opendrive_id": "2376",
+        "stop_line_id": 35804,
+        "frame": 3412877,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -142.90016174316406,
+          -85.41778564453125
+        ]
+      },
+      {
+        "group_id": 36025,
+        "opendrive_id": "2390",
+        "stop_line_id": 36012,
+        "frame": 3413785,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -129.68946838378906,
+          -13.316555976867676
+        ]
+      },
+      {
+        "group_id": 36249,
+        "opendrive_id": "2404",
+        "stop_line_id": 36236,
+        "frame": 3415318,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -63.143333435058594,
+          6.572419166564941
+        ]
+      },
+      {
+        "group_id": 36265,
+        "opendrive_id": "2405",
+        "stop_line_id": 36252,
+        "frame": 3416515,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          16.340667724609375,
+          3.5309183597564697
+        ]
+      },
+      {
+        "group_id": 36153,
+        "opendrive_id": "2398",
+        "stop_line_id": 36140,
+        "frame": 3418033,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          36.668724060058594,
+          -75.03734588623047
+        ]
+      },
+      {
+        "group_id": 36599,
+        "opendrive_id": "2431",
+        "stop_line_id": 36595,
+        "frame": 3418654,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          35.34721755981445,
+          -133.7659454345703
+        ]
+      },
+      {
+        "group_id": 36473,
+        "opendrive_id": "2421",
+        "stop_line_id": 36460,
+        "frame": 3419197,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          36.62842559814453,
+          -176.22634887695312
+        ]
+      },
+      {
+        "group_id": 36615,
+        "opendrive_id": "2432",
+        "stop_line_id": 36602,
+        "frame": 3423152,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          9.553308486938477,
+          202.37428283691406
+        ]
+      },
+      {
+        "group_id": 36537,
+        "opendrive_id": "2426",
+        "stop_line_id": 36524,
+        "frame": 3425288,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          35.30156707763672,
+          103.69911193847656
+        ]
+      },
+      {
+        "group_id": 36281,
+        "opendrive_id": "2406",
+        "stop_line_id": 36268,
+        "frame": 3426466,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          32.63323974609375,
+          13.975168228149414
+        ]
+      },
+      {
+        "group_id": 36217,
+        "opendrive_id": "2402",
+        "stop_line_id": 36204,
+        "frame": 3426933,
+        "state": "Yellow",
+        "previous_state": "Yellow",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -35.50800704956055,
+          -1.3631513118743896
+        ]
+      },
+      {
+        "group_id": 35897,
+        "opendrive_id": "2381",
+        "stop_line_id": 35884,
+        "frame": 3428283,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -53.96124267578125,
+          75.17825317382812
+        ]
+      },
+      {
+        "group_id": 36377,
+        "opendrive_id": "2412",
+        "stop_line_id": 36364,
+        "frame": 3429201,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -107.99190521240234,
+          84.37052154541016
+        ]
+      },
+      {
+        "group_id": 35993,
+        "opendrive_id": "2388",
+        "stop_line_id": 35980,
+        "frame": 3430403,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -184.3062744140625,
+          16.04439353942871
+        ]
+      }
+    ],
+    "signal_states": {
+      "Green": 13,
+      "Yellow": 1
+    },
+    "signal_violations": 0,
+    "peak_kmh_by_zone": {
+      "urban": 26.835485695949497,
+      "ring_road": 46.492729941989566
+    },
+    "duration_sim_s": 974.850014526,
+    "cleanup": {
+      "stop_verified": true,
+      "test_speed_limit_clear_sent": true,
+      "route_cleared": true,
+      "errors": []
+    },
+    "encounters": [
+      {
+        "actor_id": 1088,
+        "direction": "same",
+        "first_sim_time": 39.200000584,
+        "minimum_bbox_clearance_m": 3.346675863562446,
+        "maximum_npc_speed_kmh": 18.022279943490023,
+        "last_sim_time": 114.850001711
+      },
+      {
+        "actor_id": 1090,
+        "direction": "opposite",
+        "first_sim_time": 39.200000584,
+        "minimum_bbox_clearance_m": 1.2817843571026974,
+        "maximum_npc_speed_kmh": 22.4417723115071,
+        "last_sim_time": 809.200012058
+      },
+      {
+        "actor_id": 1088,
+        "direction": "crossing",
+        "first_sim_time": 54.800000816,
+        "minimum_bbox_clearance_m": 4.361753345908225,
+        "maximum_npc_speed_kmh": 19.075943602265905,
+        "last_sim_time": 249.900003723
+      },
+      {
+        "actor_id": 1094,
+        "direction": "crossing",
+        "first_sim_time": 64.250000957,
+        "minimum_bbox_clearance_m": 26.4425656701039,
+        "maximum_npc_speed_kmh": 22.302889672848107,
+        "last_sim_time": 66.600000992
+      },
+      {
+        "actor_id": 1090,
+        "direction": "crossing",
+        "first_sim_time": 125.900001876,
+        "minimum_bbox_clearance_m": 6.799071767954878,
+        "maximum_npc_speed_kmh": 19.611677042404715,
+        "last_sim_time": 795.800011858
+      },
+      {
+        "actor_id": 1112,
+        "direction": "opposite",
+        "first_sim_time": 154.250002298,
+        "minimum_bbox_clearance_m": 7.049804853959082,
+        "maximum_npc_speed_kmh": 19.483135146847207,
+        "last_sim_time": 922.700013749
+      },
+      {
+        "actor_id": 1112,
+        "direction": "crossing",
+        "first_sim_time": 160.40000239,
+        "minimum_bbox_clearance_m": 10.639402451643226,
+        "maximum_npc_speed_kmh": 1.105698706429688e-06,
+        "last_sim_time": 177.20000264
+      },
+      {
+        "actor_id": 1098,
+        "direction": "crossing",
+        "first_sim_time": 181.600002706,
+        "minimum_bbox_clearance_m": 21.20668352738263,
+        "maximum_npc_speed_kmh": 21.82198653910817,
+        "last_sim_time": 188.200002804
+      },
+      {
+        "actor_id": 1100,
+        "direction": "crossing",
+        "first_sim_time": 335.200004994,
+        "minimum_bbox_clearance_m": 27.107083094792163,
+        "maximum_npc_speed_kmh": 19.67042853531391,
+        "last_sim_time": 336.300005011
+      },
+      {
+        "actor_id": 1092,
+        "direction": "crossing",
+        "first_sim_time": 360.250005368,
+        "minimum_bbox_clearance_m": 16.71310106341313,
+        "maximum_npc_speed_kmh": 18.163412126263086,
+        "last_sim_time": 386.100005753
+      },
+      {
+        "actor_id": 1110,
+        "direction": "same",
+        "first_sim_time": 376.700005613,
+        "minimum_bbox_clearance_m": 20.759748694047076,
+        "maximum_npc_speed_kmh": 18.44900761641797,
+        "last_sim_time": 383.600005716
+      },
+      {
+        "actor_id": 1102,
+        "direction": "opposite",
+        "first_sim_time": 400.300005964,
+        "minimum_bbox_clearance_m": 1.5099614720234513,
+        "maximum_npc_speed_kmh": 19.323090510381096,
+        "last_sim_time": 411.850006137
+      },
+      {
+        "actor_id": 1116,
+        "direction": "crossing",
+        "first_sim_time": 425.850006345,
+        "minimum_bbox_clearance_m": 19.29896313736813,
+        "maximum_npc_speed_kmh": 16.798105645022435,
+        "last_sim_time": 430.750006418
+      },
+      {
+        "actor_id": 1116,
+        "direction": "same",
+        "first_sim_time": 430.950006421,
+        "minimum_bbox_clearance_m": 3.539730956598627,
+        "maximum_npc_speed_kmh": 39.06709930242352,
+        "last_sim_time": 450.700006715
+      },
+      {
+        "actor_id": 1118,
+        "direction": "opposite",
+        "first_sim_time": 506.05000754,
+        "minimum_bbox_clearance_m": 10.04510939249986,
+        "maximum_npc_speed_kmh": 37.993284705624546,
+        "last_sim_time": 509.250007588
+      },
+      {
+        "actor_id": 1096,
+        "direction": "opposite",
+        "first_sim_time": 631.950009416,
+        "minimum_bbox_clearance_m": 17.85086786676718,
+        "maximum_npc_speed_kmh": 16.523844208338787,
+        "last_sim_time": 634.250009451
+      },
+      {
+        "actor_id": 1096,
+        "direction": "crossing",
+        "first_sim_time": 634.450009454,
+        "minimum_bbox_clearance_m": 13.192398754511432,
+        "maximum_npc_speed_kmh": 19.583614141030512,
+        "last_sim_time": 639.950009535
+      },
+      {
+        "actor_id": 1096,
+        "direction": "same",
+        "first_sim_time": 640.150009538,
+        "minimum_bbox_clearance_m": 25.316912073585573,
+        "maximum_npc_speed_kmh": 19.476421061963826,
+        "last_sim_time": 641.850009564
+      },
+      {
+        "actor_id": 1088,
+        "direction": "opposite",
+        "first_sim_time": 655.650009769,
+        "minimum_bbox_clearance_m": 5.56390946161871,
+        "maximum_npc_speed_kmh": 19.475156668807625,
+        "last_sim_time": 668.600009962
+      },
+      {
+        "actor_id": 1102,
+        "direction": "same",
+        "first_sim_time": 687.700010247,
+        "minimum_bbox_clearance_m": 24.61295638020918,
+        "maximum_npc_speed_kmh": 19.246777646815193,
+        "last_sim_time": 688.100010253
+      },
+      {
+        "actor_id": 1102,
+        "direction": "crossing",
+        "first_sim_time": 688.350010257,
+        "minimum_bbox_clearance_m": 24.26049396827399,
+        "maximum_npc_speed_kmh": 22.82410735058301,
+        "last_sim_time": 690.700010292
+      },
+      {
+        "actor_id": 1104,
+        "direction": "crossing",
+        "first_sim_time": 743.250011075,
+        "minimum_bbox_clearance_m": 16.814235624596694,
+        "maximum_npc_speed_kmh": 19.525580124766748,
+        "last_sim_time": 750.050011176
+      },
+      {
+        "actor_id": 1114,
+        "direction": "opposite",
+        "first_sim_time": 747.950011145,
+        "minimum_bbox_clearance_m": 2.477971329052202,
+        "maximum_npc_speed_kmh": 19.366153929450455,
+        "last_sim_time": 754.450011242
+      }
+    ],
+    "lap_json_sha256": "3bccd225459c7498c755e3a1e593149fec6c7c6b4b9819dc091b5718f58989d1",
+    "minimum_visible_npcs": 16,
+    "unexpected_actor_loss": [],
+    "nonfinite_control_samples": 0,
+    "accepted_traffic_validation": true,
+    "bounds_audit": {
+      "moving_fresh_samples": 649,
+      "skipped_stopped_stale_or_empty": 399,
+      "invalid_polygon_samples": 0,
+      "outside_area_over_0_1_m2_samples": 5,
+      "worst_samples": [
+        {
+          "sim_time": 671.10001,
+          "valid_polygon": true,
+          "outside_area_m2": 1.2089955343149648,
+          "x": 34.12679672241211,
+          "y": -140.27146911621094,
+          "speed_mps": 0.41192471981048584
+        },
+        {
+          "sim_time": 674.100010044,
+          "valid_polygon": true,
+          "outside_area_m2": 0.8533659945889911,
+          "x": 34.77037811279297,
+          "y": -135.01937866210938,
+          "speed_mps": 2.2809946537017822
+        },
+        {
+          "sim_time": 672.050010014,
+          "valid_polygon": true,
+          "outside_area_m2": 0.8266521525777174,
+          "x": 34.190818786621094,
+          "y": -139.0819854736328,
+          "speed_mps": 1.7824538946151733
+        },
+        {
+          "sim_time": 673.100010029,
+          "valid_polygon": true,
+          "outside_area_m2": 0.8078604523842973,
+          "x": 34.4682731628418,
+          "y": -137.0322265625,
+          "speed_mps": 1.9502604007720947
+        },
+        {
+          "sim_time": 116.650001738,
+          "valid_polygon": true,
+          "outside_area_m2": 0.10202571437546978,
+          "x": -132.60035705566406,
+          "y": 81.05879211425781,
+          "speed_mps": 1.5822131633758545
+        },
+        {
+          "sim_time": 42.500000633,
+          "valid_polygon": true,
+          "outside_area_m2": 0.0,
+          "x": -185.02745056152344,
+          "y": 42.976749420166016,
+          "speed_mps": 1.9868401288986206
+        },
+        {
+          "sim_time": 43.500000648,
+          "valid_polygon": true,
+          "outside_area_m2": 0.0,
+          "x": -184.9678497314453,
+          "y": 45.273529052734375,
+          "speed_mps": 2.5508761405944824
+        },
+        {
+          "sim_time": 44.500000663,
+          "valid_polygon": true,
+          "outside_area_m2": 0.0,
+          "x": -184.8813934326172,
+          "y": 48.094200134277344,
+          "speed_mps": 3.0931243896484375
+        }
+      ]
+    },
+    "limitations": [
+      "Two temporary emergency episodes, both recovered automatically; not perfectly smooth driving",
+      "All 649 fresh moving boundary polygons were valid, but 5 samples had current bus footprint outside the instantaneous polygon by more than 0.1 m²; maximum 1.209 m²",
+      "Owned NPC defensive following and 0.01 km/h near-zero target floor enabled; not unmodified Traffic Manager",
+      "One non-service full lap with ground-truth object/signal input; pedestrians, service stops and bell logic remain unvalidated",
+      "Mapped stop-line audit recorded 13 green and 1 yellow crossing; this is not a formal proof of every traffic rule"
+    ],
+    "deployed_source_sha256": {
+      "tools/carla_bus_following.py": "b5c12d0db3cc4ec9425121e96db9f0a535ee4173ec5685cc445cdc744d3be765",
+      "tools/carla_bus_course_traffic.py": "570d351311cf0b801958caadb992f6eed4a8f4764b24c957550f9efe270e25d5",
+      "vtd_overlay/src/autoware_universe/planning/behavior_path_planner/autoware_behavior_path_planner_common/src/utils/drivable_area_expansion/drivable_area_expansion.cpp": "3d03b6bc1ec33d1c9b3a9a23648d47c3840336a609e8b93ca8810e9f9ee4fe7e"
+    }
+  }
+}

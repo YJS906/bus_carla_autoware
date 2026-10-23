@@ -384,54 +384,37 @@ void calculate_expansion_distances(
   Expansion & expansion, const std::vector<double> & max_left_expansions,
   const std::vector<double> & max_right_expansions)
 {
-  expansion.left_distances.resize(max_left_expansions.size(), 0.0);
-  expansion.right_distances.resize(max_right_expansions.size(), 0.0);
+  expansion.left_distances.assign(max_left_expansions.size(), 0.0);
+  expansion.right_distances.assign(max_right_expansions.size(), 0.0);
+  // A lateral join has a fixed physical-edge endpoint and a movable internal
+  // endpoint. Taking the MIN of their limits pins both and creates a notch.
+  // Allocate the requested width, then cap EACH vertex by its own proven limit.
+  // Shared vertices retain the largest request from adjacent path samples.
+  const auto apply = [](auto & distances, const auto & limits, size_t idx, double request) {
+    for (const auto vertex : {idx, idx + 1}) {
+      distances[vertex] = std::max(distances[vertex], std::min(request, limits[vertex]));
+    }
+  };
   for (auto path_idx = 0UL; path_idx < expansion.min_lane_widths.size(); ++path_idx) {
-    const auto left_bound_idx = expansion.left_bound_indexes[path_idx];
-    const auto right_bound_idx = expansion.right_bound_indexes[path_idx];
+    const auto left_idx = expansion.left_bound_indexes[path_idx];
+    const auto right_idx = expansion.right_bound_indexes[path_idx];
     const auto original_width = expansion.left_projections[path_idx].distance +
                                 expansion.right_projections[path_idx].distance;
-    const auto expansion_dist = expansion.min_lane_widths[path_idx] - original_width;
-    if (expansion_dist <= 0.0) continue;
-    const auto left_limit =
-      std::min(max_left_expansions[left_bound_idx], max_left_expansions[left_bound_idx + 1]);
-    const auto right_limit =
-      std::min(max_right_expansions[right_bound_idx], max_right_expansions[right_bound_idx + 1]);
+    const auto request = expansion.min_lane_widths[path_idx] - original_width;
+    if (request <= 0.0) continue;
+    const auto left_limit = std::max(max_left_expansions[left_idx], max_left_expansions[left_idx + 1]);
+    const auto right_limit = std::max(max_right_expansions[right_idx], max_right_expansions[right_idx + 1]);
+    double left, right;
     if (expansion.curvatures[path_idx] < -kTurnCurvatureThreshold) {
-      // On a right turn the swept front-left corner is the outermost point. Apply the requested
-      // clearance to the left bound first and use the inner bound only if the outer limit is hit.
-      const auto left_expansion = std::min(left_limit, expansion_dist);
-      const auto right_expansion = std::min(right_limit, expansion_dist - left_expansion);
-      expansion.left_distances[left_bound_idx] = left_expansion;
-      expansion.left_distances[left_bound_idx + 1] = left_expansion;
-      expansion.right_distances[right_bound_idx] = right_expansion;
-      expansion.right_distances[right_bound_idx + 1] = right_expansion;
-      continue;
+      left = std::min(left_limit, request);
+      right = std::min(right_limit, request - left);
+    } else {
+      left = std::min(left_limit, request / 2.0);
+      right = std::min(right_limit, request - left);
+      left = std::min(left_limit, request - right);
     }
-    const auto expansion_fits_on_left_side = expansion_dist / 2.0 < left_limit;
-    const auto expansion_fits_on_right_side = expansion_dist / 2.0 < right_limit;
-    if (expansion_fits_on_left_side && expansion_fits_on_right_side) {
-      expansion.left_distances[left_bound_idx] = expansion_dist / 2.0;
-      expansion.left_distances[left_bound_idx + 1] = expansion_dist / 2.0;
-      expansion.right_distances[right_bound_idx] = expansion_dist / 2.0;
-      expansion.right_distances[right_bound_idx + 1] = expansion_dist / 2.0;
-    } else if (!expansion_fits_on_left_side) {
-      expansion.left_distances[left_bound_idx] = left_limit;
-      expansion.left_distances[left_bound_idx + 1] = left_limit;
-      const auto compensation_dist = expansion_dist / 2.0 - left_limit;
-      expansion.right_distances[right_bound_idx] =
-        std::min(right_limit, expansion_dist / 2.0 + compensation_dist);
-      expansion.right_distances[right_bound_idx + 1] =
-        std::min(right_limit, expansion_dist / 2.0 + compensation_dist);
-    } else if (!expansion_fits_on_right_side) {
-      expansion.right_distances[right_bound_idx] = right_limit;
-      expansion.right_distances[right_bound_idx + 1] = right_limit;
-      const auto compensation_dist = expansion_dist / 2.0 - right_limit;
-      expansion.left_distances[left_bound_idx] =
-        std::min(left_limit, expansion_dist / 2.0 + compensation_dist);
-      expansion.left_distances[left_bound_idx + 1] =
-        std::min(left_limit, expansion_dist / 2.0 + compensation_dist);
-    }
+    apply(expansion.left_distances, max_left_expansions, left_idx, left);
+    apply(expansion.right_distances, max_right_expansions, right_idx, right);
   }
 }
 
@@ -484,7 +467,6 @@ void expand_drivable_area(
   const auto & route_handler = *planner_data->route_handler;
   const auto uncrossable_segments = extract_uncrossable_segments(
     *route_handler.getLaneletMapPtr(), planner_data->self_odometry->pose.pose.position, params);
-  const auto uncrossable_polygons = create_object_footprints(*planner_data->dynamic_object, params);
   const auto preprocessing_ms = stop_watch.toc("preprocessing");
   stop_watch.tic("crop");
   std::vector<Pose> path_poses = planner_data->drivable_area_expansion_prev_path_poses;
@@ -493,6 +475,8 @@ void expand_drivable_area(
   reuse_previous_poses(
     path, path_poses, curvatures, planner_data->self_odometry->pose.pose.position, params);
   const auto crop_ms = stop_watch.toc("crop");
+  const auto uncrossable_polygons = create_object_footprints(
+    *planner_data->dynamic_object, params, planner_data->self_odometry->pose.pose, path_poses);
   add_bound_points(path.left_bound, path.right_bound, path_poses, params.min_bound_interval);
 
   stop_watch.tic("curvatures_expansion");
@@ -509,6 +493,10 @@ void expand_drivable_area(
     std::cerr << "[drivable_area_expansion] could not calculate path curvatures\n";
     curvatures.resize(path_poses.size(), 0.0);
   }
+  apply_verified_straight_margins(
+    path.left_bound, *route_handler.getLaneletMapPtr(), uncrossable_polygons, path_poses);
+  apply_verified_straight_margins(
+    path.right_bound, *route_handler.getLaneletMapPtr(), uncrossable_polygons, path_poses);
   auto expansion =
     calculate_expansion(path_poses, path.left_bound, path.right_bound, curvatures, params);
   const auto curvature_expansion_ms = stop_watch.toc("curvatures_expansion");

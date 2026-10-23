@@ -19,6 +19,7 @@
 #include "autoware/motion_utils/trajectory/conversion.hpp"
 #include "autoware/motion_utils/trajectory/trajectory.hpp"
 #include "autoware/path_optimizer/utils/geometry_utils.hpp"
+#include "autoware/path_optimizer/utils/road_clearance.hpp"
 #include "autoware/path_optimizer/utils/trajectory_utils.hpp"
 
 #include <autoware_utils/math/normalization.hpp>
@@ -215,6 +216,8 @@ MPTOptimizer::MPTParam::MPTParam(
       node->declare_parameter<double>("mpt.clearance.hard_clearance_from_road");
     soft_clearance_from_road =
       node->declare_parameter<double>("mpt.clearance.soft_clearance_from_road");
+    straight_soft_clearance_from_road = node->declare_parameter<double>(
+      "mpt.clearance.straight_soft_clearance_from_road", soft_clearance_from_road);
   }
 
   {  // weight
@@ -222,6 +225,7 @@ MPTOptimizer::MPTParam::MPTParam(
       node->declare_parameter<double>("mpt.weight.soft_collision_free_weight");
 
     lat_error_weight = node->declare_parameter<double>("mpt.weight.lat_error_weight");
+    straight_reference_weight = node->declare_parameter<double>("mpt.weight.straight_reference_weight", 0.0);
     yaw_error_weight = node->declare_parameter<double>("mpt.weight.yaw_error_weight");
     yaw_error_rate_weight = node->declare_parameter<double>("mpt.weight.yaw_error_rate_weight");
     steer_input_weight = node->declare_parameter<double>("mpt.weight.steer_input_weight");
@@ -368,6 +372,8 @@ void MPTOptimizer::MPTParam::onParam(const std::vector<rclcpp::Parameter> & para
       parameters, "mpt.clearance.hard_clearance_from_road", hard_clearance_from_road);
     update_param<double>(
       parameters, "mpt.clearance.soft_clearance_from_road", soft_clearance_from_road);
+    update_param<double>(
+      parameters, "mpt.clearance.straight_soft_clearance_from_road", straight_soft_clearance_from_road);
   }
 
   {  // weight
@@ -375,6 +381,7 @@ void MPTOptimizer::MPTParam::onParam(const std::vector<rclcpp::Parameter> & para
       parameters, "mpt.weight.soft_collision_free_weight", soft_collision_free_weight);
 
     update_param<double>(parameters, "mpt.weight.lat_error_weight", lat_error_weight);
+    update_param<double>(parameters, "mpt.weight.straight_reference_weight", straight_reference_weight);
     update_param<double>(parameters, "mpt.weight.yaw_error_weight", yaw_error_weight);
     update_param<double>(parameters, "mpt.weight.yaw_error_rate_weight", yaw_error_rate_weight);
     update_param<double>(parameters, "mpt.weight.steer_input_weight", steer_input_weight);
@@ -508,6 +515,7 @@ std::optional<std::vector<TrajectoryPoint>> MPTOptimizer::optimizeTrajectory(
   const PlannerData & planner_data)
 {
   auto iteration_data = planner_data;
+  centering_ref_points_.clear();
   std::optional<std::vector<TrajectoryPoint>> result;
   const int count = mpt_param_.use_acados ? 1 : std::clamp(mpt_param_.refinement_iterations, 1, 4);
   for (int iteration = 0; iteration < count; ++iteration) {
@@ -545,6 +553,9 @@ std::optional<std::vector<TrajectoryPoint>> MPTOptimizer::optimizeTrajectoryOnce
       logger_, enable_debug_info_, "return std::nullopt since ref_points size is less than 2.");
     return std::nullopt;
   }
+  // Keep the original reference for every sequential refinement. Otherwise
+  // a displaced candidate becomes the new zero-error target on the next pass.
+  if (centering_ref_points_.empty()) centering_ref_points_ = ref_points;
 
   // 2. calculate B and W matrices where x = B u + W
   const auto mpt_mat = state_equation_generator_.calcMatrix(ref_points);
@@ -1327,8 +1338,10 @@ void MPTOptimizer::updateBounds(
 {
   autoware_utils::ScopedTimeTrack st(__func__, *time_keeper_);
 
-  const double soft_road_clearance =
-    mpt_param_.soft_clearance_from_road + vehicle_info_.vehicle_width_m / 2.0;
+  // Include the complete bus length on both sides of each reference point so
+  // a straight/curve transition cannot reduce clearance under the vehicle.
+  const size_t curvature_window = static_cast<size_t>(std::ceil(
+    vehicle_info_.vehicle_length_m / mpt_param_.delta_arc_length));
 
   // calculate distance to left/right bound on each reference point
   // NOTE: Reference points is sometimes not fully covered by the drivable area.
@@ -1337,6 +1350,14 @@ void MPTOptimizer::updateBounds(
   const size_t min_ref_point_index = std::min(
     static_cast<size_t>(std::ceil(1.0 / mpt_param_.delta_arc_length)), ref_points.size() - 1);
   for (size_t i = 0; i < ref_points.size(); ++i) {
+    double nearby_curvature = 0.0;
+    for (size_t j = i > curvature_window ? i - curvature_window : 0;
+         j < std::min(ref_points.size(), i + curvature_window + 1); ++j) {
+      nearby_curvature = std::max(nearby_curvature, std::abs(ref_points.at(j).curvature));
+    }
+    const double soft_road_clearance = roadClearance(
+      nearby_curvature, mpt_param_.straight_soft_clearance_from_road,
+      mpt_param_.soft_clearance_from_road) + vehicle_info_.vehicle_width_m / 2.0;
     const auto ref_point_for_bound_search = ref_points.at(std::max(min_ref_point_index, i));
     const double dist_to_left_bound = calcLateralDistToBounds(
       ref_point_for_bound_search.pose, left_bound, soft_road_clearance, true);
@@ -1816,6 +1837,41 @@ MPTOptimizer::ObjectiveMatrix MPTOptimizer::calcObjectiveMatrix(
   Eigen::VectorXd g = Eigen::VectorXd::Zero(N_v);
   g.segment(0, N_x) = T_vec.transpose() * val_mat.Q * sparse_T_mat;
   g.segment(N_x + N_u, N_s) = mpt_param_.soft_collision_free_weight * Eigen::VectorXd::Ones(N_s);
+  if (mpt_param_.straight_reference_weight > 0.0 && centering_ref_points_.size() >= 2) {
+    const size_t window = static_cast<size_t>(std::ceil(
+      vehicle_info_.vehicle_length_m / mpt_param_.delta_arc_length));
+    for (size_t i = 0; i + 1 < N_ref; ++i) {
+      const auto & pose = ref_points[i].pose;
+      double best_distance = std::numeric_limits<double>::max();
+      double displacement = 0.0, alignment = 0.0;
+      size_t nearest = 0;
+      for (size_t j = 0; j + 1 < centering_ref_points_.size(); ++j) {
+        const auto & a = centering_ref_points_[j].pose.position;
+        const auto & b = centering_ref_points_[j + 1].pose.position;
+        const double dx = b.x - a.x, dy = b.y - a.y, length = std::hypot(dx, dy);
+        if (length < 1e-6) continue;
+        const double px = pose.position.x - a.x, py = pose.position.y - a.y;
+        const double t = std::clamp((px * dx + py * dy) / (length * length), 0.0, 1.0);
+        const double distance = std::hypot(px - t * dx, py - t * dy);
+        if (distance < best_distance) {
+          best_distance = distance; nearest = j;
+          displacement = (dx * py - dy * px) / length;
+          alignment = std::cos(ref_points[i].getYaw() - std::atan2(dy, dx));
+        }
+      }
+      if (best_distance > 3.0 || alignment < 0.95) continue;
+      double curvature = 0.0;
+      for (size_t j = nearest > window ? nearest - window : 0;
+           j < std::min(centering_ref_points_.size(), nearest + window + 2); ++j) {
+        curvature = std::max(curvature, std::abs(centering_ref_points_[j].curvature));
+      }
+      // Exactly zero in bends; a gradual transition avoids an abrupt return
+      // to centre as the long vehicle exits a curve. Bounds retain priority.
+      const double weight = roadClearance(curvature, mpt_param_.straight_reference_weight, 0.0);
+      H(i * D_x, i * D_x) += weight * alignment * alignment;
+      g(i * D_x) += weight * alignment * displacement;
+    }
+  }
   time_keeper_->end_track("objectiveMatrix_Hg");
 
   time_keeper_->comment(

@@ -711,8 +711,10 @@ std::vector<lane_change::TrajectoryGroup> generate_frenet_candidates(
     const auto shift_time = std::max(
       calculation::calc_lateral_shift_time(
         std::abs(initial_state.position.d), common_data_ptr->lc_param_ptr->trajectory, lateral_acc),
-      utils::minimumGeometricShiftLength(
-        initial_state.position.d, common_data_ptr->bpp_param_ptr->vehicle_info) /
+      std::max(utils::minimumGeometricShiftLength(
+        initial_state.position.d, common_data_ptr->bpp_param_ptr->vehicle_info),
+        std::abs(initial_state.position.d) > calculation::eps ?
+          common_data_ptr->lc_param_ptr->trajectory.minimum_lane_change_length : 0.0) /
         std::max(metric.velocity, calculation::eps));
     initial_state.longitudinal_acceleration = calculation::calc_lane_changing_acceleration(
       common_data_ptr, metric.velocity, transient_data.current_path_velocity, shift_time,

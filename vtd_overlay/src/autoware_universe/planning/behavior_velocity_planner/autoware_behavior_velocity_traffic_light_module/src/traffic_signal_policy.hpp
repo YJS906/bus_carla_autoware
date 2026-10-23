@@ -41,6 +41,61 @@ inline Signal classify(const autoware_perception_msgs::msg::TrafficLightGroup & 
   return Signal::NORMAL;
 }
 
+// Use the last confirmed green observation as a conservative lower bound on
+// yellow onset. Seeing another yellow sample must not grant a new full period.
+class YellowPassWindow
+{
+public:
+  void observe(
+    const autoware_perception_msgs::msg::TrafficLightGroup & signal,
+    const std::optional<double> stamp, const double now, const double timeout)
+  {
+    using Element = autoware_perception_msgs::msg::TrafficLightElement;
+    if (last_update_ && now < *last_update_) reset();
+    last_update_ = now;
+    if (!stamp || now < *stamp || now - *stamp > timeout || signal.elements.empty()) {
+      reset();
+      return;
+    }
+    const auto all_circle = [&](const auto color) {
+      return std::all_of(signal.elements.begin(), signal.elements.end(), [&](const auto & e) {
+        return e.color == color && e.shape == Element::CIRCLE && e.status == Element::SOLID_ON;
+      });
+    };
+    if (all_circle(Element::GREEN)) {
+      last_green_ = *stamp;
+      yellow_since_.reset();
+      was_yellow_ = false;
+    } else if (all_circle(Element::AMBER)) {
+      if (!was_yellow_ && last_green_ && now - *last_green_ <= timeout) {
+        yellow_since_ = *last_green_;
+      }
+      was_yellow_ = true;
+      last_green_.reset();
+    } else {
+      reset();
+    }
+  }
+
+  double remaining(const double now, const double period) const
+  {
+    if (!yellow_since_ || now < *yellow_since_) return 0.0;
+    return std::max(0.0, period - (now - *yellow_since_));
+  }
+
+  void reset()
+  {
+    last_green_.reset();
+    yellow_since_.reset();
+    last_update_.reset();
+    was_yellow_ = false;
+  }
+
+private:
+  std::optional<double> last_green_, yellow_since_, last_update_;
+  bool was_yellow_{false};
+};
+
 struct FlashingStopParameters
 {
   double duration{1.0};   // seconds of continuous measured standstill

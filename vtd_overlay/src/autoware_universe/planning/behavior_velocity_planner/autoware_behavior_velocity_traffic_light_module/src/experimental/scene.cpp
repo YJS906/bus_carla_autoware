@@ -90,12 +90,19 @@ bool TrafficLightModule::modifyPathVelocity(
   const auto signed_arc_length_to_stop_point = *stop_point_s - ego_s;
   setDistance(signed_arc_length_to_stop_point);
 
+  // This is the rear-axle stopping pose, including the configured front clearance.
+  // Retire the signal relative to the physical line, not this earlier stopping pose.
+  const double signed_front_distance_to_line =
+    signed_arc_length_to_stop_point + planner_param_.stop_margin;
+
   // Check state
   if (state_ == State::APPROACH) {
     // Move to go out state if ego vehicle over deadline.
     constexpr double signed_deadline_length = -2.0;
-    if (signed_arc_length_to_stop_point < signed_deadline_length) {
-      RCLCPP_DEBUG(logger_, "APPROACH -> GO_OUT");
+    if (signed_front_distance_to_line < signed_deadline_length) {
+      RCLCPP_INFO(
+        logger_, "experimental signal %ld APPROACH -> GO_OUT: front_dist=%.3f margin=%.3f",
+        traffic_light_reg_elem_.id(), signed_front_distance_to_line, planner_param_.stop_margin);
       state_ = State::GO_OUT;
       stop_signal_received_time_ptr_.reset();
       return true;
@@ -172,7 +179,7 @@ bool TrafficLightModule::modifyPathVelocity(
     // Initialize if vehicle is far from stop_line
     constexpr bool use_initialization_after_start = true;
     constexpr double restart_length = 1.0;
-    if (use_initialization_after_start && signed_arc_length_to_stop_point > restart_length) {
+    if (use_initialization_after_start && signed_front_distance_to_line > restart_length) {
       RCLCPP_DEBUG(logger_, "GO_OUT(RESTART) -> APPROACH");
       state_ = State::APPROACH;
       flashing_stop_.reset();
@@ -192,6 +199,11 @@ bool TrafficLightModule::isStopSignal(const PlannerData & planner_data)
   prev_looking_tl_state_ = looking_tl_state_;
 
   updateTrafficSignal(planner_data);
+  yellow_pass_window_.observe(
+    looking_tl_state_, traffic_signal_stamp_ ?
+      std::optional<double>{traffic_signal_stamp_->seconds()} : std::nullopt,
+    clock_->now().seconds(), planner_param_.tl_state_timeout);
+
 
   // If there is no upcoming traffic signal information,
   //   SIMULATION: it will PASS to prevent stopping on the planning simulator
@@ -340,12 +352,17 @@ bool TrafficLightModule::isPassthrough(
     return false;
   }
 
+  // Dilemma-zone permission is restricted to fresh yellow observations.
+  if (!isTrafficSignalYellow() || isTrafficSignalTimedOut()) {
+    return false;
+  }
   const double max_acc = planner_data.max_stop_acceleration_threshold;
   const double max_jerk = planner_data.max_stop_jerk_threshold;
   const double delay_response_time = planner_data.delay_response_time;
 
   const double reachable_distance =
-    planner_data.current_velocity->twist.linear.x * planner_param_.yellow_lamp_period;
+    planner_data.current_velocity->twist.linear.x * yellow_pass_window_.remaining(
+      clock_->now().seconds(), planner_param_.yellow_lamp_period);
 
   // Calculate distance until ego vehicle decide not to stop,
   // taking into account the jerk and acceleration.
@@ -358,7 +375,8 @@ bool TrafficLightModule::isPassthrough(
   const bool slow_velocity =
     planner_data.current_velocity->twist.linear.x < planner_param_.yellow_light_stop_velocity;
   const bool stoppable = distance_stoppable || slow_velocity;
-  const bool reachable = signed_arc_length < reachable_distance;
+  // The stop pose includes front clearance. Reaching it is not crossing the line.
+  const bool reachable = signed_arc_length + planner_param_.stop_margin < reachable_distance;
 
   const auto & enable_pass_judge = planner_param_.enable_pass_judge;
 

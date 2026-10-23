@@ -262,7 +262,7 @@ TEST_F(TrafficSignalPolicyTest, NewSignalAndRepeatedApproachRequireAnotherStop)
   step(flash, 100.0);
   step(flash, 100.5);
   EXPECT_FALSE(stops(step(flash, 101.0)));
-  step(flash, 101.1, 2.0, -3.0);  // crossed the deadline
+  step(flash, 101.1, 2.0, -4.0);  // front is 3 m past the physical line
   step(flash, 101.2, 0.0, 5.0);   // re-approach the same light
   EXPECT_TRUE(stops(step(flash, 101.3)));
   resetModule();

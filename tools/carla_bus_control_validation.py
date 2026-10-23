@@ -50,9 +50,17 @@ class BusValidation(Validation):
         self.call(self.clear_client,ClearRoute.Request(),'clear_old_route')
         s0,s1={'straight':(330.,390.),'curve':(130.,300.),
                'speed':(20.,490.)}[self.args.case]
-        self.start_wp=self.wmap.get_waypoint_xodr(37,-2,s0)
-        self.goal_wp=self.wmap.get_waypoint_xodr(37,-2,s1)
+        if self.args.start_s is not None:s0=self.args.start_s
+        if self.args.goal_s is not None:s1=self.args.goal_s
+        self.start_wp=self.wmap.get_waypoint_xodr(self.args.road_id,self.args.lane_id,s0)
+        self.goal_wp=self.wmap.get_waypoint_xodr(self.args.road_id,self.args.lane_id,s1)
+        if self.start_wp is None or self.goal_wp is None:raise ValueError('Invalid native fixture endpoints')
         t=self.start_wp.transform
+        # Edge-lane fixtures start/finish inside the existing protected road
+        # boundary. The measured target between them remains the native centre.
+        edge_offset = {-1: .65, -2: 0., -3: -.65}[self.args.lane_id]
+        if self.args.fixture_offset_m is not None:edge_offset=self.args.fixture_offset_m
+        t.location += t.rotation.get_right_vector()*edge_offset
         offset=t.rotation.get_forward_vector()*self.base_offset[0]
         t.location-=carla.Location(offset.x,offset.y,offset.z)
         t.location.z+=.05
@@ -68,6 +76,7 @@ class BusValidation(Validation):
         limit.max_velocity=self.args.speed_kmh/3.6;limit.use_constraints=False;limit.sender='carla_closed_loop_test'
         self.limit_pub.publish(limit);self.limit_sent=True;self.spin(.5)
         goal=self.goal_wp.transform
+        goal.location += goal.rotation.get_right_vector()*edge_offset
         request=SetRoutePoints.Request();request.header.frame_id='map';request.header.stamp=self.get_clock().now().to_msg()
         request.option.allow_goal_modification=False
         request.goal.position.x,request.goal.position.y,request.goal.position.z=goal.location.x,-goal.location.y,goal.location.z
@@ -84,8 +93,8 @@ class BusValidation(Validation):
         self.until(lambda:time.monotonic()-self.actuation_received<1,10,'fresh converted actuation commands')
         if not self.last['mode'].is_autoware_control_enabled:
             self.call(self.enable_client,ChangeOperationMode.Request(),'enable_autoware_control')
-        self.result['native_start']={'road':37,'lane':-2,'s':s0}
-        self.result['native_goal']={'road':37,'lane':-2,'s':s1}
+        self.result['native_start']={'road':self.args.road_id,'lane':self.args.lane_id,'s':s0}
+        self.result['native_goal']={'road':self.args.road_id,'lane':self.args.lane_id,'s':s1}
         self.result['goal']=message_to_ordereddict(request.goal)
         self.case_start_frame=self.world.get_snapshot().frame
         self.case_running=True
@@ -108,8 +117,23 @@ class BusValidation(Validation):
             distance+=rear.distance(last_position);last_position=rear
             goal_distance=rear.distance(self.goal_wp.transform.location)
             native=self.wmap.get_waypoint(rear)
-            ref=self.wmap.get_waypoint_xodr(37,-2,native.s) if native.road_id==37 else None
+            ref=self.wmap.get_waypoint_xodr(self.args.road_id,self.args.lane_id,native.s) if native.road_id==self.args.road_id else None
             error=rear.distance(ref.transform.location) if ref else 999.
+            lateral_error=None
+            if ref:
+                d=rear-ref.transform.location;r=ref.transform.rotation.get_right_vector()
+                lateral_error=d.x*r.x+d.y*r.y
+            planned_lateral_error=None
+            trajectory=self.last.get('trajectory')
+            if trajectory and trajectory.points:
+                p=min(trajectory.points,key=lambda p:math.hypot(
+                    p.pose.position.x-rear.x,p.pose.position.y+rear.y)).pose.position
+                planned=carla.Location(p.x,-p.y,p.z)
+                nearest=self.wmap.get_waypoint(planned)
+                centre=self.wmap.get_waypoint_xodr(self.args.road_id,self.args.lane_id,nearest.s) if nearest.road_id==self.args.road_id else None
+                if centre:
+                    d=planned-centre.transform.location;r=centre.transform.rotation.get_right_vector()
+                    planned_lateral_error=d.x*r.x+d.y*r.y
             max_error=max(max_error,error);peak=max(peak,v)
             if v*3.6>=self.args.minimum_peak_kmh:
                 if cruise_since is None:cruise_since=now.timestamp.elapsed_seconds
@@ -122,6 +146,8 @@ class BusValidation(Validation):
             row={'sim_s':now.timestamp.elapsed_seconds-sim_start,'frame':now.frame,'speed_mps':v,
                  'rear_xyz':xyz(rear),'goal_distance_m':goal_distance,'distance_m':distance,
                  'centreline_error_m':error,'yaw_change_deg':turn,'odometry_position_error_m':odom_error,
+                 'signed_lateral_error_m':lateral_error,'native_s':native.s,
+                 'planned_lateral_error_m':planned_lateral_error,
                  'matches':[],
                  'mode':self.last['mode'].mode,'throttle':control.throttle,'brake':control.brake,'steer':control.steer,
                  'ros_control':message_to_ordereddict(self.last['control']) if 'control' in self.last else None}
@@ -159,13 +185,20 @@ class BusValidation(Validation):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--case',choices=['straight','curve','speed'],required=True)
+    parser.add_argument('--lane-id',type=int,choices=[-1,-2,-3],default=-2)
+    parser.add_argument('--road-id',type=int,default=37)
+    parser.add_argument('--start-s',type=float)
+    parser.add_argument('--goal-s',type=float)
+    parser.add_argument('--fixture-offset-m',type=float)
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--speed-kmh',type=float,default=20)
     parser.add_argument('--duration',type=float,default=360)
     parser.add_argument('--minimum-peak-kmh',type=float)
     parser.add_argument('--cruise-hold-s',type=float,default=0)
     args=parser.parse_args()
-    if not 0<args.speed_kmh<=20:parser.error('speed-kmh must be in (0,20] for the current validated profile')
+    if args.case!='straight' and (args.road_id!=37 or args.start_s is not None or args.goal_s is not None):
+        parser.error('Custom fixture endpoints are only supported for straight diagnostics')
+    if not 0<args.speed_kmh<=50:parser.error('speed-kmh must be in (0,50]')
     if args.minimum_peak_kmh is None:
         args.minimum_peak_kmh=args.speed_kmh*.95 if args.case=='speed' else 7.2
     if not 0<=args.minimum_peak_kmh<=args.speed_kmh:parser.error('Invalid minimum cruise speed')

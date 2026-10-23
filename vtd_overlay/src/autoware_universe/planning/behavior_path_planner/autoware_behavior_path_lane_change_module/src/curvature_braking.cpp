@@ -227,6 +227,14 @@ BehaviorModuleOutput NormalLaneChange::braking_wait_output() const
   };
   const double origin = motion_utils::calcSignedArcLength(
     output.path.points, output.path.points.front().point.pose.position, getEgoPosition());
+  // An independent obstacle/validator stop can complete the speed reduction
+  // before the anchored braking profile reaches its planned endpoint. Do not
+  // keep predicting its old high-speed motion from a vehicle already below
+  // the target; that can latch an RSS stop forever. Lateral approval is unchanged,
+  // and the current-lane output below still preserves every upstream stop.
+  if (c.get_ego_speed() <= target + 0.01) {
+    speed_preparation_profile_.reset();
+  }
   // Anchor the profile once. Recreating its 0.2 s latency at ego on every frame would
   // move the braking start forwards forever while the vehicle keeps driving.
   if (!speed_preparation_profile_ || speed_preparation_profile_->target_velocity > target + 0.05) {

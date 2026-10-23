@@ -1,13 +1,16 @@
 {
   "files": {
-    "lanelet2_map.osm": "5b7fb0dda6c507ae8a36545793e5064e17d122cb883353f1bd07c510b1d5af7b",
-    "carla_traffic_signals.json": "67554b031d5d7736a570ee663c6f8dd748e7ea4cd1f265261709919e64be1c8a",
-    "carla_map_report.json": "4d4730ccba0c127e60c0e287253e51896557c5aff8389bdc0e611699457bfcf9",
+    "lanelet2_map.osm": "674e8e38076356693dd344a18964bdf7bfb2a722ecddd082ffac2563831a6d71",
+    "carla_traffic_signals.json": "766e1b701dc08a951ee1a6e18245dd7709acbc289039e40d04eed9b17305bee9",
+    "carla_map_report.json": "812cfb0b6b1c329872760ec1ad4aa1028aa2d3868c33942df83c21184180e7e0",
     "carla_lane_change_report.json": "ebe15eaed281d0ca3df73bbfe543ca9a1e4086ec1f7bf818b446eac06a166ce7",
     "carla_stop_line_report.json": "f9701a9afafb6c6d4ea691f5cfe76630aaaca11d20db5fa15ea7bc18309c4c4d",
     "map_projector_info.yaml": "a6fb6af33e164e61a075f9a79eeffa5eca3ead4435dc3de49e811525175b8307",
     "bus_map_source.json": "f1739f16f7c34433bd56f24979acdedb2491cd8deb7fd07842bdf0d357b5f393",
-    "carla_bus_road_edge_report.json": "242329dc300be124801ad2961d35e74e4111cd5bec93f2be2c5072962f82fc70"
+    "carla_bus_road_edge_report.json": "242329dc300be124801ad2961d35e74e4111cd5bec93f2be2c5072962f82fc70",
+    "carla_bus_speed_report.json": "a2d5dbaf8aee88034eb7a5ce63d8c805a6b1bb45facd3f39ebd9bd411d61ed9b",
+    "carla_bus_lane_seam_report.json": "f8c4630f3aeb878cecc2449cadcb611aaaaee959569eb76d0c61635afff70a86",
+    "carla_bus_straight_margin_report.json": "579ef5d611ff3d6b9f32c6d0c0e2a918382ca927898a8787493ee1c88610a231"
   },
   "external_files": {
     "pointcloud_map.pcd": {

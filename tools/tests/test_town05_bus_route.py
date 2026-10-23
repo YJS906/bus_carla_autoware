@@ -19,7 +19,7 @@ class BusRouteTest(unittest.TestCase):
     def setUpClass(cls):
         cls.xodr = Path('/home/a/CARLA/0.9.16/CarlaUE4/Content/Carla/Maps/OpenDrive/Town05.xodr')
         cls.native = carla.Map('Town05', cls.xodr.read_text())
-        cls.map_path = Path('/home/a/autoware_data/maps/Town05/lanelet2_map.osm')
+        cls.map_path = Path('/home/a/autoware_data/maps/Town05Bus/lanelet2_map.osm')
         cls.roads, cls.crossings = module.read_polygons(cls.map_path)
         cls.route = json.loads((ROOT/'scenarios/bus/town05_bus_route.json').read_text())
 
@@ -63,6 +63,16 @@ class BusRouteTest(unittest.TestCase):
                'lanelet_map':self.map_path}
         for key,path in paths.items():
             self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(),self.route['source_sha256'][key])
+
+    def test_ring_reference_changes_only_on_straights_and_cruises_outer(self):
+        for segment in self.route['segments']:
+            for a,b in zip(segment['points'],segment['points'][1:]):
+                if a['road_id'] == b['road_id'] == 37 and a['lane_id'] != b['lane_id']:
+                    self.assertTrue(25 <= b['s_m'] < 130 or 670 <= b['s_m'] < 785)
+                    self.assertEqual(abs(a['lane_id']-b['lane_id']),1)
+            for p in segment['points']:
+                if p['road_id']==37 and 140 < p['s_m'] < 660:
+                    self.assertEqual(p['lane_id'],-3)
 
 
 if __name__ == '__main__':

@@ -4,10 +4,11 @@ repo_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 test_case="${1:-}"
 case "$test_case" in
   straight|curve|speed) ;;
-  *) echo "usage: $0 {straight|curve|speed} [output-directory] [speed-kmh]" >&2; exit 2 ;;
+  *) echo "usage: $0 {straight|curve|speed} [output-directory] [speed-kmh] [lane-id=-2] [diagnostic-options...]" >&2; exit 2 ;;
 esac
 output_dir="${2:-${repo_root}/log/bus-control-$(date +%Y%m%d-%H%M%S)}"
 speed_kmh="${3:-20}"
+lane_id="${4:--2}"
 mkdir -p "$output_dir"
 exec 9>"${TMPDIR:-/tmp}/carla-bus-control-validation.lock"
 flock -n 9 || { echo "Another bus control validation is running." >&2; exit 1; }
@@ -25,8 +26,9 @@ set +e
 docker exec "$container" bash -lc '
   source /opt/ros/jazzy/setup.bash && source /opt/autoware/setup.bash &&
   source /opt/selfcar_overlay/setup.bash && source /opt/carla_overlay/setup.bash &&
-  python3 /tmp/bus-tools/carla_bus_control_validation.py --case "$1" --duration 600 --output "$2" --speed-kmh "$3" --cruise-hold-s "$4"
-' bash "$test_case" "$report" "$speed_kmh" "$([[ $test_case == speed ]] && echo 5 || echo 0)" 2>&1 | tee "$output_dir/$test_case.log"
+  test_case="$1"; report="$2"; speed_kmh="$3"; hold="$4"; lane="$5"; shift 5
+  python3 /tmp/bus-tools/carla_bus_control_validation.py --case "$test_case" --duration 600 --output "$report" --speed-kmh "$speed_kmh" --cruise-hold-s "$hold" --lane-id "$lane" "$@"
+' bash "$test_case" "$report" "$speed_kmh" "$([[ $test_case == speed ]] && echo 5 || echo 0)" "$lane_id" "${@:5}" 2>&1 | tee "$output_dir/$test_case.log"
 result=${PIPESTATUS[0]}
 set -e
 if docker exec "$container" test -f "$report"; then

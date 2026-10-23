@@ -1,14 +1,14 @@
 # Bus maximum speed; curvature, traffic and stop constraints may lower this.
 /**:
   ros__parameters:
-    max_vel: 5.5555555556 # 20 km/h
+    max_vel: 13.8888888889 # 50 km/h; Town05Bus lanelets limit urban roads to 30
     normal:
       min_acc: -3.0
-      max_acc: 0.7
+      max_acc: 1.0
       min_jerk: -2.0
       max_jerk: 1.0
     limit:
       min_acc: -5.0
-      max_acc: 0.7
+      max_acc: 1.0
       min_jerk: -3.5
       max_jerk: 1.4

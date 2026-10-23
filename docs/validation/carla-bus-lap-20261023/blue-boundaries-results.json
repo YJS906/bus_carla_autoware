@@ -1,0 +1,137 @@
+{
+  "source": "carla_paved_straight_v2",
+  "map_sha256": "674e8e38076356693dd344a18964bdf7bfb2a722ecddd082ffac2563831a6d71",
+  "boundary_count": 174,
+  "road_edge_count": 87,
+  "painted_divider_count": 87,
+  "geometry_modified": false,
+  "routing_permissions_modified": false,
+  "curve_check": {
+    "road_id": 37,
+    "native_s_intervals_m": [
+      [
+        147,
+        304
+      ],
+      [
+        504,
+        657
+      ]
+    ],
+    "vertices_checked": 1241,
+    "nonzero_margin_count": 0
+  },
+  "live_blue_boundary_check": {
+    "road_id": 44,
+    "native_s_m": 30,
+    "painted_divider_expansion_m": 0.5000001042,
+    "outer_road_edge_expansion_m": 0.4500001034
+  },
+  "unit_tests_passed": {
+    "mission_planner": 2,
+    "behavior_path_planner": 19,
+    "path_optimizer": 4
+  },
+  "center_goal_tests": {
+    "urban-outer2": {
+      "success": true,
+      "travel_distance_m": 30.27421694642726,
+      "final_goal_error_m": 0.2984876036643982,
+      "max_centreline_error_m": 0.25787243247032166,
+      "native_start": {
+        "road": 44,
+        "lane": -2,
+        "s": 15.0
+      },
+      "native_goal": {
+        "road": 44,
+        "lane": -2,
+        "s": 45.0
+      },
+      "collisions": []
+    },
+    "urban-inner2": {
+      "success": true,
+      "travel_distance_m": 29.266555648468056,
+      "final_goal_error_m": 0.7698869109153748,
+      "max_centreline_error_m": 0.14723417162895203,
+      "native_start": {
+        "road": 44,
+        "lane": -1,
+        "s": 15.0
+      },
+      "native_goal": {
+        "road": 44,
+        "lane": -1,
+        "s": 45.0
+      },
+      "collisions": []
+    }
+  },
+  "section_S06_S08": {
+    "success": true,
+    "result": "section_completed",
+    "distance_m": 179.96120833067835,
+    "collisions": [],
+    "signal_crossings": [
+      {
+        "group_id": 36281,
+        "opendrive_id": "2406",
+        "stop_line_id": 36268,
+        "frame": 2388588,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          32.76885986328125,
+          13.898652076721191
+        ]
+      },
+      {
+        "group_id": 36217,
+        "opendrive_id": "2402",
+        "stop_line_id": 36204,
+        "frame": 2390094,
+        "state": "Green",
+        "previous_state": "Green",
+        "phase_transition": false,
+        "violation": false,
+        "front_xy": [
+          -35.40864944458008,
+          -1.3601644039154053
+        ]
+      }
+    ],
+    "trajectory_shift_warning_observed": true
+  },
+  "oncoming_traffic": {
+    "tested": false,
+    "object_stop_lateral_margin_m": 0.4,
+    "vehicle_dimensions_changed": false,
+    "note": "Widened drivable bounds are body clearance, not permission to ignore objects. Predicted footprint overlap including safety margin can stop the bus without physical contact; evaluate an oncoming vehicle separately."
+  },
+  "full_lap": {
+    "success": true,
+    "total_distance_m": 2006.9106897714964,
+    "visited_stops": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07",
+      "S08",
+      "S09",
+      "S10",
+      "S01"
+    ],
+    "peak_speed_kmh": {
+      "ring_road": 46.40748800586568,
+      "urban": 26.39993296409461
+    },
+    "temporary_emergency_episodes": 7,
+    "evidence": "blue-boundaries-full-lap.json"
+  }
+}

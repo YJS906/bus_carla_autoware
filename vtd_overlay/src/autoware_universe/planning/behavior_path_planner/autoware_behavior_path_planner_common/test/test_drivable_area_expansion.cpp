@@ -15,6 +15,7 @@
 #include "autoware/behavior_path_planner_common/data_manager.hpp"
 #include "autoware/behavior_path_planner_common/utils/drivable_area_expansion/drivable_area_expansion.hpp"
 #include "autoware/behavior_path_planner_common/utils/drivable_area_expansion/path_projection.hpp"
+#include "autoware/behavior_path_planner_common/utils/drivable_area_expansion/map_utils.hpp"
 #include "autoware/behavior_path_planner_common/utils/drivable_area_expansion/types.hpp"
 
 #include <autoware/lanelet2_utils/conversion.hpp>
@@ -372,4 +373,106 @@ TEST(DrivableAreaExpansion, LateralConnectorDoesNotPinItsInternalEndpoint)
   const auto fixed = calculate_maximum_distance(straight, protected_lines, {}, params, LEFT, path);
   EXPECT_DOUBLE_EQ(fixed[0], 0.0);
   EXPECT_DOUBLE_EQ(fixed[1], 0.0);
+}
+
+TEST(VerifiedStraightMargin, RequiresProofAndKeepsObjectsOtherLevelsAndGapsProtected)
+{
+  using namespace autoware::behavior_path_planner::drivable_area_expansion;
+  lanelet::LaneletMap map;
+  lanelet::Point3d a(9001, 0.0, -1.75, 0.0), b(9002, 20.0, -1.75, 0.0);
+  lanelet::LineString3d edge(9003, {a, b});
+  edge.attributes()["type"] = "road_border";
+  map.add(edge);
+  Point p; p.x = 10.0; p.y = -1.75;
+  auto check = [&](const std::vector<Polygon2d> & objects,
+                   const double height = 0.0) {
+    auto point = p; point.z = height;
+    std::vector<Point> bound{point};
+    apply_verified_straight_margins(bound, map, objects);
+    return bound.front().y;
+  };
+  EXPECT_DOUBLE_EQ(check({}), -1.75);  // No blanket road-border override.
+  edge.attributes()["bus:margin_source"] = "carla_paved_straight_v1";
+  edge.attributes()["bus:outward_sign"] = "-1";
+  a.attributes()["bus:margin:9003"] = "0.65";
+  b.attributes()["bus:margin:9003"] = "0.65";
+  EXPECT_NEAR(check({}), -2.4, 1e-9);
+  EXPECT_DOUBLE_EQ(check({}, 10.0), -1.75);  // Different road level.
+  Polygon2d object;
+  object.outer() = {{9.0, -2.5}, {9.0, -2.0}, {11.0, -2.0}, {11.0, -2.5}, {9.0, -2.5}};
+  EXPECT_DOUBLE_EQ(check({object}), -1.75);
+  b.attributes()["bus:margin:9003"] = "0";
+  EXPECT_DOUBLE_EQ(check({}), -1.75);  // No interpolation across unverified gaps.
+}
+
+TEST(VerifiedStraightMargin, SharedPaintedDividerUsesPathSideWithoutChangingRouting)
+{
+  using namespace autoware::behavior_path_planner::drivable_area_expansion;
+  lanelet::LaneletMap map;
+  lanelet::Point3d a(9101, 0.0, 0.0, 0.0), b(9102, 20.0, 0.0, 0.0);
+  a.attributes()["bus:margin:9103"] = "0.5";
+  b.attributes()["bus:margin:9103"] = "0.5";
+  lanelet::LineString3d edge(9103, {a, b});
+  edge.attributes()["type"] = "line_thin";
+  edge.attributes()["subtype"] = "solid";
+  edge.attributes()["lane_change"] = "no";
+  edge.attributes()["carla:bus_boundary_source"] = "native_nonjunction_edges_v1";
+  edge.attributes()["bus:margin_source"] = "carla_paved_straight_v2";
+  edge.attributes()["bus:outward_sign"] = "0";
+  map.add(edge);
+  Point p; p.x = 10.0;
+  Pose pose; pose.position.x = 10.0; pose.position.y = -1.75;
+  std::vector<Point> right_side{p};
+  apply_verified_straight_margins(right_side, map, {}, {pose});
+  EXPECT_DOUBLE_EQ(right_side.front().y, 0.5);
+  pose.position.y = 1.75;
+  std::vector<Point> left_side{p};
+  apply_verified_straight_margins(left_side, map, {}, {pose});
+  EXPECT_DOUBLE_EQ(left_side.front().y, -0.5);
+  EXPECT_EQ(edge.attributeOr("lane_change", std::string{}), "no");
+  edge.attributes()["type"] = "curbstone";
+  std::vector<Point> physical_divider{p};
+  apply_verified_straight_margins(physical_divider, map, {}, {pose});
+  EXPECT_DOUBLE_EQ(physical_divider.front().y, 0.0);
+}
+
+
+TEST(DrivableAreaExpansion, ConnectorWidthAllocationKeepsPhysicalEdgeAndOpensInternalVertex)
+{
+  using namespace autoware::behavior_path_planner::drivable_area_expansion;
+  Expansion expansion;
+  expansion.min_lane_widths = {5.44};
+  expansion.curvatures = {0.0};
+  expansion.left_bound_indexes = {0};
+  expansion.right_bound_indexes = {1};
+  expansion.left_projections.resize(1);
+  expansion.right_projections.resize(1);
+  expansion.left_projections[0].distance = 1.75;
+  expansion.right_projections[0].distance = 1.75;
+  // Centre divider is fixed; right boundary joins a fixed road edge to an
+  // internal dashed line with 3.4 m of measured clearance to that edge.
+  calculate_expansion_distances(expansion, {0.0, 0.0}, {0.0, 0.0, 3.4, 3.4});
+  EXPECT_DOUBLE_EQ(expansion.right_distances[1], 0.0);
+  EXPECT_NEAR(expansion.right_distances[2], 1.94, 1e-6);
+  EXPECT_DOUBLE_EQ(expansion.left_distances[0], 0.0);
+  // An object or protected line may close that space on the next update.
+  calculate_expansion_distances(expansion, {0.0, 0.0}, {0.0, 0.0, 0.0, 0.0});
+  for (const auto distance : expansion.right_distances) EXPECT_DOUBLE_EQ(distance, 0.0);
+}
+
+TEST(DrivableAreaExpansion, SharedVertexKeepsLargerSweptWidthRequest)
+{
+  using namespace autoware::behavior_path_planner::drivable_area_expansion;
+  Expansion expansion;
+  expansion.min_lane_widths = {5.44, 4.04};
+  expansion.curvatures = {0.0, 0.0};
+  expansion.left_bound_indexes = {0, 0};
+  expansion.right_bound_indexes = {0, 0};
+  expansion.left_projections.resize(2);
+  expansion.right_projections.resize(2);
+  for (auto & p : expansion.left_projections) p.distance = 1.75;
+  for (auto & p : expansion.right_projections) p.distance = 1.75;
+  calculate_expansion_distances(expansion, {0.0, 0.0}, {3.4, 3.4});
+  EXPECT_NEAR(expansion.right_distances[0], 1.94, 1e-6);
+  EXPECT_NEAR(expansion.right_distances[1], 1.94, 1e-6);
 }

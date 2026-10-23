@@ -13,11 +13,13 @@
 // limitations under the License.
 
 #include "../src/scene.hpp"
+#include "../src/experimental/scene.hpp"
 
 #include <autoware/behavior_velocity_planner/test_utils.hpp>
 #include <autoware/behavior_velocity_planner_common/planner_data.hpp>
 
 #include <gtest/gtest.h>
+#include <rcl/time.h>
 
 #include <memory>
 
@@ -136,6 +138,81 @@ protected:
     return element;
   }
 
+  PathWithLaneId setupBusSignalApproach(double ego_x, double speed)
+  {
+    planner_data_->max_stop_acceleration_threshold = -2.0;
+    planner_data_->max_stop_jerk_threshold = -1.0;
+    planner_param_.stop_margin = 5.0;
+    planner_param_.enable_pass_judge = true;
+    planner_param_.enable_arrow_aware_yellow_passing = false;
+    planner_param_.stop_time_hysteresis = -1.0;  // Immediate deterministic test decision.
+    auto node = std::make_shared<rclcpp::Node>("bus_signal_test");
+    planning_factor_interface_ =
+      std::make_shared<planning_factor_interface::PlanningFactorInterface>(node.get(), "bus_test");
+    lanelet::LineString3d stop_line(200, {
+      lanelet::Point3d(201, 100.0, -5.0, 0.0),
+      lanelet::Point3d(202, 100.0, 5.0, 0.0)});
+    module_ = std::make_shared<TrafficLightModule>(
+      100, *traffic_light_ptr_, lanelet::Lanelet(100), stop_line, false, false,
+      planner_param_, logger_, clock_, time_keeper_, planning_factor_interface_);
+    module_->setRTCEnabled(false);
+    auto pose = std::make_shared<geometry_msgs::msg::PoseStamped>();
+    pose->pose.position.x = ego_x;
+    pose->pose.orientation.w = 1.0;
+    planner_data_->current_odometry = pose;
+    auto velocity = std::make_shared<geometry_msgs::msg::TwistStamped>();
+    velocity->twist.linear.x = speed;
+    planner_data_->current_velocity = velocity;
+    setPlannerData(planner_data_);
+    PathWithLaneId path;
+    for (int x = 0; x <= 130; ++x) {
+      autoware_internal_planning_msgs::msg::PathPointWithLaneId point;
+      point.point.pose.position.x = x;
+      point.point.pose.orientation.w = 1.0;
+      point.point.longitudinal_velocity_mps = 5.0;
+      point.lane_ids = {100};
+      path.points.push_back(point);
+    }
+    for (double x : {0.0, 130.0}) {
+      geometry_msgs::msg::Point point;
+      point.x = x;
+      point.y = 2.0;
+      path.left_bound.push_back(point);
+      point.y = -2.0;
+      path.right_bound.push_back(point);
+    }
+    return path;
+  }
+
+  std::shared_ptr<experimental::TrafficLightModule> makeExperimentalModule()
+  {
+    experimental::TrafficLightModule::PlannerParam params{};
+    params.stop_margin = 5.0;
+    params.tl_state_timeout = 1.0;
+    params.yellow_lamp_period = 3.0;
+    params.yellow_light_stop_velocity = 1.0;
+    params.stop_time_hysteresis = -1.0;
+    params.enable_pass_judge = true;
+    lanelet::LineString3d stop_line(200, {
+      lanelet::Point3d(201, 100.0, -5.0, 0.0),
+      lanelet::Point3d(202, 100.0, 5.0, 0.0)});
+    auto module = std::make_shared<experimental::TrafficLightModule>(
+      100, *traffic_light_ptr_, lanelet::Lanelet(100), stop_line, false, false,
+      params, logger_, clock_, time_keeper_, planning_factor_interface_);
+    module->setRTCEnabled(false);
+    return module;
+  }
+
+  void setCircleSignal(uint8_t color)
+  {
+    using Element = autoware_perception_msgs::msg::TrafficLightElement;
+    autoware_perception_msgs::msg::TrafficLightGroup signal;
+    signal.elements.push_back(createElement(color, Element::CIRCLE, Element::SOLID_ON));
+    setTrafficSignal(signal);
+  }
+
+  bool callIsPassthrough(double distance) { return module_->isPassthrough(distance); }
+
   using YellowState = TrafficLightModule::YellowState;
 
   YellowState getYellowTransitionState() { return module_->yellow_transition_state_; }
@@ -166,6 +243,131 @@ protected:
     }
   }
 };
+
+TEST_F(TrafficLightModuleTest, BusMarginDoesNotRetireSignalBeforePhysicalLine)
+{
+  using Element = autoware_perception_msgs::msg::TrafficLightElement;
+  // 3.7 m front offset: front is 2.3 m before line, but 2.7 m past the 5 m stop pose.
+  const auto input = setupBusSignalApproach(94.0, 0.5);
+  auto path = input;
+  setCircleSignal(Element::GREEN);
+  ASSERT_TRUE(module_->modifyPathVelocity(&path));
+  EXPECT_EQ(module_->getTrafficLightModuleState(), TrafficLightModule::State::APPROACH);
+  path = input;
+  setCircleSignal(Element::RED);
+  ASSERT_TRUE(module_->modifyPathVelocity(&path));
+  EXPECT_EQ(module_->getTrafficLightModuleState(), TrafficLightModule::State::APPROACH);
+  EXPECT_FALSE(module_->isSafe());
+  for (const auto & point : path.points) {
+    if (point.point.pose.position.x >= 94.0) {
+      EXPECT_FLOAT_EQ(point.point.longitudinal_velocity_mps, 0.0f);
+    }
+  }
+}
+
+TEST_F(TrafficLightModuleTest, SignalRetiresAfterFrontClearsPhysicalLine)
+{
+  auto path = setupBusSignalApproach(99.0, 2.0);  // front is 2.7 m past line
+  ASSERT_TRUE(module_->modifyPathVelocity(&path));
+  EXPECT_EQ(module_->getTrafficLightModuleState(), TrafficLightModule::State::GO_OUT);
+}
+
+TEST_F(TrafficLightModuleTest, DilemmaZoneNeverAuthorizesRed)
+{
+  using Element = autoware_perception_msgs::msg::TrafficLightElement;
+  setupBusSignalApproach(90.0, 5.0);
+  setCircleSignal(Element::GREEN);
+  callIsStopSignal();
+  setCircleSignal(Element::AMBER);
+  callIsStopSignal();
+  EXPECT_TRUE(callIsPassthrough(0.5));  // Too close to stop comfortably during yellow.
+  setCircleSignal(Element::RED);
+  callIsStopSignal();
+  EXPECT_FALSE(callIsPassthrough(0.5));
+}
+
+TEST_F(TrafficLightModuleTest, ExperimentalBusMarginKeepsSignalUntilPhysicalLine)
+{
+  using Element = autoware_perception_msgs::msg::TrafficLightElement;
+  const auto input = setupBusSignalApproach(94.0, 0.5);
+  auto module = makeExperimentalModule();
+  auto path = experimental::Trajectory::Builder{}.build(input.points).value();
+  setCircleSignal(Element::GREEN);
+  ASSERT_TRUE(module->modifyPathVelocity(path, input.left_bound, input.right_bound, *planner_data_));
+  EXPECT_EQ(module->getTrafficLightModuleState(), experimental::TrafficLightModule::State::APPROACH);
+  setCircleSignal(Element::RED);
+  ASSERT_TRUE(module->modifyPathVelocity(path, input.left_bound, input.right_bound, *planner_data_));
+  EXPECT_FALSE(module->isSafe());
+  EXPECT_FLOAT_EQ(path.compute(94.0).point.longitudinal_velocity_mps, 0.0f);
+}
+
+TEST_F(TrafficLightModuleTest, ExperimentalDilemmaZoneCannotPassRedOrStaleYellow)
+{
+  using Element = autoware_perception_msgs::msg::TrafficLightElement;
+  const auto input = setupBusSignalApproach(90.0, 5.0);
+  for (const int scenario : {0, 1, 2}) {
+    auto module = makeExperimentalModule();
+    auto path = experimental::Trajectory::Builder{}.build(input.points).value();
+    setCircleSignal(Element::GREEN);
+    ASSERT_TRUE(module->modifyPathVelocity(path, input.left_bound, input.right_bound, *planner_data_));
+    setCircleSignal(scenario == 0 ? Element::RED : Element::AMBER);
+    if (scenario == 2) {
+      planner_data_->traffic_light_id_map_raw_[12345].stamp =
+        clock_->now() - rclcpp::Duration::from_seconds(3.0);
+    }
+    ASSERT_TRUE(module->modifyPathVelocity(path, input.left_bound, input.right_bound, *planner_data_));
+    EXPECT_FLOAT_EQ(path.compute(95.0).point.longitudinal_velocity_mps, scenario == 1 ? 5.0f : 0.0f);
+  }
+}
+
+TEST_F(TrafficLightModuleTest, YellowPassUsesRemainingTimeAndPhysicalLine)
+{
+  using Element = autoware_perception_msgs::msg::TrafficLightElement;
+  ASSERT_EQ(rcl_enable_ros_time_override(clock_->get_clock_handle()), RCL_RET_OK);
+  ASSERT_EQ(rcl_set_ros_time_override(clock_->get_clock_handle(), 100000000000LL), RCL_RET_OK);
+  const auto input = setupBusSignalApproach(90.0, 5.0);
+  auto module = makeExperimentalModule();
+  auto path = experimental::Trajectory::Builder{}.build(input.points).value();
+  setCircleSignal(Element::GREEN);
+  callIsStopSignal();
+  ASSERT_TRUE(module->modifyPathVelocity(path, input.left_bound, input.right_bound, *planner_data_));
+  ASSERT_EQ(rcl_set_ros_time_override(clock_->get_clock_handle(), 100100000000LL), RCL_RET_OK);
+  setCircleSignal(Element::AMBER);
+  callIsStopSignal();
+  EXPECT_TRUE(callIsPassthrough(1.3)); // 6.3 m to physical line, 14.5 m reachable.
+  ASSERT_TRUE(module->modifyPathVelocity(path, input.left_bound, input.right_bound, *planner_data_));
+  EXPECT_FLOAT_EQ(path.compute(95.0).point.longitudinal_velocity_mps, 5.0f);
+  // Fresh yellow updates late in the SAME phase must not reset its duration.
+  ASSERT_EQ(rcl_set_ros_time_override(clock_->get_clock_handle(), 102500000000LL), RCL_RET_OK);
+  setCircleSignal(Element::AMBER);
+  callIsStopSignal();
+  EXPECT_FALSE(callIsPassthrough(1.3)); // 2.5 m reachable: stop pose fits, physical line does not.
+  path = experimental::Trajectory::Builder{}.build(input.points).value();
+  ASSERT_TRUE(module->modifyPathVelocity(path, input.left_bound, input.right_bound, *planner_data_));
+  EXPECT_FLOAT_EQ(path.compute(95.0).point.longitudinal_velocity_mps, 0.0f);
+}
+
+TEST_F(TrafficLightModuleTest, InitiallyYellowDoesNotAssumeFullPhaseRemaining)
+{
+  using Element = autoware_perception_msgs::msg::TrafficLightElement;
+  const auto input = setupBusSignalApproach(90.0, 5.0);
+  setCircleSignal(Element::AMBER);
+  callIsStopSignal();
+  EXPECT_FALSE(callIsPassthrough(0.5));
+  auto module = makeExperimentalModule();
+  auto path = experimental::Trajectory::Builder{}.build(input.points).value();
+  ASSERT_TRUE(module->modifyPathVelocity(path, input.left_bound, input.right_bound, *planner_data_));
+  EXPECT_FLOAT_EQ(path.compute(95.0).point.longitudinal_velocity_mps, 0.0f);
+}
+
+TEST_F(TrafficLightModuleTest, ExperimentalSignalRetiresAfterFrontClearsLine)
+{
+  const auto input = setupBusSignalApproach(99.0, 2.0);
+  auto module = makeExperimentalModule();
+  auto path = experimental::Trajectory::Builder{}.build(input.points).value();
+  ASSERT_TRUE(module->modifyPathVelocity(path, input.left_bound, input.right_bound, *planner_data_));
+  EXPECT_EQ(module->getTrafficLightModuleState(), experimental::TrafficLightModule::State::GO_OUT);
+}
 
 TEST_F(TrafficLightModuleTest, TransitionToYellowFromGreen)
 {

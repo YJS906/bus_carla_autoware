@@ -16,7 +16,7 @@
       ego:
         extra_wheelbase: 0.0
         extra_front_overhang: 0.5
-        extra_width: 1.0
+        extra_width: 1.4 # request 0.4 m more free corridor; road/object expansion limits still apply
       object_exclusion:
         exclude_static: true
         exclude_dynamic: true

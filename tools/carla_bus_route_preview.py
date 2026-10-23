@@ -45,7 +45,16 @@ def preview(client, route, duration):
         a,b=loc(p),loc(p)
         a.x+=dx;a.y+=dy;b.x-=dx;b.y-=dy
         world.debug.draw_line(a,b,thickness=.20,color=carla.Color(255,220,20),life_time=duration)
-        world.debug.draw_string(loc(p,2.5),f"BUS {stop['id']}",draw_shadow=True,
+        # Put the sign on the outer roadside, so it cannot look like a station
+        # on the neighbouring lane when viewed from the following camera.
+        sign = loc(p, .1)
+        side = stop['lane_width_m']/2 + .45
+        sign.x += -math.sin(yaw)*side
+        sign.y += math.cos(yaw)*side
+        top = carla.Location(sign.x, sign.y, sign.z+2.8)
+        world.debug.draw_line(sign, top, thickness=.08,
+                              color=carla.Color(255,220,20),life_time=duration)
+        world.debug.draw_string(top,f"BUS {stop['id']} (outer lane)",draw_shadow=True,
                                 color=carla.Color(255,220,20),life_time=duration)
     return {'map':native.name,'stop_markers':len(route['stops']), 'duration_seconds':duration,
             'actors_spawned':0,'vehicle_control_commands':0,'world_ticks':0}

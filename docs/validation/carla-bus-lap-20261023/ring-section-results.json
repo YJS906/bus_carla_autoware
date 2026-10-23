@@ -1,0 +1,424 @@
+{
+  "scope": "Diagnostic sections only; new full lap pending",
+  "runs": [
+    {
+      "success": true,
+      "result": "section_completed",
+      "error": null,
+      "full_course": false,
+      "total_distance_m": 166.65132863913982,
+      "collisions": [],
+      "signal_crossings": [
+        {
+          "group_id": 36249,
+          "opendrive_id": "2404",
+          "stop_line_id": 36236,
+          "frame": 2121138,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -63.086177825927734,
+            1.0926460027694702
+          ]
+        },
+        {
+          "group_id": 36265,
+          "opendrive_id": "2405",
+          "stop_line_id": 36252,
+          "frame": 2122334,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            16.18024253845215,
+            2.982985258102417
+          ]
+        }
+      ],
+      "run": "seam-section1",
+      "raw_report_sha256": "5955b118c0100d4bf20d82e3f94669e5d2b5bf3090a10bf7d1b4f9affb344294",
+      "peak_kmh": 10.149453408341278,
+      "ring_events": [],
+      "ring_curve_lanes": []
+    },
+    {
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError('Lap interrupted')",
+      "full_course": false,
+      "total_distance_m": null,
+      "collisions": [],
+      "signal_crossings": [],
+      "run": "outer-section1",
+      "raw_report_sha256": "aa50a28e497077cc259a333fbbe0f7fe5fd0835107c18654595a88ccba07e875",
+      "peak_kmh": 19.507289443707332,
+      "ring_events": [
+        {
+          "event": "ring_lane_request",
+          "sim_time": 14.950000222,
+          "lane": -2,
+          "initial": true,
+          "status": {
+            "success": true,
+            "code": 0,
+            "message": "Successfully set preferred primitive."
+          }
+        },
+        {
+          "event": "ring_lane_request",
+          "sim_time": 19.700000293,
+          "lane": -3,
+          "initial": false,
+          "status": {
+            "success": true,
+            "code": 0,
+            "message": "Successfully set preferred primitive."
+          }
+        },
+        {
+          "event": "ring_stage",
+          "sim_time": 20.000000298,
+          "stage": "merging_outer",
+          "native_s": 40.00814819335934,
+          "lane": -2,
+          "center_offset_m": -9.155265252047684e-05
+        },
+        {
+          "event": "ring_stage",
+          "sim_time": 38.900000579,
+          "stage": "outer_cruise",
+          "native_s": 65.85853576660153,
+          "lane": -3,
+          "center_offset_m": -0.5660405408244547
+        },
+        {
+          "event": "ring_lane_request",
+          "sim_time": 380.450005669,
+          "lane": -2,
+          "initial": false,
+          "status": {
+            "success": true,
+            "code": 0,
+            "message": "Successfully set preferred primitive."
+          }
+        },
+        {
+          "event": "ring_stage",
+          "sim_time": 380.750005673,
+          "stage": "merging_middle",
+          "native_s": 670.1014060974121,
+          "lane": -3,
+          "center_offset_m": -0.7190972038012085
+        },
+        {
+          "event": "ring_lane_request",
+          "sim_time": 396.850005913,
+          "lane": -1,
+          "initial": false,
+          "status": {
+            "success": true,
+            "code": 0,
+            "message": "Successfully set preferred primitive."
+          }
+        },
+        {
+          "event": "ring_stage",
+          "sim_time": 397.150005917,
+          "stage": "merging_inner",
+          "native_s": 699.6015892028809,
+          "lane": -2,
+          "center_offset_m": -0.18793415156742643
+        },
+        {
+          "event": "ring_stage",
+          "sim_time": 405.800006046,
+          "stage": "exit_ready",
+          "native_s": 731.6202936172485,
+          "lane": -1,
+          "center_offset_m": 0.7765351365979738
+        }
+      ],
+      "west_straight_median_offset_m": -0.6996371318939953,
+      "ring_curve_lanes": [
+        -3
+      ]
+    },
+    {
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError('Lap interrupted')",
+      "full_course": false,
+      "total_distance_m": null,
+      "collisions": [],
+      "signal_crossings": [],
+      "run": "outer-section2",
+      "raw_report_sha256": "97536031fd1bcb8dbf07c0876ae6ef48cefcc941a1f9a31aa209f87c4586c6ab",
+      "peak_kmh": 14.051650010993605,
+      "ring_events": [
+        {
+          "event": "ring_lane_request",
+          "sim_time": 11.000000163,
+          "lane": -2,
+          "initial": true,
+          "status": {
+            "success": true,
+            "code": 0,
+            "message": "Successfully set preferred primitive."
+          }
+        },
+        {
+          "event": "ring_lane_request",
+          "sim_time": 15.900000236,
+          "lane": -3,
+          "initial": false,
+          "status": {
+            "success": true,
+            "code": 0,
+            "message": "Successfully set preferred primitive."
+          }
+        },
+        {
+          "event": "ring_stage",
+          "sim_time": 16.200000241,
+          "stage": "merging_outer",
+          "native_s": 40.008178710937464,
+          "lane": -2,
+          "center_offset_m": -9.155265252047684e-05
+        },
+        {
+          "event": "ring_stage",
+          "sim_time": 35.850000534,
+          "stage": "outer_cruise",
+          "native_s": 68.9619445800781,
+          "lane": -3,
+          "center_offset_m": -0.7109686442697196
+        }
+      ],
+      "ring_curve_lanes": [
+        -3
+      ]
+    },
+    {
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError('Inner merge not completed on exit straight; stop diagnostic')",
+      "full_course": false,
+      "total_distance_m": null,
+      "collisions": [],
+      "signal_crossings": [],
+      "run": "outer-section3",
+      "raw_report_sha256": "d991db625fa7522d474d838243b99a95b12e2fbc3a3b8f1e1c4485fb163cc166",
+      "peak_kmh": 48.41310638236285,
+      "ring_events": [
+        {
+          "event": "ring_lane_request",
+          "sim_time": 200.500002987,
+          "lane": -2,
+          "initial": true,
+          "status": {
+            "success": true,
+            "code": 0,
+            "message": "Successfully set preferred primitive."
+          }
+        },
+        {
+          "event": "ring_lane_request",
+          "sim_time": 202.850003022,
+          "lane": -3,
+          "initial": false,
+          "status": {
+            "success": true,
+            "code": 0,
+            "message": "Successfully set preferred primitive."
+          }
+        },
+        {
+          "event": "ring_stage",
+          "sim_time": 203.150003027,
+          "stage": "merging_outer",
+          "native_s": 40.046123504638636,
+          "lane": -2,
+          "center_offset_m": -0.0005187932741756995
+        },
+        {
+          "event": "ring_stage",
+          "sim_time": 236.600003525,
+          "stage": "outer_cruise",
+          "native_s": 104.75127518177027,
+          "lane": -3,
+          "center_offset_m": -0.6278377261378001
+        },
+        {
+          "event": "ring_lane_request",
+          "sim_time": 292.400004357,
+          "lane": -2,
+          "initial": false,
+          "status": {
+            "success": true,
+            "code": 0,
+            "message": "Successfully set preferred primitive."
+          }
+        },
+        {
+          "event": "ring_stage",
+          "sim_time": 292.750004362,
+          "stage": "merging_middle",
+          "native_s": 670.2774686813354,
+          "lane": -3,
+          "center_offset_m": -0.6083489183412016
+        },
+        {
+          "event": "ring_lane_request",
+          "sim_time": 300.600004479,
+          "lane": -1,
+          "initial": false,
+          "status": {
+            "success": false,
+            "code": 1,
+            "message": "Cannot reroute as the planner is not in lane following."
+          }
+        },
+        {
+          "event": "ring_lane_request",
+          "sim_time": 302.750004511,
+          "lane": -1,
+          "initial": false,
+          "status": {
+            "success": true,
+            "code": 0,
+            "message": "Successfully set preferred primitive."
+          }
+        },
+        {
+          "event": "ring_stage",
+          "sim_time": 303.050004515,
+          "stage": "merging_inner",
+          "native_s": 724.262610912323,
+          "lane": -2,
+          "center_offset_m": -0.013854982640411073
+        }
+      ],
+      "west_straight_median_offset_m": -0.4951792644331654,
+      "ring_curve_lanes": [
+        -3
+      ]
+    },
+    {
+      "success": true,
+      "result": "section_completed",
+      "error": null,
+      "full_course": false,
+      "total_distance_m": 483.777036792575,
+      "collisions": [],
+      "signal_crossings": [
+        {
+          "group_id": 36615,
+          "opendrive_id": "2432",
+          "stop_line_id": 36602,
+          "frame": 2180303,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            9.865346908569336,
+            202.71609497070312
+          ]
+        },
+        {
+          "group_id": 36537,
+          "opendrive_id": "2426",
+          "stop_line_id": 36524,
+          "frame": 2182021,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            34.046470642089844,
+            103.66397094726562
+          ]
+        }
+      ],
+      "run": "outer-exit20",
+      "raw_report_sha256": "eda25633734216d4613324b3fe223b4e550653f88167403573eb60f644a945e3",
+      "peak_kmh": 42.08629440923245,
+      "ring_events": [
+        {
+          "event": "ring_lane_request",
+          "sim_time": 399.30000595,
+          "lane": -3,
+          "initial": true,
+          "status": {
+            "success": true,
+            "code": 0,
+            "message": "Successfully set preferred primitive."
+          }
+        },
+        {
+          "event": "ring_lane_request",
+          "sim_time": 427.350006368,
+          "lane": -2,
+          "initial": false,
+          "status": {
+            "success": true,
+            "code": 0,
+            "message": "Successfully set preferred primitive."
+          }
+        },
+        {
+          "event": "ring_stage",
+          "sim_time": 427.700006373,
+          "stage": "merging_middle",
+          "native_s": 670.594518661499,
+          "lane": -3,
+          "center_offset_m": -0.630535194993266
+        },
+        {
+          "event": "ring_lane_request",
+          "sim_time": 434.850006479,
+          "lane": -1,
+          "initial": false,
+          "status": {
+            "success": false,
+            "code": 1,
+            "message": "Cannot reroute as the planner is not in lane following."
+          }
+        },
+        {
+          "event": "ring_lane_request",
+          "sim_time": 436.950006511,
+          "lane": -1,
+          "initial": false,
+          "status": {
+            "success": true,
+            "code": 0,
+            "message": "Successfully set preferred primitive."
+          }
+        },
+        {
+          "event": "ring_stage",
+          "sim_time": 437.250006515,
+          "stage": "merging_inner",
+          "native_s": 715.529848575592,
+          "lane": -2,
+          "center_offset_m": -0.004318236789913499
+        },
+        {
+          "event": "ring_stage",
+          "sim_time": 445.800006642,
+          "stage": "exit_ready",
+          "native_s": 749.5391941070557,
+          "lane": -1,
+          "center_offset_m": 0.8538056543156287
+        }
+      ],
+      "ring_curve_lanes": [
+        -3
+      ]
+    }
+  ]
+}

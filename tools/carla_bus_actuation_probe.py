@@ -14,7 +14,7 @@ import statistics
 import carla
 
 
-def run(output):
+def run(output, speeds=(2.78,5.56), acceleration_pedal=.65, extended=False):
     client=carla.Client('127.0.0.1',2000);client.set_timeout(10)
     world=client.get_world()
     if world.get_map().name.rsplit('/',1)[-1] not in ('Town05','Town05_Opt'):
@@ -46,7 +46,8 @@ def run(output):
             bus.apply_control(carla.VehicleControl(throttle=pedal,brake=brake))
             world.tick()
         controls=[('brake',x) for x in (0,.005,.01,.02,.04,.06,.1,.2,.4,.8)]+[('throttle',x) for x in (.1,.2,.3,.4,.5,.6)]
-        for target in (2.78,5.56):
+        if extended: controls += [('throttle',x) for x in (.7,.8,.9,1.)]
+        for target in speeds:
             for kind,pedal in controls:
                 active[0]=False
                 for _ in range(30):tick(0,1)
@@ -56,7 +57,7 @@ def run(output):
                 for _ in range(30):tick(0,1)
                 reached=False
                 for _ in range(400):
-                    tick(.65)
+                    tick(acceleration_pedal)
                     if speed()>=target:
                         reached=True;break
                 if not reached:raise RuntimeError('Bus failed to accelerate to calibration speed')
@@ -94,5 +95,11 @@ def run(output):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--speeds',type=float,nargs='+',default=[2.78,5.56])
+    parser.add_argument('--acceleration-pedal',type=float,default=.65)
+    parser.add_argument('--extended',action='store_true')
     args=parser.parse_args();args.output.parent.mkdir(parents=True,exist_ok=True)
-    run(args.output)
+    if any(not math.isfinite(v) or not 0<v<=14 for v in args.speeds):
+        parser.error('Calibration speeds must be in (0,14] m/s')
+    if not 0<args.acceleration_pedal<=1:parser.error('Invalid acceleration pedal')
+    run(args.output,args.speeds,args.acceleration_pedal,args.extended)

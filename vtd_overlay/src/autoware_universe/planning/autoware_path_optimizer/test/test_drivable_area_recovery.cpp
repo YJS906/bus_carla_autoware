@@ -1,10 +1,21 @@
 // Copyright 2026 selfcar contributors
 // SPDX-License-Identifier: Apache-2.0
 #include "autoware/path_optimizer/utils/drivable_area_recovery.hpp"
+#include "autoware/path_optimizer/utils/road_clearance.hpp"
 
 #include <gtest/gtest.h>
 
 using autoware::path_optimizer::DrivableAreaRecoveryState;
+
+TEST(RoadClearance, StraightBendTransitionAndUnchangedDefault)
+{
+  using autoware::path_optimizer::roadClearance;
+  EXPECT_DOUBLE_EQ(roadClearance(0.0, 0.1, 0.3), 0.1);
+  EXPECT_NEAR(roadClearance(0.0045, 0.1, 0.3), 0.2, 1e-12);
+  EXPECT_DOUBLE_EQ(roadClearance(-0.01, 0.1, 0.3), 0.3);
+  EXPECT_DOUBLE_EQ(roadClearance(0.1, 0.3, 0.3), 0.3);
+  EXPECT_DOUBLE_EQ(roadClearance(0.0, 0.3, 0.3), 0.3);
+}
 
 TEST(BoundaryColdRetry, OncePerEpisodeEvenAfterTenSeconds)
 {

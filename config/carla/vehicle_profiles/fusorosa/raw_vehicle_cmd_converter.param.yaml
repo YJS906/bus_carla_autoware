@@ -10,7 +10,7 @@
     use_steer_ff: true
     use_steer_fb: true
     is_debugging: false
-    max_throttle: 0.6
+    max_throttle: 1.0
     max_brake: 0.8
     max_steer: 1.2217303432379762
     min_steer: -1.2217303432379762

@@ -1,0 +1,23 @@
+{
+  "source": "native_shared_boundary_seam_v1",
+  "map_sha256": "26dad8cd5a1142b887f77c3356b16072f98534959fd3a6e399610d6a8e6e9483",
+  "xodr_sha256": "7edc53b0be840e177598da7a4ed9571146d7b2595ce280d154c90f92e8a48851",
+  "geometry_modified": false,
+  "boundaries": [
+    {
+      "way_id": 6522,
+      "native_sections": [
+        [
+          25,
+          0,
+          1,
+          2
+        ]
+      ],
+      "samples": 70,
+      "max_boundary_error_m": 0.040538213759423826,
+      "endpoint_inset_m": 0.25
+    }
+  ],
+  "backup": "/home/a/autoware_data/maps/Town05Bus/backups/bus-lane-seams-20261023T050611819113Z"
+}

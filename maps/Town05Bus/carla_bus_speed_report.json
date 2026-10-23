@@ -1,0 +1,11 @@
+{
+  "urban_30": 480,
+  "ring_50": 6,
+  "map_sha256": "fc94226795abc1a22a5f392a71f6a635254cc7580c65a39a32447e707bc52372",
+  "geometry_modified": false,
+  "ring_native_road_ids": [
+    36,
+    37
+  ],
+  "backup": "/home/a/autoware_data/maps/Town05Bus/backups/bus-speeds-20261023T041722554136Z"
+}

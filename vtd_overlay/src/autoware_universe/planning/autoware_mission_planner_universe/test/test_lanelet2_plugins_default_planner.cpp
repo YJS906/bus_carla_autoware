@@ -139,6 +139,40 @@ TEST_F(DefaultPlannerTest, BusCorridorRequiresLegalNeighboursAndKeepsRoadEdges)
   }
 }
 
+TEST_F(DefaultPlannerTest, BusCorridorUsesOnlyVerifiedPavementStrips)
+{
+  for (const bool inverted : {false, true}) {
+    auto map = std::make_shared<lanelet::LaneletMap>();
+    lanelet::LineString3d left(100, {
+      lanelet::Point3d(200, 0., 1.75, 0.), lanelet::Point3d(201, 40., 1.75, 0.)});
+    lanelet::LineString3d right(101, {
+      lanelet::Point3d(202, 0., -1.75, 0.), lanelet::Point3d(203, 40., -1.75, 0.)});
+    for (auto bound : {left, right}) {
+      bound.attributes()["type"] = "road_border";
+      bound.attributes()["bus:margin_source"] = "carla_paved_straight_v2";
+      for (auto point : bound) point.attributes()["bus:margin:" + std::to_string(bound.id())] = "0.45";
+    }
+    lanelet::Lanelet lane(300, left, right);
+    lane.attributes()["subtype"] = "road";
+    lane.attributes()["location"] = "urban";
+    lane.attributes()["one_way"] = "yes";
+    if (inverted) lane = lane.invert();
+    map->add(lane);
+    planner_.set_test_map(map);
+    autoware_utils::Polygon2d footprint;
+    footprint.outer() = {{10, -2.05}, {10, 2.05}, {20, 2.05}, {20, -2.05}, {10, -2.05}};
+    EXPECT_TRUE(planner_.bus_corridor({lane}, footprint));
+    right.front().attributes()["bus:margin:101"] = "0";
+    EXPECT_FALSE(planner_.bus_corridor({lane}, footprint));
+    right.front().attributes()["bus:margin:101"] = "0.45";
+    right.attributes()["bus:margin_source"] = "unknown";
+    EXPECT_FALSE(planner_.bus_corridor({lane}, footprint));
+    right.attributes()["bus:margin_source"] = "carla_paved_straight_v2";
+    footprint.outer() = {{10, -2.3}, {10, 2.05}, {20, 2.05}, {20, -2.3}, {10, -2.3}};
+    EXPECT_FALSE(planner_.bus_corridor({lane}, footprint));
+  }
+}
+
 TEST_F(DefaultPlannerTest, checkGoalInsideLane)
 {
   // Test with dummy map such that only the lanelets provided as inputs are used for the ego lane

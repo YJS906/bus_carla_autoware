@@ -587,15 +587,7 @@ bool DefaultPlanner::check_goal_footprint_inside_lane_changeable_corridor(
   std::deque<lanelet::ConstLanelet> pending(lanelets_near_goal.begin(), lanelets_near_goal.end());
   std::unordered_set<lanelet::Id> visited;
   std::vector<autoware_utils::Polygon2d> remaining{goal_footprint};
-  // Subtract only legal, same-direction lane-change neighbours. No road-border
-  // buffering, shoulder expansion, opposite lanes, or convex hull over gaps.
-  while (!pending.empty()) {
-    const auto lane = pending.front();
-    pending.pop_front();
-    if (!visited.insert(lane.id()).second || !route_handler_.isRoadLanelet(lane)) continue;
-    autoware_utils::Polygon2d polygon;
-    for (const auto & p : lane.polygon2d()) polygon.outer().emplace_back(p.x(), p.y());
-    boost::geometry::correct(polygon);
+  const auto subtract = [&](const autoware_utils::Polygon2d & polygon) {
     std::vector<autoware_utils::Polygon2d> next;
     for (const auto & part : remaining) {
       std::vector<autoware_utils::Polygon2d> difference;
@@ -603,6 +595,51 @@ bool DefaultPlanner::check_goal_footprint_inside_lane_changeable_corridor(
       next.insert(next.end(), difference.begin(), difference.end());
     }
     remaining = std::move(next);
+  };
+  // Legal neighbours plus explicitly measured pavement strips. These strips
+  // provide body clearance only; they never create a routing connection.
+  while (!pending.empty()) {
+    const auto lane = pending.front();
+    pending.pop_front();
+    if (!visited.insert(lane.id()).second || !route_handler_.isRoadLanelet(lane)) continue;
+    autoware_utils::Polygon2d polygon;
+    for (const auto & p : lane.polygon2d()) polygon.outer().emplace_back(p.x(), p.y());
+    boost::geometry::correct(polygon);
+    subtract(polygon);
+    for (const bool left_side : {true, false}) {
+      const auto bound = left_side ? lane.leftBound() : lane.rightBound();
+      const auto source = bound.attributeOr<std::string>("bus:margin_source", "");
+      const auto type = bound.attributeOr<std::string>("type", "");
+      const bool painted = source == "carla_paved_straight_v2" && type == "line_thin" &&
+        bound.attributeOr<std::string>("subtype", "") == "solid" &&
+        bound.attributeOr<std::string>("carla:bus_boundary_source", "") ==
+          "native_nonjunction_edges_v1";
+      if (!(painted || (type == "road_border" &&
+          (source == "carla_paved_straight_v1" || source == "carla_paved_straight_v2")))) {
+        continue;
+      }
+      const auto key = "bus:margin:" + std::to_string(bound.id());
+      for (size_t i = 1; i < bound.size(); ++i) {
+        const auto & a = bound[i - 1];
+        const auto & b = bound[i];
+        const double ma = a.attributeOr<double>(key, 0.0);
+        const double mb = b.attributeOr<double>(key, 0.0);
+        const double maximum = painted ? 0.5 : 0.65;
+        if (!(ma > 0 && ma <= maximum && mb > 0 && mb <= maximum)) continue;
+        const double dx = b.x() - a.x(), dy = b.y() - a.y();
+        const double length = std::hypot(dx, dy);
+        if (length < 1e-6) continue;
+        // Lanelet bounds (including inverted ones) follow lane travel direction.
+        const double sign = left_side ? 1.0 : -1.0;
+        const double nx = -dy / length * sign, ny = dx / length * sign;
+        autoware_utils::Polygon2d strip;
+        strip.outer() = {{a.x(), a.y()}, {b.x(), b.y()},
+          {b.x() + nx * mb, b.y() + ny * mb},
+          {a.x() + nx * ma, a.y() + ny * ma}, {a.x(), a.y()}};
+        boost::geometry::correct(strip);
+        subtract(strip);
+      }
+    }
     if (const auto left = graph->left(lane)) pending.push_back(*left);
     if (const auto right = graph->right(lane)) pending.push_back(*right);
   }

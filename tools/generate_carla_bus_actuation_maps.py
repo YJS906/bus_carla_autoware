@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Fit monotone pedal maps to recorded Fuso Rosa calibration runs.
 
-Measured speed bands are 2.78 and 5.56m/s. Outside them values are clamped;
+Measured speed bands are read from the calibration file. Outside them values are clamped;
 low-speed/standing behaviour still requires separate closed-loop validation.
 """
 import csv
+import argparse
 import json
 from pathlib import Path
 
@@ -23,14 +24,13 @@ def isotonic(values,increasing=True):
     return [sign*total/count for total,count in blocks for _ in range(count)]
 
 
-def generate():
-    source=ROOT/'docs/validation/carla-bus-control-20261022/pedal-calibration.json'
+def generate(source, out, report_path):
     data=json.loads(source.read_text())
     if not data.get('complete'):raise ValueError('Complete calibration is required')
-    out=ROOT/'config/carla/vehicle_profiles/fusorosa/calibration_maps';out.mkdir(exist_ok=True)
+    out.mkdir(parents=True,exist_ok=True)
     speeds=sorted({c['target_speed_mps'] for c in data['cases']})
-    columns=[0,1.39,2.78,4.17,5.56,8.33,13.89]
-    report={'source':str(source.relative_to(ROOT)),'measured_speed_bands_mps':speeds,
+    columns=sorted(set([0,1.39,2.78,4.17,5.56,8.33,13.89]+speeds))
+    report={'source':str(source),'measured_speed_bands_mps':speeds,
             'minimum_pedal_acceleration_step_mps2':0.001,
             'strict_order_reason':'Autoware inverse interpolation rejects equal acceleration rows',
             'outside_measured_bands':'clamped, not measured','adjustments':[]}
@@ -58,7 +58,13 @@ def generate():
             writer=csv.writer(stream,lineterminator='\n');writer.writerow(['default',*columns])
             for i,p in enumerate(pedals):
                 writer.writerow([f'{p:.6f}',*[f'{np.interp(v,speeds,[fitted[s][i] for s in speeds]):.6f}' for v in columns]])
-    (ROOT/'docs/validation/carla-bus-control-20261022/map-fit.json').write_text(json.dumps(report,indent=2)+'\n')
+    report_path.parent.mkdir(parents=True,exist_ok=True)
+    report_path.write_text(json.dumps(report,indent=2)+'\n')
 
 
-if __name__=='__main__':generate()
+if __name__=='__main__':
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--source',type=Path,default=ROOT/'docs/validation/carla-bus-control-20261022/pedal-calibration.json')
+    p.add_argument('--output-dir',type=Path,default=ROOT/'config/carla/vehicle_profiles/fusorosa/calibration_maps')
+    p.add_argument('--report',type=Path,default=ROOT/'docs/validation/carla-bus-control-20261022/map-fit.json')
+    a=p.parse_args();generate(a.source,a.output_dir,a.report)

@@ -1,0 +1,192 @@
+{
+  "date": "2026-10-23",
+  "map": "Carla/Maps/Town05_Opt",
+  "blueprint": "static.prop.busstop",
+  "stop_count": 10,
+  "visual_review": "S01-S10 reviewed; S03 shifted behind lamp post and S09 shifted away from hedge",
+  "second_apply_all_unchanged": true,
+  "world_ticks": 0,
+  "vehicle_controls": 0,
+  "shelters": [
+    {
+      "id": "S01",
+      "name": "서부 도심",
+      "blueprint": "static.prop.busstop",
+      "role_name": "bus_mission_stop_S01",
+      "transform": {
+        "x": -179.87469482421875,
+        "y": -41.22010803222656,
+        "z": 0.21285033226013184,
+        "yaw": -90.01579284667969
+      },
+      "sidewalk_width_m": 4.0,
+      "sidewalk_ground_z": 0.20785033702850342,
+      "driving_lane_clearance_m": 2.188189586862124,
+      "longitudinal_offset_m": 0.0,
+      "lateral_offset_m": 0.0,
+      "sidewalk_edge_margin_m": 1.053195
+    },
+    {
+      "id": "S02",
+      "name": "북서 도심",
+      "blueprint": "static.prop.busstop",
+      "role_name": "bus_mission_stop_S02",
+      "transform": {
+        "x": -157.9032745361328,
+        "y": -79.92386627197266,
+        "z": 0.15739989280700684,
+        "yaw": 0.0863037109375
+      },
+      "sidewalk_width_m": 4.0,
+      "sidewalk_ground_z": 0.15239989757537842,
+      "driving_lane_clearance_m": 2.18819505295354,
+      "longitudinal_offset_m": 0.0,
+      "lateral_offset_m": 0.0,
+      "sidewalk_edge_margin_m": 1.053195
+    },
+    {
+      "id": "S03",
+      "name": "중앙 북부",
+      "blueprint": "static.prop.busstop",
+      "role_name": "bus_mission_stop_S03",
+      "transform": {
+        "x": -139.01612854003906,
+        "y": -55.32802963256836,
+        "z": 0.15738463401794434,
+        "yaw": 90.39353942871094
+      },
+      "sidewalk_width_m": 4.0,
+      "sidewalk_ground_z": 0.15238463878631592,
+      "driving_lane_clearance_m": 4.68819574939397,
+      "longitudinal_offset_m": -4.0,
+      "lateral_offset_m": 0.0,
+      "sidewalk_edge_margin_m": 1.053195
+    },
+    {
+      "id": "S04",
+      "name": "중앙 도심",
+      "blueprint": "static.prop.busstop",
+      "role_name": "bus_mission_stop_S04",
+      "transform": {
+        "x": -86.09232330322266,
+        "y": 10.966672897338867,
+        "z": 0.15740202367305756,
+        "yaw": 359.86053466796875
+      },
+      "sidewalk_width_m": 4.0,
+      "sidewalk_ground_z": 0.15240202844142914,
+      "driving_lane_clearance_m": 2.188194344588824,
+      "longitudinal_offset_m": 0.0,
+      "lateral_offset_m": 0.0,
+      "sidewalk_edge_margin_m": 1.053195
+    },
+    {
+      "id": "S05",
+      "name": "북동 도심",
+      "blueprint": "static.prop.busstop",
+      "role_name": "bus_mission_stop_S05",
+      "transform": {
+        "x": 40.03985595703125,
+        "y": -52.15071487426758,
+        "z": 0.15741515159606934,
+        "yaw": 271.5320739746094
+      },
+      "sidewalk_width_m": 3.0,
+      "sidewalk_ground_z": 0.15241515636444092,
+      "driving_lane_clearance_m": 1.6881928671041186,
+      "longitudinal_offset_m": 0.0,
+      "lateral_offset_m": 0.0,
+      "sidewalk_edge_margin_m": 0.553195
+    },
+    {
+      "id": "S06",
+      "name": "남동 도심",
+      "blueprint": "static.prop.busstop",
+      "role_name": "bus_mission_stop_S06",
+      "transform": {
+        "x": 39.298423767089844,
+        "y": 53.58768844604492,
+        "z": 0.15741515159606934,
+        "yaw": -89.97710418701172
+      },
+      "sidewalk_width_m": 3.0,
+      "sidewalk_ground_z": 0.15241515636444092,
+      "driving_lane_clearance_m": 1.6881937599588466,
+      "longitudinal_offset_m": 0.0,
+      "lateral_offset_m": 0.0,
+      "sidewalk_edge_margin_m": 0.553195
+    },
+    {
+      "id": "S07",
+      "name": "동부 도심",
+      "blueprint": "static.prop.busstop",
+      "role_name": "bus_mission_stop_S07",
+      "transform": {
+        "x": -8.47480297088623,
+        "y": -8.137845993041992,
+        "z": 0.15714110434055328,
+        "yaw": 179.86053466796875
+      },
+      "sidewalk_width_m": 2.0,
+      "sidewalk_ground_z": 0.15214110910892487,
+      "driving_lane_clearance_m": 1.188195223297427,
+      "longitudinal_offset_m": 0.0,
+      "lateral_offset_m": 0.0,
+      "sidewalk_edge_margin_m": 0.05319499999999999
+    },
+    {
+      "id": "S08",
+      "name": "중앙 남부",
+      "blueprint": "static.prop.busstop",
+      "role_name": "bus_mission_stop_S08",
+      "transform": {
+        "x": -58.897518157958984,
+        "y": 54.496761322021484,
+        "z": 0.21234282851219177,
+        "yaw": 90.3792953491211
+      },
+      "sidewalk_width_m": 4.0,
+      "sidewalk_ground_z": 0.20734283328056335,
+      "driving_lane_clearance_m": 2.1881934320954115,
+      "longitudinal_offset_m": 0.0,
+      "lateral_offset_m": 0.0,
+      "sidewalk_edge_margin_m": 1.053195
+    },
+    {
+      "id": "S09",
+      "name": "남서 도심",
+      "blueprint": "static.prop.busstop",
+      "role_name": "bus_mission_stop_S09",
+      "transform": {
+        "x": -157.4220428466797,
+        "y": 80.07880401611328,
+        "z": 0.15739959478378296,
+        "yaw": -179.93443298339844
+      },
+      "sidewalk_width_m": 4.0,
+      "sidewalk_ground_z": 0.15239959955215454,
+      "driving_lane_clearance_m": 1.788190907249271,
+      "longitudinal_offset_m": 0.0,
+      "lateral_offset_m": -0.4,
+      "sidewalk_edge_margin_m": 0.6531950000000001
+    },
+    {
+      "id": "S10",
+      "name": "서부 남단",
+      "blueprint": "static.prop.busstop",
+      "role_name": "bus_mission_stop_S10",
+      "transform": {
+        "x": -179.851318359375,
+        "y": 43.55988693237305,
+        "z": 0.2128506302833557,
+        "yaw": -90.01579284667969
+      },
+      "sidewalk_width_m": 4.0,
+      "sidewalk_ground_z": 0.2078506350517273,
+      "driving_lane_clearance_m": 2.188189586862124,
+      "longitudinal_offset_m": 0.0,
+      "lateral_offset_m": 0.0,
+      "sidewalk_edge_margin_m": 1.053195
+    }
+  ]
+}

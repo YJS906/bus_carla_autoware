@@ -5,6 +5,7 @@ No CARLA connection or vehicle commands. ROS_DOMAIN_ID must be 211 to keep
 fixture messages away from the driving runtime.
 """
 import argparse
+import copy
 import json
 import math
 import os
@@ -35,9 +36,11 @@ def main():
     a=p.parse_args()
     if os.environ.get('ROS_DOMAIN_ID')!='211': raise RuntimeError('Use isolated ROS_DOMAIN_ID=211')
     captured=json.loads(a.fixture.read_text())
+    sequence=captured if isinstance(captured,list) else None
+    if sequence:captured=sequence[0]
     path=PathMessage();odom=Odometry()
-    set_message_fields(path,captured['/planning/scenario_planning/lane_driving/behavior_planning/path'])
-    set_message_fields(odom,captured['/localization/kinematic_state'])
+    set_message_fields(path,copy.deepcopy(captured['/planning/scenario_planning/lane_driving/behavior_planning/path']))
+    set_message_fields(odom,copy.deepcopy(captured['/localization/kinematic_state']))
     a.output.parent.mkdir(parents=True,exist_ok=True)
     args=['/opt/carla_overlay/lib/autoware_path_optimizer/path_optimizer_node','--ros-args',
           '--params-file','/opt/carla-config/vehicle_profiles/fusorosa/vehicle_info.param.yaml',
@@ -54,11 +57,13 @@ def main():
         args += ['-p','mpt.kinematics.optimization_center_offset:='+str(a.center_offset)]
     for value in a.param: args += ['-p', value]
     result={'parameters':{key:str(value) if isinstance(value,Path) else value for key,value in vars(a).items()},
-            'preserve_input_bounds':a.preserve_bounds,'trajectory':None,'factors':None,'trajectory_history':[]}
+            'preserve_input_bounds':a.preserve_bounds,'trajectory':None,'factors':None,'trajectory_history':[], 'trajectory_fixture_indices':[]}
+    fixture_index=[0]
     def record_trajectory(message):
         data=message_to_ordereddict(message)
         result['trajectory']=data
         result['trajectory_history'].append(data)
+        result['trajectory_fixture_indices'].append(fixture_index[0])
     with a.output.with_suffix('.log').open('w') as log:
         proc=subprocess.Popen(args,stdout=log,stderr=subprocess.STDOUT)
         rclpy.init(args=[]);node=rclpy.create_node('bus_optimizer_replay')
@@ -73,10 +78,19 @@ def main():
             node.create_subscription(Trajectory,'/path_optimizer/debug/mpt_ref_traj',
                 lambda m:result.update(reference_trajectory=message_to_ordereddict(m)),1)]
         try:
+            ready=time.monotonic()+10
+            while publishers[0].get_subscription_count()==0 and time.monotonic()<ready:
+                rclpy.spin_once(node,timeout_sec=.05)
             start=time.monotonic();last=0
-            while time.monotonic()-start<8:
+            duration=len(sequence)*.2+2 if sequence else 8
+            while time.monotonic()-start<duration:
                 if proc.poll() is not None: raise RuntimeError('Optimizer exited; inspect replay log')
                 if time.monotonic()-last>.2:
+                    if sequence:
+                        fixture_index[0]=min(int((time.monotonic()-start)/.2),len(sequence)-1)
+                        sample=sequence[fixture_index[0]]
+                        set_message_fields(path,copy.deepcopy(sample['/planning/scenario_planning/lane_driving/behavior_planning/path']))
+                        set_message_fields(odom,copy.deepcopy(sample['/localization/kinematic_state']))
                     stamp=node.get_clock().now().to_msg();path.header.stamp=stamp;odom.header.stamp=stamp
                     publishers[1].publish(odom);publishers[0].publish(path);last=time.monotonic()
                 rclpy.spin_once(node,timeout_sec=.03)

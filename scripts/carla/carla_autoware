@@ -88,6 +88,7 @@ case "${1:-start}" in
     export CARLA_SPECTATOR_DISTANCE=16
     export CARLA_SPECTATOR_HEIGHT=8
     "$0" start-town05
+    "${script_dir}/place_bus_stops"
     ;;
   start-town05)
     export AUTOWARE_MAP_DIR="${AUTOWARE_MAP_DIR:-/home/a/autoware_data/maps}"

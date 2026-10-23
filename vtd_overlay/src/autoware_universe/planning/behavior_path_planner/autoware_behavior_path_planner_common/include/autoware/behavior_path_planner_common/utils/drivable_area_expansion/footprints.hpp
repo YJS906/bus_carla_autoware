@@ -45,5 +45,12 @@ Polygon2d create_footprint(const geometry_msgs::msg::Pose & pose, const Polygon2
 MultiPolygon2d create_object_footprints(
   const autoware_perception_msgs::msg::PredictedObjects & objects,
   const DrivableAreaExpansionParameters & params);
+// Context-aware road geometry: retain the current footprint of a following
+// vehicle, but do not turn its future traversal of our lane into a static wall.
+// Prediction messages used by collision/RSS checks are never modified.
+MultiPolygon2d create_object_footprints(
+  const autoware_perception_msgs::msg::PredictedObjects & objects,
+  const DrivableAreaExpansionParameters & params, const geometry_msgs::msg::Pose & ego_pose,
+  const std::vector<geometry_msgs::msg::Pose> & path_poses);
 }  // namespace autoware::behavior_path_planner::drivable_area_expansion
 #endif  // AUTOWARE__BEHAVIOR_PATH_PLANNER_COMMON__UTILS__DRIVABLE_AREA_EXPANSION__FOOTPRINTS_HPP_

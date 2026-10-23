@@ -88,6 +88,12 @@ LCParamPtr LaneChangeModuleManager::set_params(rclcpp::Node * node, const std::s
       get_or_declare_parameter<double>(*node, parameter("trajectory.min_prepare_duration"));
     p.trajectory.multi_lane_prepare_duration =
       get_double_with_default(parameter("trajectory.multi_lane_prepare_duration"), 0.0);
+    p.trajectory.minimum_lane_change_length =
+      get_double_with_default(parameter("trajectory.minimum_lane_change_length"), 0.0);
+    if (!std::isfinite(p.trajectory.minimum_lane_change_length) ||
+        p.trajectory.minimum_lane_change_length < 0.0) {
+      throw std::invalid_argument("minimum_lane_change_length must be finite and nonnegative");
+    }
     p.trajectory.enable_lateral_acceleration_limit = get_bool_with_default(
       parameter("trajectory.enable_lateral_acceleration_limit"), true);
     p.trajectory.enable_lateral_jerk_limit = get_bool_with_default(
@@ -456,6 +462,11 @@ void LaneChangeModuleManager::updateModuleParams(const std::vector<rclcpp::Param
       parameters, ns + "min_prepare_duration", p->trajectory.min_prepare_duration);
     update_param<double>(
       parameters, ns + "multi_lane_prepare_duration", p->trajectory.multi_lane_prepare_duration);
+    double minimum_length = p->trajectory.minimum_lane_change_length;
+    update_param<double>(parameters, ns + "minimum_lane_change_length", minimum_length);
+    if (std::isfinite(minimum_length) && minimum_length >= 0.0) {
+      p->trajectory.minimum_lane_change_length = minimum_length;
+    }
     update_param<double>(parameters, ns + "lateral_jerk", p->trajectory.lateral_jerk);
     update_param<double>(
       parameters, ns + "min_lane_changing_velocity", p->trajectory.min_lane_changing_velocity);

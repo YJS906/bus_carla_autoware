@@ -58,7 +58,7 @@
       "name": "서부 순환로 진입",
       "kind": "via",
       "road_id": 37,
-      "lane_id": -1,
+      "lane_id": -2,
       "s": 40.0
     },
     {
@@ -83,7 +83,7 @@
       "kind": "via",
       "road_id": 37,
       "lane_id": -1,
-      "s": 760.0
+      "s": 780.0
     },
     {
       "id": "R06",
@@ -133,5 +133,23 @@
       "lane_id": -2,
       "s": 30.0
     }
-  ]
+  ],
+  "ring_lane_policy": {
+    "road_id": 37,
+    "entry_middle_lane": -2,
+    "cruise_outer_lane": -3,
+    "exit_inner_lane": -1,
+    "outer_request_straight_s_m": [
+      25,
+      100
+    ],
+    "outer_complete_before_s_m": 130,
+    "exit_request_straight_s_m": [
+      670,
+      765
+    ],
+    "exit_complete_before_s_m": 785,
+    "lane_change_cap_kmh": 20,
+    "note": "Sequential lane requests on straights; stop diagnostic if a merge misses its window."
+  }
 }

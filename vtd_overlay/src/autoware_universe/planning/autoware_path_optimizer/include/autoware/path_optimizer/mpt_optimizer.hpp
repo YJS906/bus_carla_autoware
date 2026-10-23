@@ -273,10 +273,12 @@ private:
     // clearance
     double hard_clearance_from_road;
     double soft_clearance_from_road;
+    double straight_soft_clearance_from_road;
     double soft_collision_free_weight;
 
     // weight
     double lat_error_weight;
+    double straight_reference_weight;
     double yaw_error_weight;
     double yaw_error_rate_weight;
 
@@ -362,6 +364,7 @@ private:
   int prev_mat_m_ = 0;
   int prev_solution_status_ = 0;
   std::shared_ptr<std::vector<ReferencePoint>> prev_ref_points_ptr_{nullptr};
+  std::vector<ReferencePoint> centering_ref_points_;
   std::shared_ptr<std::vector<TrajectoryPoint>> prev_optimized_traj_points_ptr_{nullptr};
 
   void updateVehicleCircles();

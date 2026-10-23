@@ -1,0 +1,6699 @@
+{
+  "task": "Stabilize bus planning with bidirectional CARLA traffic",
+  "changes": [
+    "Use current and up-to-3-second road-vehicle predictions for geometric drivable bounds; retain full input predictions for collision/RSS/velocity planning",
+    "Do not let parallel followers (same or neighboring lane) entirely behind the inflated rear clearance reshape the historical drivable corridor; adjacent/oncoming/front/rear-overlap objects retain geometric footprints",
+    "Scale bus low-speed lateral acceleration with speed squared to retain a gradual lane-change geometry",
+    "After passing a station, choose the connected exit lane before the next forced junction segment; retain unpassed station preferences and reroute safety checks",
+    "Discard the anchored braking preparation once measured speed is already below its target; preserve upstream stops and lateral approval state",
+    "Use a continuous bus nominal-path miss tolerance: 2m through 5m/s, tapering at higher speeds; retain optimized footprint/obstacle checks",
+    "Increase bus signal stopping margin from 1m to 5m after a failed red-line crossing; preserve independent signal audit",
+    "Apply physical-line retirement and red/stale-yellow prohibition to both legacy and deployed experimental signal implementations; earlier legacy-only changes did not cover the runtime plugin",
+    "Lower bus lateral jerk to 0.4m/s^3 and low-speed lateral acceleration to extend measured lane-change geometry to about 29.5m",
+    "Prepare S04 exit at a 10km/h ceiling until station passed and inner-lane alignment held for 1s; restore normal route speed limits afterward",
+    "Keep physical bus dimensions, obstacle margins, signal obedience and trajectory validators"
+  ],
+  "tests": {
+    "mission_goal": 2,
+    "drivable_area": 21,
+    "optimizer_boundary": 4,
+    "station_exit_policy": 8,
+    "ring_policy": 3,
+    "braking_preparation": 10,
+    "traffic_signal": 33,
+    "signal_regressions_fail_against_old_library": 2,
+    "experimental_signal_regressions_fail_against_old_library": 2,
+    "deployed_experimental_signal_tests": 3,
+    "python_compile": true
+  },
+  "runs": {
+    "following1": {
+      "source_log": "log/bus-traffic-fix-20261023/following1/lap.json",
+      "sha256": "69e2979fbae3ff125c24f884b30bd2db29adfed659ac46ccac3b50a7d9a0b8fe",
+      "success": true,
+      "result": "section_completed",
+      "error": null,
+      "distance_m": 124.55120983354254,
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03"
+      ],
+      "collisions": [],
+      "emergency_episode_count": 2,
+      "emergency_episodes": [
+        {
+          "start_sim_s": 36.30000054,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 36.600000545
+        },
+        {
+          "start_sim_s": 146.200002178,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 148.100002206
+        }
+      ],
+      "peak_speed_kmh": {
+        "urban": 18.437235362779766,
+        "ring_road": 0
+      },
+      "signal_crossings": [
+        {
+          "group_id": 35817,
+          "opendrive_id": "2376",
+          "stop_line_id": 35804,
+          "frame": 2757529,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -143.0708770751953,
+            -85.48281860351562
+          ]
+        }
+      ],
+      "traffic_spawned": [
+        {
+          "id": 477,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 44,
+          "lane": -2,
+          "native_s": 6.0,
+          "initial_xyz": [
+            -184.57594299316406,
+            -17.585704803466797,
+            0.305450439453125
+          ]
+        }
+      ],
+      "traffic_skipped": [],
+      "traffic_encounters": {
+        "477:same": {
+          "actor_id": 477,
+          "direction": "same",
+          "first_sim_time": 16.400000244,
+          "minimum_bbox_clearance_m": 1.7863412339206544,
+          "maximum_npc_speed_kmh": 17.880460722126227,
+          "last_sim_time": 161.550002407
+        },
+        "477:crossing": {
+          "actor_id": 477,
+          "direction": "crossing",
+          "first_sim_time": 33.050000492,
+          "minimum_bbox_clearance_m": 1.656833250000764,
+          "maximum_npc_speed_kmh": 11.89205584567396,
+          "last_sim_time": 145.100002162
+        }
+      },
+      "last_live_npc_count": 1,
+      "cleanup_removed_ids": [
+        477
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null
+    },
+    "traffic16-1": {
+      "source_log": "log/bus-traffic-fix-20261023/traffic16-1/lap.json",
+      "sha256": "0511e0ea0de9084f371bfe9d71d690f20937d47894499e77ea62f742965fecdb",
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError('Lap interrupted')",
+      "distance_m": 1707.6810918509368,
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07"
+      ],
+      "collisions": [],
+      "emergency_episode_count": 47,
+      "emergency_episodes": [
+        {
+          "start_sim_s": 62.300000928,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 62.400000929
+        },
+        {
+          "start_sim_s": 153.600002288,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 153.70000229
+        },
+        {
+          "start_sim_s": 153.800002291,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 154.300002299
+        },
+        {
+          "start_sim_s": 154.600002303,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 154.700002305
+        },
+        {
+          "start_sim_s": 158.500002361,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 158.900002367
+        },
+        {
+          "start_sim_s": 161.700002409,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 162.100002415
+        },
+        {
+          "start_sim_s": 162.500002421,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 163.80000244
+        },
+        {
+          "start_sim_s": 172.600002571,
+          "faults": [
+            "controller_node_exe: control_state"
+          ],
+          "end_sim_s": 173.000002577
+        },
+        {
+          "start_sim_s": 201.200002998,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 203.000003024
+        },
+        {
+          "start_sim_s": 247.700003691,
+          "faults": [
+            "topic_state_monitor_scenario_planning_trajectory: planning_topic_status"
+          ],
+          "end_sim_s": 247.900003693
+        },
+        {
+          "start_sim_s": 256.800003826,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 257.000003829
+        },
+        {
+          "start_sim_s": 270.800004035,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 272.50000406
+        },
+        {
+          "start_sim_s": 301.500004492,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 303.400004521
+        },
+        {
+          "start_sim_s": 317.100004725,
+          "faults": [
+            "planning_validator: trajectory_validation_curvature",
+            "planning_validator: trajectory_validation_steering",
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 317.200004726
+        },
+        {
+          "start_sim_s": 377.800005629,
+          "faults": [
+            "controller_node_exe: control_state",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 378.100005634
+        },
+        {
+          "start_sim_s": 412.500006146,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 413.000006154
+        },
+        {
+          "start_sim_s": 413.300006158,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 414.400006175
+        },
+        {
+          "start_sim_s": 437.60000652,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status",
+            "controller_node_exe: control_state"
+          ],
+          "end_sim_s": 440.30000656
+        },
+        {
+          "start_sim_s": 442.200006589,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 442.700006596
+        },
+        {
+          "start_sim_s": 443.400006607,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 444.100006617
+        },
+        {
+          "start_sim_s": 446.100006647,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 446.800006657
+        },
+        {
+          "start_sim_s": 449.00000669,
+          "faults": [
+            "service_log_checker: response_status",
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 449.800006702
+        },
+        {
+          "start_sim_s": 452.100006736,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 453.400006756
+        },
+        {
+          "start_sim_s": 455.400006785,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 456.500006802
+        },
+        {
+          "start_sim_s": 489.300007291,
+          "faults": [
+            "topic_state_monitor_scenario_planning_trajectory: planning_topic_status"
+          ],
+          "end_sim_s": 489.350007291
+        },
+        {
+          "start_sim_s": 572.200008526,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 572.350008528
+        },
+        {
+          "start_sim_s": 586.500008739,
+          "faults": [
+            "topic_state_monitor_scenario_planning_trajectory: planning_topic_status"
+          ],
+          "end_sim_s": 586.700008742
+        },
+        {
+          "start_sim_s": 586.900008745,
+          "faults": [
+            "topic_state_monitor_scenario_planning_trajectory: planning_topic_status",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 587.100008748
+        },
+        {
+          "start_sim_s": 587.350008752,
+          "faults": [
+            "topic_state_monitor_scenario_planning_trajectory: planning_topic_status",
+            "service_log_checker: response_status",
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 591.400008812
+        },
+        {
+          "start_sim_s": 599.800008937,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 601.700008966
+        },
+        {
+          "start_sim_s": 607.100009046,
+          "faults": [
+            "topic_state_monitor_scenario_planning_trajectory: planning_topic_status",
+            "controller_node_exe: control_state",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 617.300009198
+        },
+        {
+          "start_sim_s": 722.900010772,
+          "faults": [
+            "planning_validator: trajectory_validation_deceleration"
+          ],
+          "end_sim_s": 723.000010773
+        },
+        {
+          "start_sim_s": 723.900010786,
+          "faults": [
+            "controller_node_exe: control_state",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 724.500010795
+        },
+        {
+          "start_sim_s": 725.000010803,
+          "faults": [
+            "service_log_checker: response_status",
+            "topic_state_monitor_scenario_planning_trajectory: planning_topic_status"
+          ],
+          "end_sim_s": 725.200010806
+        },
+        {
+          "start_sim_s": 745.300011105,
+          "faults": [
+            "topic_state_monitor_scenario_planning_trajectory: planning_topic_status",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 767.200011432
+        },
+        {
+          "start_sim_s": 791.200011789,
+          "faults": [
+            "topic_state_monitor_scenario_planning_trajectory: planning_topic_status",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 793.200011819
+        },
+        {
+          "start_sim_s": 827.700012333,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 828.500012345
+        },
+        {
+          "start_sim_s": 828.600012347,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 829.50001236
+        },
+        {
+          "start_sim_s": 1057.600015759,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 1059.400015786
+        },
+        {
+          "start_sim_s": 1116.200016632,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 1116.70001664
+        },
+        {
+          "start_sim_s": 1117.300016649,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 1117.40001665
+        },
+        {
+          "start_sim_s": 1118.300016663,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 1118.500016666
+        },
+        {
+          "start_sim_s": 1119.100016675,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 1119.40001668
+        },
+        {
+          "start_sim_s": 1131.800016865,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 1133.900016896
+        },
+        {
+          "start_sim_s": 1153.100017182,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 1153.200017184
+        },
+        {
+          "start_sim_s": 1166.40001738,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 1166.500017382
+        },
+        {
+          "start_sim_s": 1171.800017461,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 1178.700017563
+        }
+      ],
+      "peak_speed_kmh": {
+        "urban": 23.593662607485964,
+        "ring_road": 46.203607828778836
+      },
+      "signal_crossings": [
+        {
+          "group_id": 35817,
+          "opendrive_id": "2376",
+          "stop_line_id": 35804,
+          "frame": 2764409,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -142.96102905273438,
+            -85.33391571044922
+          ]
+        },
+        {
+          "group_id": 36025,
+          "opendrive_id": "2390",
+          "stop_line_id": 36012,
+          "frame": 2766448,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -129.67323303222656,
+            -13.581095695495605
+          ]
+        },
+        {
+          "group_id": 36249,
+          "opendrive_id": "2404",
+          "stop_line_id": 36236,
+          "frame": 2767978,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -63.19557189941406,
+            6.3336944580078125
+          ]
+        },
+        {
+          "group_id": 36265,
+          "opendrive_id": "2405",
+          "stop_line_id": 36252,
+          "frame": 2769160,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            16.178083419799805,
+            6.556326866149902
+          ]
+        },
+        {
+          "group_id": 36153,
+          "opendrive_id": "2398",
+          "stop_line_id": 36140,
+          "frame": 2770698,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            36.68568420410156,
+            -75.03614807128906
+          ]
+        },
+        {
+          "group_id": 36599,
+          "opendrive_id": "2431",
+          "stop_line_id": 36595,
+          "frame": 2771472,
+          "state": "Yellow",
+          "previous_state": "Yellow",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            37.695838928222656,
+            -133.9898681640625
+          ]
+        },
+        {
+          "group_id": 36473,
+          "opendrive_id": "2421",
+          "stop_line_id": 36460,
+          "frame": 2772023,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            36.525306701660156,
+            -175.71734619140625
+          ]
+        },
+        {
+          "group_id": 36615,
+          "opendrive_id": "2432",
+          "stop_line_id": 36602,
+          "frame": 2779455,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            9.403604507446289,
+            202.62904357910156
+          ]
+        },
+        {
+          "group_id": 36537,
+          "opendrive_id": "2426",
+          "stop_line_id": 36524,
+          "frame": 2780474,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            35.55562973022461,
+            103.70288848876953
+          ]
+        },
+        {
+          "group_id": 36281,
+          "opendrive_id": "2406",
+          "stop_line_id": 36268,
+          "frame": 2783979,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            31.97524642944336,
+            13.921806335449219
+          ]
+        }
+      ],
+      "traffic_spawned": [
+        {
+          "id": 484,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 44,
+          "lane": -2,
+          "native_s": 6.0,
+          "initial_xyz": [
+            -184.57594299316406,
+            -17.585704803466797,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 485,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 44,
+          "lane": 1,
+          "native_s": 55.0,
+          "initial_xyz": [
+            -191.58946228027344,
+            -66.58377075195312,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 486,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 5,
+          "lane": -2,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -131.93467712402344,
+            -36.91206359863281,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 487,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 5,
+          "lane": 1,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -124.76313018798828,
+            -61.86339569091797,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 488,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 1,
+          "lane": 2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -76.73690795898438,
+            6.236118316650391,
+            0.25
+          ]
+        },
+        {
+          "id": 489,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 1,
+          "lane": -1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -101.75387573242188,
+            -0.7030093669891357,
+            0.25
+          ]
+        },
+        {
+          "id": 490,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 16,
+          "lane": 2,
+          "native_s": 12.0,
+          "initial_xyz": [
+            36.16423797607422,
+            -64.62568664550781,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 491,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 16,
+          "lane": -1,
+          "native_s": 36.0,
+          "initial_xyz": [
+            28.525062561035156,
+            -40.82142639160156,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 492,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 29,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            35.08800506591797,
+            60.2191162109375,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 493,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 29,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            28.097993850708008,
+            35.21632385253906,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 494,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 0,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            2.167299509048462,
+            -4.455968856811523,
+            0.25
+          ]
+        },
+        {
+          "id": 495,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 0,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -22.815589904785156,
+            2.604861259460449,
+            0.25
+          ]
+        },
+        {
+          "id": 496,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 40,
+          "lane": -2,
+          "native_s": 10.0,
+          "initial_xyz": [
+            -54.12608337402344,
+            44.895023345947266,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 497,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 40,
+          "lane": 1,
+          "native_s": 30.0,
+          "initial_xyz": [
+            -47.258636474609375,
+            64.94092559814453,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 498,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 37,
+          "lane": -3,
+          "native_s": 350.0,
+          "initial_xyz": [
+            -247.16058349609375,
+            -52.36977767944336,
+            10.25
+          ]
+        },
+        {
+          "id": 499,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 37,
+          "lane": 2,
+          "native_s": 450.0,
+          "initial_xyz": [
+            -232.98533630371094,
+            47.56609344482422,
+            10.25
+          ]
+        }
+      ],
+      "traffic_skipped": [],
+      "traffic_encounters": {
+        "484:same": {
+          "actor_id": 484,
+          "direction": "same",
+          "first_sim_time": 16.300000242,
+          "minimum_bbox_clearance_m": 1.6499458267547369,
+          "maximum_npc_speed_kmh": 19.474112207940692,
+          "last_sim_time": 172.000002562
+        },
+        "485:opposite": {
+          "actor_id": 485,
+          "direction": "opposite",
+          "first_sim_time": 16.300000242,
+          "minimum_bbox_clearance_m": 3.5617067411800956,
+          "maximum_npc_speed_kmh": 19.569194753651733,
+          "last_sim_time": 126.150001879
+        },
+        "484:crossing": {
+          "actor_id": 484,
+          "direction": "crossing",
+          "first_sim_time": 33.150000493,
+          "minimum_bbox_clearance_m": 3.596868182220476,
+          "maximum_npc_speed_kmh": 18.551264749687746,
+          "last_sim_time": 1036.550015445
+        },
+        "487:crossing": {
+          "actor_id": 487,
+          "direction": "crossing",
+          "first_sim_time": 44.600000664,
+          "minimum_bbox_clearance_m": 4.685618725883233,
+          "maximum_npc_speed_kmh": 11.038875964550206,
+          "last_sim_time": 60.250000897
+        },
+        "487:opposite": {
+          "actor_id": 487,
+          "direction": "opposite",
+          "first_sim_time": 61.300000913,
+          "minimum_bbox_clearance_m": 1.1707438411379898,
+          "maximum_npc_speed_kmh": 21.706141417605526,
+          "last_sim_time": 66.50000099
+        },
+        "496:opposite": {
+          "actor_id": 496,
+          "direction": "opposite",
+          "first_sim_time": 120.900001801,
+          "minimum_bbox_clearance_m": 4.236135476533431,
+          "maximum_npc_speed_kmh": 38.54365272346865,
+          "last_sim_time": 1272.650018963
+        },
+        "485:crossing": {
+          "actor_id": 485,
+          "direction": "crossing",
+          "first_sim_time": 127.200001895,
+          "minimum_bbox_clearance_m": 13.612254591037736,
+          "maximum_npc_speed_kmh": 19.662229770401783,
+          "last_sim_time": 132.450001973
+        },
+        "486:crossing": {
+          "actor_id": 486,
+          "direction": "crossing",
+          "first_sim_time": 179.400002673,
+          "minimum_bbox_clearance_m": 13.438284258731377,
+          "maximum_npc_speed_kmh": 19.47383651839983,
+          "last_sim_time": 1118.300016663
+        },
+        "496:crossing": {
+          "actor_id": 496,
+          "direction": "crossing",
+          "first_sim_time": 227.400003388,
+          "minimum_bbox_clearance_m": 17.827366409759186,
+          "maximum_npc_speed_kmh": 18.467249981090315,
+          "last_sim_time": 250.300003729
+        },
+        "488:crossing": {
+          "actor_id": 488,
+          "direction": "crossing",
+          "first_sim_time": 269.950004022,
+          "minimum_bbox_clearance_m": 0.0,
+          "maximum_npc_speed_kmh": 19.489943497292447,
+          "last_sim_time": 1180.200017586
+        },
+        "491:crossing": {
+          "actor_id": 491,
+          "direction": "crossing",
+          "first_sim_time": 273.050004068,
+          "minimum_bbox_clearance_m": 7.773339297953361,
+          "maximum_npc_speed_kmh": 22.205603192379378,
+          "last_sim_time": 1172.850017476
+        },
+        "492:opposite": {
+          "actor_id": 492,
+          "direction": "opposite",
+          "first_sim_time": 288.650004301,
+          "minimum_bbox_clearance_m": 11.519360901140852,
+          "maximum_npc_speed_kmh": 38.740238571800695,
+          "last_sim_time": 793.850011829
+        },
+        "492:crossing": {
+          "actor_id": 492,
+          "direction": "crossing",
+          "first_sim_time": 297.050004426,
+          "minimum_bbox_clearance_m": 9.921648899879559,
+          "maximum_npc_speed_kmh": 20.148002351393504,
+          "last_sim_time": 787.750011738
+        },
+        "488:same": {
+          "actor_id": 488,
+          "direction": "same",
+          "first_sim_time": 300.150004472,
+          "minimum_bbox_clearance_m": 0.0,
+          "maximum_npc_speed_kmh": 19.922540624086984,
+          "last_sim_time": 1273.650018978
+        },
+        "494:crossing": {
+          "actor_id": 494,
+          "direction": "crossing",
+          "first_sim_time": 344.700005136,
+          "minimum_bbox_clearance_m": 0.0,
+          "maximum_npc_speed_kmh": 19.507471748496254,
+          "last_sim_time": 397.000005915
+        },
+        "497:crossing": {
+          "actor_id": 497,
+          "direction": "crossing",
+          "first_sim_time": 362.4000054,
+          "minimum_bbox_clearance_m": 19.314813185256426,
+          "maximum_npc_speed_kmh": 16.833878444345967,
+          "last_sim_time": 450.850006718
+        },
+        "497:same": {
+          "actor_id": 497,
+          "direction": "same",
+          "first_sim_time": 417.700006224,
+          "minimum_bbox_clearance_m": 2.5517835817110677,
+          "maximum_npc_speed_kmh": 19.340177355071724,
+          "last_sim_time": 435.250006485
+        },
+        "493:crossing": {
+          "actor_id": 493,
+          "direction": "crossing",
+          "first_sim_time": 429.150006394,
+          "minimum_bbox_clearance_m": 16.60068854996818,
+          "maximum_npc_speed_kmh": 6.099560331357362,
+          "last_sim_time": 437.400006517
+        },
+        "498:crossing": {
+          "actor_id": 498,
+          "direction": "crossing",
+          "first_sim_time": 432.150006439,
+          "minimum_bbox_clearance_m": 19.146654993180064,
+          "maximum_npc_speed_kmh": 15.12733835299883,
+          "last_sim_time": 437.400006517
+        },
+        "493:same": {
+          "actor_id": 493,
+          "direction": "same",
+          "first_sim_time": 438.450006533,
+          "minimum_bbox_clearance_m": 1.7049041413543309,
+          "maximum_npc_speed_kmh": 18.936923107718037,
+          "last_sim_time": 568.150008466
+        },
+        "498:same": {
+          "actor_id": 498,
+          "direction": "same",
+          "first_sim_time": 438.450006533,
+          "minimum_bbox_clearance_m": 1.9023259270840742,
+          "maximum_npc_speed_kmh": 38.80988591977278,
+          "last_sim_time": 744.450011093
+        },
+        "499:opposite": {
+          "actor_id": 499,
+          "direction": "opposite",
+          "first_sim_time": 533.850007954,
+          "minimum_bbox_clearance_m": 4.591320850314121,
+          "maximum_npc_speed_kmh": 37.9801113232242,
+          "last_sim_time": 708.650010559
+        },
+        "495:crossing": {
+          "actor_id": 495,
+          "direction": "crossing",
+          "first_sim_time": 573.350008543,
+          "minimum_bbox_clearance_m": 16.038184278475196,
+          "maximum_npc_speed_kmh": 19.197907942279695,
+          "last_sim_time": 576.50000859
+        },
+        "495:same": {
+          "actor_id": 495,
+          "direction": "same",
+          "first_sim_time": 577.500008605,
+          "minimum_bbox_clearance_m": 0.0,
+          "maximum_npc_speed_kmh": 37.70259693227477,
+          "last_sim_time": 601.650008965
+        },
+        "484:opposite": {
+          "actor_id": 484,
+          "direction": "opposite",
+          "first_sim_time": 585.90000873,
+          "minimum_bbox_clearance_m": 4.378548145926477,
+          "maximum_npc_speed_kmh": 38.8762984047304,
+          "last_sim_time": 1053.100015692
+        },
+        "494:opposite": {
+          "actor_id": 494,
+          "direction": "opposite",
+          "first_sim_time": 750.750011187,
+          "minimum_bbox_clearance_m": 11.048865336875298,
+          "maximum_npc_speed_kmh": 38.318945018997034,
+          "last_sim_time": 752.850011218
+        },
+        "491:same": {
+          "actor_id": 491,
+          "direction": "same",
+          "first_sim_time": 791.800011798,
+          "minimum_bbox_clearance_m": 0.29297825411159373,
+          "maximum_npc_speed_kmh": 38.12796797174494,
+          "last_sim_time": 971.250014472
+        },
+        "488:opposite": {
+          "actor_id": 488,
+          "direction": "opposite",
+          "first_sim_time": 876.100013054,
+          "minimum_bbox_clearance_m": 13.69925027620634,
+          "maximum_npc_speed_kmh": 19.42922965370063,
+          "last_sim_time": 1125.500016771
+        },
+        "490:crossing": {
+          "actor_id": 490,
+          "direction": "crossing",
+          "first_sim_time": 903.950013469,
+          "minimum_bbox_clearance_m": 17.26974959810529,
+          "maximum_npc_speed_kmh": 18.134129956081885,
+          "last_sim_time": 925.000013783
+        },
+        "486:same": {
+          "actor_id": 486,
+          "direction": "same",
+          "first_sim_time": 1119.350016679,
+          "minimum_bbox_clearance_m": 14.650374226639354,
+          "maximum_npc_speed_kmh": 19.53354658455308,
+          "last_sim_time": 1121.40001671
+        },
+        "491:opposite": {
+          "actor_id": 491,
+          "direction": "opposite",
+          "first_sim_time": 1263.250018823,
+          "minimum_bbox_clearance_m": 0.9615380419831353,
+          "maximum_npc_speed_kmh": 19.3149865997903,
+          "last_sim_time": 1275.75001901
+        }
+      },
+      "last_live_npc_count": 13,
+      "cleanup_removed_ids": [
+        484,
+        485,
+        486,
+        487,
+        488,
+        489,
+        490,
+        491,
+        492,
+        493,
+        494,
+        495,
+        496,
+        497,
+        498,
+        499
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null
+    },
+    "traffic16-horizon3": {
+      "source_log": "log/bus-traffic-fix-20261023/traffic16-horizon3/lap.json",
+      "sha256": "2da64123e8c1dae1b845621e43a335f75c6db6d43ced88b4fdc0a164d2fe963e",
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError(\"Unable to convert call argument '0' to Python object (#define PYBIND11_DETAILED_ERROR_MESSAGES or compile in debug mode for details)\")",
+      "distance_m": 233.02557903567504,
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03",
+        "S04"
+      ],
+      "collisions": [],
+      "emergency_episode_count": 0,
+      "emergency_episodes": [],
+      "peak_speed_kmh": {
+        "urban": 20.010962356854826,
+        "ring_road": 0
+      },
+      "signal_crossings": [
+        {
+          "group_id": 35817,
+          "opendrive_id": "2376",
+          "stop_line_id": 35804,
+          "frame": 2796938,
+          "state": "Yellow",
+          "previous_state": "Yellow",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -143.1817626953125,
+            -85.36051177978516
+          ]
+        },
+        {
+          "group_id": 36025,
+          "opendrive_id": "2390",
+          "stop_line_id": 36012,
+          "frame": 2797754,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -129.68252563476562,
+            -13.491262435913086
+          ]
+        },
+        {
+          "group_id": 36249,
+          "opendrive_id": "2404",
+          "stop_line_id": 36236,
+          "frame": 2799201,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -63.153038024902344,
+            6.467730522155762
+          ]
+        }
+      ],
+      "traffic_spawned": [
+        {
+          "id": 506,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 44,
+          "lane": -2,
+          "native_s": 6.0,
+          "initial_xyz": [
+            -184.57594299316406,
+            -17.585704803466797,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 507,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 44,
+          "lane": 1,
+          "native_s": 55.0,
+          "initial_xyz": [
+            -191.58946228027344,
+            -66.58377075195312,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 508,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 5,
+          "lane": -2,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -131.93467712402344,
+            -36.91206359863281,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 509,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 5,
+          "lane": 1,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -124.76313018798828,
+            -61.86339569091797,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 510,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 1,
+          "lane": 2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -76.73690795898438,
+            6.236118316650391,
+            0.25
+          ]
+        },
+        {
+          "id": 511,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 1,
+          "lane": -1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -101.75387573242188,
+            -0.7030093669891357,
+            0.25
+          ]
+        },
+        {
+          "id": 512,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 16,
+          "lane": 2,
+          "native_s": 12.0,
+          "initial_xyz": [
+            36.16423797607422,
+            -64.62568664550781,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 513,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 16,
+          "lane": -1,
+          "native_s": 36.0,
+          "initial_xyz": [
+            28.525062561035156,
+            -40.82142639160156,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 514,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 29,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            35.08800506591797,
+            60.2191162109375,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 515,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 29,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            28.097993850708008,
+            35.21632385253906,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 516,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 0,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            2.167299509048462,
+            -4.455968856811523,
+            0.25
+          ]
+        },
+        {
+          "id": 517,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 0,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -22.815589904785156,
+            2.604861259460449,
+            0.25
+          ]
+        },
+        {
+          "id": 518,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 40,
+          "lane": -2,
+          "native_s": 10.0,
+          "initial_xyz": [
+            -54.12608337402344,
+            44.895023345947266,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 519,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 40,
+          "lane": 1,
+          "native_s": 30.0,
+          "initial_xyz": [
+            -47.258636474609375,
+            64.94092559814453,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 520,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 37,
+          "lane": -3,
+          "native_s": 350.0,
+          "initial_xyz": [
+            -247.16058349609375,
+            -52.36977767944336,
+            10.25
+          ]
+        },
+        {
+          "id": 521,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 37,
+          "lane": 2,
+          "native_s": 450.0,
+          "initial_xyz": [
+            -232.98533630371094,
+            47.56609344482422,
+            10.25
+          ]
+        }
+      ],
+      "traffic_skipped": [],
+      "traffic_encounters": {
+        "506:same": {
+          "actor_id": 506,
+          "direction": "same",
+          "first_sim_time": 21.50000032,
+          "minimum_bbox_clearance_m": 1.6654666895561456,
+          "maximum_npc_speed_kmh": 17.952079800687123,
+          "last_sim_time": 141.100002102
+        },
+        "507:opposite": {
+          "actor_id": 507,
+          "direction": "opposite",
+          "first_sim_time": 21.50000032,
+          "minimum_bbox_clearance_m": 2.0402512580891643,
+          "maximum_npc_speed_kmh": 19.680782906267268,
+          "last_sim_time": 236.600003525
+        },
+        "506:crossing": {
+          "actor_id": 506,
+          "direction": "crossing",
+          "first_sim_time": 37.900000564,
+          "minimum_bbox_clearance_m": 3.521645060749188,
+          "maximum_npc_speed_kmh": 11.95899441349995,
+          "last_sim_time": 42.900000639
+        },
+        "509:opposite": {
+          "actor_id": 509,
+          "direction": "opposite",
+          "first_sim_time": 38.900000579,
+          "minimum_bbox_clearance_m": 3.2947921996481497,
+          "maximum_npc_speed_kmh": 19.580905450317406,
+          "last_sim_time": 49.900000743
+        },
+        "509:crossing": {
+          "actor_id": 509,
+          "direction": "crossing",
+          "first_sim_time": 92.300001375,
+          "minimum_bbox_clearance_m": 16.673595455804445,
+          "maximum_npc_speed_kmh": 22.087045586048333,
+          "last_sim_time": 151.350002255
+        },
+        "516:crossing": {
+          "actor_id": 516,
+          "direction": "crossing",
+          "first_sim_time": 120.350001793,
+          "minimum_bbox_clearance_m": 4.816963273162028,
+          "maximum_npc_speed_kmh": 19.332780183673034,
+          "last_sim_time": 261.350003894
+        },
+        "509:same": {
+          "actor_id": 509,
+          "direction": "same",
+          "first_sim_time": 135.900002025,
+          "minimum_bbox_clearance_m": 0.22109573946614813,
+          "maximum_npc_speed_kmh": 22.5436079587969,
+          "last_sim_time": 146.150002177
+        },
+        "516:opposite": {
+          "actor_id": 516,
+          "direction": "opposite",
+          "first_sim_time": 155.550002317,
+          "minimum_bbox_clearance_m": 8.477499770109825,
+          "maximum_npc_speed_kmh": 19.507866992649234,
+          "last_sim_time": 158.700002364
+        },
+        "510:opposite": {
+          "actor_id": 510,
+          "direction": "opposite",
+          "first_sim_time": 161.850002411,
+          "minimum_bbox_clearance_m": 6.648884694608671,
+          "maximum_npc_speed_kmh": 19.473889566348284,
+          "last_sim_time": 171.200002551
+        },
+        "515:crossing": {
+          "actor_id": 515,
+          "direction": "crossing",
+          "first_sim_time": 183.650002736,
+          "minimum_bbox_clearance_m": 9.77695346649896,
+          "maximum_npc_speed_kmh": 19.207915505495333,
+          "last_sim_time": 233.55000348
+        },
+        "515:opposite": {
+          "actor_id": 515,
+          "direction": "opposite",
+          "first_sim_time": 200.200002983,
+          "minimum_bbox_clearance_m": 0.6154393700205898,
+          "maximum_npc_speed_kmh": 19.072680918801844,
+          "last_sim_time": 231.450003448
+        },
+        "519:opposite": {
+          "actor_id": 519,
+          "direction": "opposite",
+          "first_sim_time": 222.000003308,
+          "minimum_bbox_clearance_m": 1.1035966976453593,
+          "maximum_npc_speed_kmh": 19.61887711783962,
+          "last_sim_time": 234.600003495
+        },
+        "519:crossing": {
+          "actor_id": 519,
+          "direction": "crossing",
+          "first_sim_time": 235.60000351,
+          "minimum_bbox_clearance_m": 26.2464990947193,
+          "maximum_npc_speed_kmh": 19.10738306812993,
+          "last_sim_time": 235.60000351
+        }
+      },
+      "last_live_npc_count": 15,
+      "cleanup_removed_ids": [
+        506,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521
+      ],
+      "cleanup": {
+        "simulator_physics_frozen": true,
+        "cap_and_fixtures_retained": true,
+        "errors": [
+          "STOP: Timeout: stop response"
+        ]
+      },
+      "cleanup_error": null
+    },
+    "traffic16-final": {
+      "source_log": "log/bus-traffic-fix-20261023/traffic16-final/lap.json",
+      "sha256": "2b3e503f45a5d93bd82545bace9d49da20e855ee5c76fdbf52bc445439103f4f",
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError('Lap interrupted')",
+      "distance_m": 502.7133062018821,
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05"
+      ],
+      "collisions": [],
+      "emergency_episode_count": 9,
+      "emergency_episodes": [
+        {
+          "start_sim_s": 248.300003699,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 249.900003723
+        },
+        {
+          "start_sim_s": 291.400004342,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 292.550004359
+        },
+        {
+          "start_sim_s": 292.900004364,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 293.500004373
+        },
+        {
+          "start_sim_s": 295.200004398,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 295.700004406
+        },
+        {
+          "start_sim_s": 295.900004409,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 296.500004418
+        },
+        {
+          "start_sim_s": 299.200004458,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 299.700004465
+        },
+        {
+          "start_sim_s": 299.900004468,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 300.400004476
+        },
+        {
+          "start_sim_s": 435.700006492,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 435.800006493
+        },
+        {
+          "start_sim_s": 449.700006701,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 451.400006726
+        }
+      ],
+      "peak_speed_kmh": {
+        "urban": 22.541009399768022,
+        "ring_road": 0
+      },
+      "signal_crossings": [
+        {
+          "group_id": 35817,
+          "opendrive_id": "2376",
+          "stop_line_id": 35804,
+          "frame": 2807584,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -143.2240447998047,
+            -85.4163818359375
+          ]
+        },
+        {
+          "group_id": 36025,
+          "opendrive_id": "2390",
+          "stop_line_id": 36012,
+          "frame": 2808573,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -129.6447296142578,
+            -13.533472061157227
+          ]
+        },
+        {
+          "group_id": 36249,
+          "opendrive_id": "2404",
+          "stop_line_id": 36236,
+          "frame": 2810009,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -63.013877868652344,
+            6.423297882080078
+          ]
+        },
+        {
+          "group_id": 36265,
+          "opendrive_id": "2405",
+          "stop_line_id": 36252,
+          "frame": 2811219,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            16.418724060058594,
+            3.632439613342285
+          ]
+        },
+        {
+          "group_id": 36153,
+          "opendrive_id": "2398",
+          "stop_line_id": 36140,
+          "frame": 2813921,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            36.671695709228516,
+            -75.1182861328125
+          ]
+        },
+        {
+          "group_id": 36599,
+          "opendrive_id": "2431",
+          "stop_line_id": 36595,
+          "frame": 2814518,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            36.562747955322266,
+            -133.78871154785156
+          ]
+        },
+        {
+          "group_id": 36473,
+          "opendrive_id": "2421",
+          "stop_line_id": 36460,
+          "frame": 2815445,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            36.54794692993164,
+            -175.69720458984375
+          ]
+        }
+      ],
+      "traffic_spawned": [
+        {
+          "id": 528,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 44,
+          "lane": -2,
+          "native_s": 6.0,
+          "initial_xyz": [
+            -184.57594299316406,
+            -17.585704803466797,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 529,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 44,
+          "lane": 1,
+          "native_s": 55.0,
+          "initial_xyz": [
+            -191.58946228027344,
+            -66.58377075195312,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 530,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 5,
+          "lane": -2,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -131.93467712402344,
+            -36.91206359863281,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 531,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 5,
+          "lane": 1,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -124.76313018798828,
+            -61.86339569091797,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 532,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 1,
+          "lane": 2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -76.73690795898438,
+            6.236118316650391,
+            0.25
+          ]
+        },
+        {
+          "id": 533,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 1,
+          "lane": -1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -101.75387573242188,
+            -0.7030093669891357,
+            0.25
+          ]
+        },
+        {
+          "id": 534,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 16,
+          "lane": 2,
+          "native_s": 12.0,
+          "initial_xyz": [
+            36.16423797607422,
+            -64.62568664550781,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 535,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 16,
+          "lane": -1,
+          "native_s": 36.0,
+          "initial_xyz": [
+            28.525062561035156,
+            -40.82142639160156,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 536,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 29,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            35.08800506591797,
+            60.2191162109375,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 537,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 29,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            28.097993850708008,
+            35.21632385253906,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 538,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 0,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            2.167299509048462,
+            -4.455968856811523,
+            0.25
+          ]
+        },
+        {
+          "id": 539,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 0,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -22.815589904785156,
+            2.604861259460449,
+            0.25
+          ]
+        },
+        {
+          "id": 540,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 40,
+          "lane": -2,
+          "native_s": 10.0,
+          "initial_xyz": [
+            -54.12608337402344,
+            44.895023345947266,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 541,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 40,
+          "lane": 1,
+          "native_s": 30.0,
+          "initial_xyz": [
+            -47.258636474609375,
+            64.94092559814453,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 542,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 37,
+          "lane": -3,
+          "native_s": 350.0,
+          "initial_xyz": [
+            -247.16058349609375,
+            -52.36977767944336,
+            10.25
+          ]
+        },
+        {
+          "id": 543,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 37,
+          "lane": 2,
+          "native_s": 450.0,
+          "initial_xyz": [
+            -232.98533630371094,
+            47.56609344482422,
+            10.25
+          ]
+        }
+      ],
+      "traffic_skipped": [],
+      "traffic_encounters": {
+        "528:same": {
+          "actor_id": 528,
+          "direction": "same",
+          "first_sim_time": 25.800000384,
+          "minimum_bbox_clearance_m": 1.817115694311903,
+          "maximum_npc_speed_kmh": 19.249051486663138,
+          "last_sim_time": 45.600000679
+        },
+        "529:opposite": {
+          "actor_id": 529,
+          "direction": "opposite",
+          "first_sim_time": 25.800000384,
+          "minimum_bbox_clearance_m": 3.5612440757787933,
+          "maximum_npc_speed_kmh": 19.373135901572585,
+          "last_sim_time": 32.000000476
+        },
+        "528:crossing": {
+          "actor_id": 528,
+          "direction": "crossing",
+          "first_sim_time": 46.650000695,
+          "minimum_bbox_clearance_m": 2.894984684098027,
+          "maximum_npc_speed_kmh": 19.592898984582,
+          "last_sim_time": 343.800005123
+        },
+        "530:crossing": {
+          "actor_id": 530,
+          "direction": "crossing",
+          "first_sim_time": 47.70000071,
+          "minimum_bbox_clearance_m": 9.241413370422958,
+          "maximum_npc_speed_kmh": 20.60973432878686,
+          "last_sim_time": 201.650003004
+        },
+        "531:opposite": {
+          "actor_id": 531,
+          "direction": "opposite",
+          "first_sim_time": 53.950000803,
+          "minimum_bbox_clearance_m": 4.114767471378641,
+          "maximum_npc_speed_kmh": 19.439168731864534,
+          "last_sim_time": 66.350000988
+        },
+        "528:opposite": {
+          "actor_id": 528,
+          "direction": "opposite",
+          "first_sim_time": 80.900001205,
+          "minimum_bbox_clearance_m": 6.643406039398642,
+          "maximum_npc_speed_kmh": 19.532911678857428,
+          "last_sim_time": 91.250001359
+        },
+        "532:opposite": {
+          "actor_id": 532,
+          "direction": "opposite",
+          "first_sim_time": 146.050002176,
+          "minimum_bbox_clearance_m": 14.7290451740744,
+          "maximum_npc_speed_kmh": 3.0912868166238846e-06,
+          "last_sim_time": 154.350002299
+        },
+        "532:crossing": {
+          "actor_id": 532,
+          "direction": "crossing",
+          "first_sim_time": 155.400002315,
+          "minimum_bbox_clearance_m": 5.501862247636859,
+          "maximum_npc_speed_kmh": 19.45223738537147,
+          "last_sim_time": 231.600003451
+        },
+        "532:same": {
+          "actor_id": 532,
+          "direction": "same",
+          "first_sim_time": 171.80000256,
+          "minimum_bbox_clearance_m": 1.7994686581901573,
+          "maximum_npc_speed_kmh": 19.65088717349546,
+          "last_sim_time": 226.300003372
+        },
+        "541:opposite": {
+          "actor_id": 541,
+          "direction": "opposite",
+          "first_sim_time": 188.050002802,
+          "minimum_bbox_clearance_m": 19.98935651316343,
+          "maximum_npc_speed_kmh": 22.559202840242918,
+          "last_sim_time": 189.100002817
+        },
+        "541:crossing": {
+          "actor_id": 541,
+          "direction": "crossing",
+          "first_sim_time": 190.150002833,
+          "minimum_bbox_clearance_m": 13.8013340235085,
+          "maximum_npc_speed_kmh": 19.44337314560753,
+          "last_sim_time": 195.400002911
+        },
+        "530:opposite": {
+          "actor_id": 530,
+          "direction": "opposite",
+          "first_sim_time": 202.70000302,
+          "minimum_bbox_clearance_m": 7.0527472140327925,
+          "maximum_npc_speed_kmh": 19.661055616760112,
+          "last_sim_time": 209.950003128
+        },
+        "531:crossing": {
+          "actor_id": 531,
+          "direction": "crossing",
+          "first_sim_time": 228.500003404,
+          "minimum_bbox_clearance_m": 7.458403242529209,
+          "maximum_npc_speed_kmh": 22.585177416451693,
+          "last_sim_time": 429.600006401
+        },
+        "534:crossing": {
+          "actor_id": 534,
+          "direction": "crossing",
+          "first_sim_time": 258.40000385,
+          "minimum_bbox_clearance_m": 13.521802270891849,
+          "maximum_npc_speed_kmh": 3.3738795153922897e-06,
+          "last_sim_time": 286.350004266
+        },
+        "534:same": {
+          "actor_id": 534,
+          "direction": "same",
+          "first_sim_time": 287.400004282,
+          "minimum_bbox_clearance_m": 1.4439968858976993,
+          "maximum_npc_speed_kmh": 19.395021633592883,
+          "last_sim_time": 389.400005802
+        },
+        "535:opposite": {
+          "actor_id": 535,
+          "direction": "opposite",
+          "first_sim_time": 316.10000471,
+          "minimum_bbox_clearance_m": 1.11311003268514,
+          "maximum_npc_speed_kmh": 19.39642016687235,
+          "last_sim_time": 329.500004909
+        },
+        "531:same": {
+          "actor_id": 531,
+          "direction": "same",
+          "first_sim_time": 467.80000697,
+          "minimum_bbox_clearance_m": 1.923829258767664,
+          "maximum_npc_speed_kmh": 19.707184170555916,
+          "last_sim_time": 489.550007294
+        },
+        "529:same": {
+          "actor_id": 529,
+          "direction": "same",
+          "first_sim_time": 474.100007064,
+          "minimum_bbox_clearance_m": 8.712357919634078,
+          "maximum_npc_speed_kmh": 16.31592952539888,
+          "last_sim_time": 489.550007294
+        }
+      },
+      "last_live_npc_count": 15,
+      "cleanup_removed_ids": [
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        539,
+        540,
+        541,
+        542,
+        543
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null
+    },
+    "traffic16-rear-history": {
+      "source_log": "log/bus-traffic-fix-20261023/traffic16-rear-history/lap.json",
+      "sha256": "db04ef8bdeded59c0c36f0e294866e117d85e0900e1b70e29ad891d43b8b6ef4",
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "distance_m": 1713.0618083605095,
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07"
+      ],
+      "collisions": [],
+      "emergency_episode_count": 16,
+      "emergency_episodes": [
+        {
+          "start_sim_s": 160.900002397,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 162.600002422
+        },
+        {
+          "start_sim_s": 186.900002785,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 187.100002788
+        },
+        {
+          "start_sim_s": 393.500005863,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 393.600005865
+        },
+        {
+          "start_sim_s": 405.200006037,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 406.400006055
+        },
+        {
+          "start_sim_s": 518.600007727,
+          "faults": [
+            "planning_validator: trajectory_validation_deceleration",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 519.300007738
+        },
+        {
+          "start_sim_s": 566.300008438,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 566.500008441
+        },
+        {
+          "start_sim_s": 580.000008642,
+          "faults": [
+            "service_log_checker: response_status",
+            "controller_node_exe: control_state"
+          ],
+          "end_sim_s": 580.800008654
+        },
+        {
+          "start_sim_s": 581.20000866,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 582.200008675
+        },
+        {
+          "start_sim_s": 590.100008793,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 590.300008796
+        },
+        {
+          "start_sim_s": 597.100008897,
+          "faults": [
+            "controller_node_exe: control_state"
+          ],
+          "end_sim_s": 598.00000891
+        },
+        {
+          "start_sim_s": 664.4000099,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 666.300009928
+        },
+        {
+          "start_sim_s": 679.400010123,
+          "faults": [
+            "controller_node_exe: control_state"
+          ],
+          "end_sim_s": 679.600010126
+        },
+        {
+          "start_sim_s": 751.100011192,
+          "faults": [
+            "controller_node_exe: control_state",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 752.600011214
+        },
+        {
+          "start_sim_s": 755.800011262,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 755.900011263
+        },
+        {
+          "start_sim_s": 768.300011448,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 770.400011479
+        },
+        {
+          "start_sim_s": 799.500011913,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 799.550011914
+        }
+      ],
+      "peak_speed_kmh": {
+        "urban": 24.868594345796172,
+        "ring_road": 44.39536104829599
+      },
+      "signal_crossings": [
+        {
+          "group_id": 35817,
+          "opendrive_id": "2376",
+          "stop_line_id": 35804,
+          "frame": 2824523,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -143.12948608398438,
+            -85.30500793457031
+          ]
+        },
+        {
+          "group_id": 36025,
+          "opendrive_id": "2390",
+          "stop_line_id": 36012,
+          "frame": 2825416,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -129.82852172851562,
+            -13.566503524780273
+          ]
+        },
+        {
+          "group_id": 36249,
+          "opendrive_id": "2404",
+          "stop_line_id": 36236,
+          "frame": 2826874,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -63.16423034667969,
+            6.453032493591309
+          ]
+        },
+        {
+          "group_id": 36265,
+          "opendrive_id": "2405",
+          "stop_line_id": 36252,
+          "frame": 2828082,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            16.278841018676758,
+            3.7016761302948
+          ]
+        },
+        {
+          "group_id": 36153,
+          "opendrive_id": "2398",
+          "stop_line_id": 36140,
+          "frame": 2829595,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            36.685943603515625,
+            -75.1017837524414
+          ]
+        },
+        {
+          "group_id": 36599,
+          "opendrive_id": "2431",
+          "stop_line_id": 36595,
+          "frame": 2830163,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            36.065650939941406,
+            -133.78387451171875
+          ]
+        },
+        {
+          "group_id": 36473,
+          "opendrive_id": "2421",
+          "stop_line_id": 36460,
+          "frame": 2831107,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            36.625667572021484,
+            -175.82774353027344
+          ]
+        },
+        {
+          "group_id": 36615,
+          "opendrive_id": "2432",
+          "stop_line_id": 36602,
+          "frame": 2835026,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            9.454362869262695,
+            202.4808349609375
+          ]
+        },
+        {
+          "group_id": 36537,
+          "opendrive_id": "2426",
+          "stop_line_id": 36524,
+          "frame": 2836841,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            35.34019088745117,
+            103.75640869140625
+          ]
+        },
+        {
+          "group_id": 36281,
+          "opendrive_id": "2406",
+          "stop_line_id": 36268,
+          "frame": 2838028,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            32.703636169433594,
+            13.960084915161133
+          ]
+        },
+        {
+          "group_id": 36217,
+          "opendrive_id": "2402",
+          "stop_line_id": 36204,
+          "frame": 2839563,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -35.46247100830078,
+            -1.395237684249878
+          ]
+        }
+      ],
+      "traffic_spawned": [
+        {
+          "id": 550,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 44,
+          "lane": -2,
+          "native_s": 6.0,
+          "initial_xyz": [
+            -184.57594299316406,
+            -17.585704803466797,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 551,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 44,
+          "lane": 1,
+          "native_s": 55.0,
+          "initial_xyz": [
+            -191.58946228027344,
+            -66.58377075195312,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 552,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 5,
+          "lane": -2,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -131.93467712402344,
+            -36.91206359863281,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 553,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 5,
+          "lane": 1,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -124.76313018798828,
+            -61.86339569091797,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 554,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 1,
+          "lane": 2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -76.73690795898438,
+            6.236118316650391,
+            0.25
+          ]
+        },
+        {
+          "id": 555,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 1,
+          "lane": -1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -101.75387573242188,
+            -0.7030093669891357,
+            0.25
+          ]
+        },
+        {
+          "id": 556,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 16,
+          "lane": 2,
+          "native_s": 12.0,
+          "initial_xyz": [
+            36.16423797607422,
+            -64.62568664550781,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 557,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 16,
+          "lane": -1,
+          "native_s": 36.0,
+          "initial_xyz": [
+            28.525062561035156,
+            -40.82142639160156,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 558,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 29,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            35.08800506591797,
+            60.2191162109375,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 559,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 29,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            28.097993850708008,
+            35.21632385253906,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 560,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 0,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            2.167299509048462,
+            -4.455968856811523,
+            0.25
+          ]
+        },
+        {
+          "id": 561,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 0,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -22.815589904785156,
+            2.604861259460449,
+            0.25
+          ]
+        },
+        {
+          "id": 562,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 40,
+          "lane": -2,
+          "native_s": 10.0,
+          "initial_xyz": [
+            -54.12608337402344,
+            44.895023345947266,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 563,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 40,
+          "lane": 1,
+          "native_s": 30.0,
+          "initial_xyz": [
+            -47.258636474609375,
+            64.94092559814453,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 564,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 37,
+          "lane": -3,
+          "native_s": 350.0,
+          "initial_xyz": [
+            -247.16058349609375,
+            -52.36977767944336,
+            10.25
+          ]
+        },
+        {
+          "id": 565,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 37,
+          "lane": 2,
+          "native_s": 450.0,
+          "initial_xyz": [
+            -232.98533630371094,
+            47.56609344482422,
+            10.25
+          ]
+        }
+      ],
+      "traffic_skipped": [],
+      "traffic_encounters": {
+        "550:same": {
+          "actor_id": 550,
+          "direction": "same",
+          "first_sim_time": 72.50000108,
+          "minimum_bbox_clearance_m": 1.9571890411980666,
+          "maximum_npc_speed_kmh": 19.781923083906136,
+          "last_sim_time": 91.900001369
+        },
+        "551:opposite": {
+          "actor_id": 551,
+          "direction": "opposite",
+          "first_sim_time": 72.50000108,
+          "minimum_bbox_clearance_m": 3.5610546154477,
+          "maximum_npc_speed_kmh": 19.84337542906776,
+          "last_sim_time": 78.600001171
+        },
+        "553:crossing": {
+          "actor_id": 553,
+          "direction": "crossing",
+          "first_sim_time": 81.700001217,
+          "minimum_bbox_clearance_m": 4.223163751075437,
+          "maximum_npc_speed_kmh": 21.21995110093042,
+          "last_sim_time": 251.300003744
+        },
+        "550:crossing": {
+          "actor_id": 550,
+          "direction": "crossing",
+          "first_sim_time": 92.900001384,
+          "minimum_bbox_clearance_m": 2.9372730719232676,
+          "maximum_npc_speed_kmh": 19.53608835193613,
+          "last_sim_time": 224.650003347
+        },
+        "553:opposite": {
+          "actor_id": 553,
+          "direction": "opposite",
+          "first_sim_time": 93.900001399,
+          "minimum_bbox_clearance_m": 19.962654295909626,
+          "maximum_npc_speed_kmh": 19.15906673751156,
+          "last_sim_time": 252.450003761
+        },
+        "560:crossing": {
+          "actor_id": 560,
+          "direction": "crossing",
+          "first_sim_time": 141.65000211,
+          "minimum_bbox_clearance_m": 17.999128464221265,
+          "maximum_npc_speed_kmh": 19.481342142040077,
+          "last_sim_time": 252.450003761
+        },
+        "562:opposite": {
+          "actor_id": 562,
+          "direction": "opposite",
+          "first_sim_time": 160.350002389,
+          "minimum_bbox_clearance_m": 12.698569189410557,
+          "maximum_npc_speed_kmh": 1.4861692444519775e-06,
+          "last_sim_time": 169.750002529
+        },
+        "562:crossing": {
+          "actor_id": 562,
+          "direction": "crossing",
+          "first_sim_time": 170.800002545,
+          "minimum_bbox_clearance_m": 10.590701127146579,
+          "maximum_npc_speed_kmh": 19.515672457548288,
+          "last_sim_time": 189.600002825
+        },
+        "557:opposite": {
+          "actor_id": 557,
+          "direction": "opposite",
+          "first_sim_time": 234.9000035,
+          "minimum_bbox_clearance_m": 2.3621285429717434,
+          "maximum_npc_speed_kmh": 19.221657956889658,
+          "last_sim_time": 262.750003915
+        },
+        "558:opposite": {
+          "actor_id": 558,
+          "direction": "opposite",
+          "first_sim_time": 263.80000393,
+          "minimum_bbox_clearance_m": 4.020672576871225,
+          "maximum_npc_speed_kmh": 38.529337320975664,
+          "last_sim_time": 758.400011301
+        },
+        "558:crossing": {
+          "actor_id": 558,
+          "direction": "crossing",
+          "first_sim_time": 376.350005608,
+          "minimum_bbox_clearance_m": 17.507587376770655,
+          "maximum_npc_speed_kmh": 18.52842519107503,
+          "last_sim_time": 387.700005777
+        },
+        "565:opposite": {
+          "actor_id": 565,
+          "direction": "opposite",
+          "first_sim_time": 521.400007769,
+          "minimum_bbox_clearance_m": 10.94516974925438,
+          "maximum_npc_speed_kmh": 37.97875730474319,
+          "last_sim_time": 525.600007832
+        },
+        "556:opposite": {
+          "actor_id": 556,
+          "direction": "opposite",
+          "first_sim_time": 529.800007894,
+          "minimum_bbox_clearance_m": 17.595118212570096,
+          "maximum_npc_speed_kmh": 38.54150378873114,
+          "last_sim_time": 531.850007925
+        },
+        "564:same": {
+          "actor_id": 564,
+          "direction": "same",
+          "first_sim_time": 561.800008371,
+          "minimum_bbox_clearance_m": 0.0,
+          "maximum_npc_speed_kmh": 38.8243556741239,
+          "last_sim_time": 643.350009586
+        },
+        "561:crossing": {
+          "actor_id": 561,
+          "direction": "crossing",
+          "first_sim_time": 666.200009927,
+          "minimum_bbox_clearance_m": 1.728197269163777,
+          "maximum_npc_speed_kmh": 19.249162104481552,
+          "last_sim_time": 800.950011935
+        },
+        "561:same": {
+          "actor_id": 561,
+          "direction": "same",
+          "first_sim_time": 683.600010186,
+          "minimum_bbox_clearance_m": 0.0,
+          "maximum_npc_speed_kmh": 19.37366445832863,
+          "last_sim_time": 797.850011888
+        },
+        "561:opposite": {
+          "actor_id": 561,
+          "direction": "opposite",
+          "first_sim_time": 802.00001195,
+          "minimum_bbox_clearance_m": 20.360243187476826,
+          "maximum_npc_speed_kmh": 19.169354029408897,
+          "last_sim_time": 802.00001195
+        },
+        "557:crossing": {
+          "actor_id": 557,
+          "direction": "crossing",
+          "first_sim_time": 805.200011998,
+          "minimum_bbox_clearance_m": 20.982646495212855,
+          "maximum_npc_speed_kmh": 18.23860890110192,
+          "last_sim_time": 810.300012074
+        },
+        "563:crossing": {
+          "actor_id": 563,
+          "direction": "crossing",
+          "first_sim_time": 815.500012151,
+          "minimum_bbox_clearance_m": 15.426658794564721,
+          "maximum_npc_speed_kmh": 19.079796238648207,
+          "last_sim_time": 853.450012717
+        },
+        "563:same": {
+          "actor_id": 563,
+          "direction": "same",
+          "first_sim_time": 854.500012733,
+          "minimum_bbox_clearance_m": 20.357861616034437,
+          "maximum_npc_speed_kmh": 19.081649896844347,
+          "last_sim_time": 855.500012747
+        }
+      },
+      "last_live_npc_count": 16,
+      "cleanup_removed_ids": [
+        550,
+        551,
+        552,
+        553,
+        554,
+        555,
+        556,
+        557,
+        558,
+        559,
+        560,
+        561,
+        562,
+        563,
+        564,
+        565
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null
+    },
+    "gradual-shift-section": {
+      "source_log": "log/bus-traffic-fix-20261023/gradual-shift-section/lap.json",
+      "sha256": "c660a769b29b40b142ca5a7ae582cc228c8e27752a100a3b0638ce2a6e5baa19",
+      "success": true,
+      "result": "section_completed",
+      "error": null,
+      "distance_m": 221.09932050888892,
+      "visited_stops": [
+        "S07",
+        "S08",
+        "S09"
+      ],
+      "collisions": [],
+      "emergency_episode_count": 2,
+      "emergency_episodes": [
+        {
+          "start_sim_s": 28.90000043,
+          "faults": [
+            "controller_node_exe: control_state",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 29.100000433
+        },
+        {
+          "start_sim_s": 122.600001826,
+          "faults": [
+            "planning_validator: trajectory_validation_relative_angle",
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 122.700001828
+        }
+      ],
+      "peak_speed_kmh": {
+        "urban": 10.242818007550513,
+        "ring_road": 0
+      },
+      "signal_crossings": [
+        {
+          "group_id": 36217,
+          "opendrive_id": "2402",
+          "stop_line_id": 36204,
+          "frame": 2855460,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -35.475345611572266,
+            -1.6395955085754395
+          ]
+        },
+        {
+          "group_id": 35897,
+          "opendrive_id": "2381",
+          "stop_line_id": 35884,
+          "frame": 2856965,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -53.87044143676758,
+            75.15375518798828
+          ]
+        },
+        {
+          "group_id": 36377,
+          "opendrive_id": "2412",
+          "stop_line_id": 36364,
+          "frame": 2857875,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -107.97196960449219,
+            84.4299087524414
+          ]
+        }
+      ],
+      "traffic_spawned": [],
+      "traffic_skipped": [],
+      "traffic_encounters": {},
+      "last_live_npc_count": 0,
+      "cleanup_removed_ids": [],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null
+    },
+    "traffic16-gradual-shift": {
+      "source_log": "log/bus-traffic-fix-20261023/traffic16-gradual-shift/lap.json",
+      "sha256": "d0cb8f10604a9720d38bf2dd3608a2c6ee5b75d5d238b0864c37f7b003465268",
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "distance_m": 148.76067009331382,
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03"
+      ],
+      "collisions": [],
+      "emergency_episode_count": 1,
+      "emergency_episodes": [
+        {
+          "start_sim_s": 392.60000585,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 393.800005868
+        }
+      ],
+      "peak_speed_kmh": {
+        "urban": 19.779555885489913,
+        "ring_road": 0
+      },
+      "signal_crossings": [
+        {
+          "group_id": 35817,
+          "opendrive_id": "2376",
+          "stop_line_id": 35804,
+          "frame": 2860890,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -143.08456420898438,
+            -85.38981628417969
+          ]
+        }
+      ],
+      "traffic_spawned": [
+        {
+          "id": 574,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 44,
+          "lane": -2,
+          "native_s": 6.0,
+          "initial_xyz": [
+            -184.57594299316406,
+            -17.585704803466797,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 575,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 44,
+          "lane": 1,
+          "native_s": 55.0,
+          "initial_xyz": [
+            -191.58946228027344,
+            -66.58377075195312,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 576,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 5,
+          "lane": -2,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -131.93467712402344,
+            -36.91206359863281,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 577,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 5,
+          "lane": 1,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -124.76313018798828,
+            -61.86339569091797,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 578,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 1,
+          "lane": 2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -76.73690795898438,
+            6.236118316650391,
+            0.25
+          ]
+        },
+        {
+          "id": 579,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 1,
+          "lane": -1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -101.75387573242188,
+            -0.7030093669891357,
+            0.25
+          ]
+        },
+        {
+          "id": 580,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 16,
+          "lane": 2,
+          "native_s": 12.0,
+          "initial_xyz": [
+            36.16423797607422,
+            -64.62568664550781,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 581,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 16,
+          "lane": -1,
+          "native_s": 36.0,
+          "initial_xyz": [
+            28.525062561035156,
+            -40.82142639160156,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 582,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 29,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            35.08800506591797,
+            60.2191162109375,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 583,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 29,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            28.097993850708008,
+            35.21632385253906,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 584,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 0,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            2.167299509048462,
+            -4.455968856811523,
+            0.25
+          ]
+        },
+        {
+          "id": 585,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 0,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -22.815589904785156,
+            2.604861259460449,
+            0.25
+          ]
+        },
+        {
+          "id": 586,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 40,
+          "lane": -2,
+          "native_s": 10.0,
+          "initial_xyz": [
+            -54.12608337402344,
+            44.895023345947266,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 587,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 40,
+          "lane": 1,
+          "native_s": 30.0,
+          "initial_xyz": [
+            -47.258636474609375,
+            64.94092559814453,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 588,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 37,
+          "lane": -3,
+          "native_s": 350.0,
+          "initial_xyz": [
+            -247.16058349609375,
+            -52.36977767944336,
+            10.25
+          ]
+        },
+        {
+          "id": 589,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 37,
+          "lane": 2,
+          "native_s": 450.0,
+          "initial_xyz": [
+            -232.98533630371094,
+            47.56609344482422,
+            10.25
+          ]
+        }
+      ],
+      "traffic_skipped": [],
+      "traffic_encounters": {
+        "574:same": {
+          "actor_id": 574,
+          "direction": "same",
+          "first_sim_time": 277.000004127,
+          "minimum_bbox_clearance_m": 1.5707743283336237,
+          "maximum_npc_speed_kmh": 19.41197207250692,
+          "last_sim_time": 344.150005128
+        },
+        "575:opposite": {
+          "actor_id": 575,
+          "direction": "opposite",
+          "first_sim_time": 277.000004127,
+          "minimum_bbox_clearance_m": 3.5683687168332083,
+          "maximum_npc_speed_kmh": 19.751419232378236,
+          "last_sim_time": 475.650007087
+        },
+        "574:crossing": {
+          "actor_id": 574,
+          "direction": "crossing",
+          "first_sim_time": 292.300004355,
+          "minimum_bbox_clearance_m": 1.4880674119896262,
+          "maximum_npc_speed_kmh": 19.4835173798532,
+          "last_sim_time": 356.650005314
+        },
+        "584:crossing": {
+          "actor_id": 584,
+          "direction": "crossing",
+          "first_sim_time": 371.250005532,
+          "minimum_bbox_clearance_m": 27.977965578700253,
+          "maximum_npc_speed_kmh": 19.47191483954612,
+          "last_sim_time": 372.250005546
+        },
+        "577:crossing": {
+          "actor_id": 577,
+          "direction": "crossing",
+          "first_sim_time": 393.150005858,
+          "minimum_bbox_clearance_m": 13.756002308713375,
+          "maximum_npc_speed_kmh": 20.151411281115337,
+          "last_sim_time": 401.500005982
+        },
+        "577:opposite": {
+          "actor_id": 577,
+          "direction": "opposite",
+          "first_sim_time": 402.550005998,
+          "minimum_bbox_clearance_m": 1.6862588261988716,
+          "maximum_npc_speed_kmh": 19.560373993184687,
+          "last_sim_time": 410.950006123
+        },
+        "586:opposite": {
+          "actor_id": 586,
+          "direction": "opposite",
+          "first_sim_time": 414.10000617,
+          "minimum_bbox_clearance_m": 5.0412700002883595,
+          "maximum_npc_speed_kmh": 19.480274513814102,
+          "last_sim_time": 425.600006341
+        },
+        "584:same": {
+          "actor_id": 584,
+          "direction": "same",
+          "first_sim_time": 465.200006932,
+          "minimum_bbox_clearance_m": 1.7076072101769233,
+          "maximum_npc_speed_kmh": 19.474042568542107,
+          "last_sim_time": 511.050007615
+        },
+        "578:opposite": {
+          "actor_id": 578,
+          "direction": "opposite",
+          "first_sim_time": 474.600007072,
+          "minimum_bbox_clearance_m": 5.043193145120389,
+          "maximum_npc_speed_kmh": 19.485097125745913,
+          "last_sim_time": 485.950007241
+        },
+        "575:crossing": {
+          "actor_id": 575,
+          "direction": "crossing",
+          "first_sim_time": 476.650007102,
+          "minimum_bbox_clearance_m": 19.369072194109954,
+          "maximum_npc_speed_kmh": 19.19992495043088,
+          "last_sim_time": 480.850007165
+        },
+        "585:same": {
+          "actor_id": 585,
+          "direction": "same",
+          "first_sim_time": 497.350007411,
+          "minimum_bbox_clearance_m": 1.6610980635711698,
+          "maximum_npc_speed_kmh": 19.30971924699228,
+          "last_sim_time": 511.050007615
+        }
+      },
+      "last_live_npc_count": 16,
+      "cleanup_removed_ids": [
+        574,
+        575,
+        576,
+        577,
+        578,
+        579,
+        580,
+        581,
+        582,
+        583,
+        584,
+        585,
+        586,
+        587,
+        588,
+        589
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null
+    },
+    "traffic16-exit-policy": {
+      "source_log": "log/bus-traffic-fix-20261023/traffic16-exit-policy/lap.json",
+      "sha256": "cd81c78d700eff1389e4bef8ecea3b8fc5636d78179815498b223d0920e5aceb",
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "distance_m": 1685.7170895889685,
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07"
+      ],
+      "collisions": [],
+      "emergency_episode_count": 17,
+      "emergency_episodes": [
+        {
+          "start_sim_s": 957.500014267,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 958.800014287
+        },
+        {
+          "start_sim_s": 1082.000016123,
+          "faults": [
+            "service_log_checker: response_status",
+            "controller_node_exe: control_state"
+          ],
+          "end_sim_s": 1082.400016129
+        },
+        {
+          "start_sim_s": 1114.900016613,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 1115.300016619
+        },
+        {
+          "start_sim_s": 1245.400018557,
+          "faults": [
+            "controller_node_exe: control_state",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 1246.100018568
+        },
+        {
+          "start_sim_s": 1319.300019659,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 1319.40001966
+        },
+        {
+          "start_sim_s": 1356.200020208,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "controller_node_exe: control_state",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 1357.250020224
+        },
+        {
+          "start_sim_s": 1362.200020298,
+          "faults": [
+            "controller_node_exe: control_state"
+          ],
+          "end_sim_s": 1363.00002031
+        },
+        {
+          "start_sim_s": 1438.900021441,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 1439.200021445
+        },
+        {
+          "start_sim_s": 1521.000022664,
+          "faults": [
+            "service_log_checker: response_status",
+            "controller_node_exe: control_state"
+          ],
+          "end_sim_s": 1522.100022681
+        },
+        {
+          "start_sim_s": 1539.600022941,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 1541.50002297
+        },
+        {
+          "start_sim_s": 1565.600023329,
+          "faults": [
+            "controller_node_exe: control_state",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 1566.800023347
+        },
+        {
+          "start_sim_s": 1567.70002336,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 1567.800023362
+        },
+        {
+          "start_sim_s": 1813.200027018,
+          "faults": [
+            "controller_node_exe: control_state"
+          ],
+          "end_sim_s": 1813.700027026
+        },
+        {
+          "start_sim_s": 1817.800027087,
+          "faults": [
+            "controller_node_exe: control_state",
+            "service_log_checker: response_status",
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 1819.600027114
+        },
+        {
+          "start_sim_s": 1858.700027696,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 1859.900027714
+        },
+        {
+          "start_sim_s": 1947.400029018,
+          "faults": [
+            "controller_node_exe: control_state"
+          ],
+          "end_sim_s": 1947.800029024
+        },
+        {
+          "start_sim_s": 1980.800029516,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status",
+            "controller_node_exe: control_state"
+          ],
+          "end_sim_s": 1985.10002958
+        }
+      ],
+      "peak_speed_kmh": {
+        "urban": 24.4240331860095,
+        "ring_road": 43.76521949569855
+      },
+      "signal_crossings": [
+        {
+          "group_id": 35817,
+          "opendrive_id": "2376",
+          "stop_line_id": 35804,
+          "frame": 2875381,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -143.03823852539062,
+            -85.3849868774414
+          ]
+        },
+        {
+          "group_id": 36025,
+          "opendrive_id": "2390",
+          "stop_line_id": 36012,
+          "frame": 2878709,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -129.78208923339844,
+            -13.514698028564453
+          ]
+        },
+        {
+          "group_id": 36249,
+          "opendrive_id": "2404",
+          "stop_line_id": 36236,
+          "frame": 2880219,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -63.16884231567383,
+            6.557844638824463
+          ]
+        },
+        {
+          "group_id": 36265,
+          "opendrive_id": "2405",
+          "stop_line_id": 36252,
+          "frame": 2882707,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            16.365304946899414,
+            3.2106852531433105
+          ]
+        },
+        {
+          "group_id": 36153,
+          "opendrive_id": "2398",
+          "stop_line_id": 36140,
+          "frame": 2884146,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            36.619728088378906,
+            -75.01522827148438
+          ]
+        },
+        {
+          "group_id": 36599,
+          "opendrive_id": "2431",
+          "stop_line_id": 36595,
+          "frame": 2884751,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            36.769840240478516,
+            -133.96653747558594
+          ]
+        },
+        {
+          "group_id": 36473,
+          "opendrive_id": "2421",
+          "stop_line_id": 36460,
+          "frame": 2885357,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            36.1080207824707,
+            -175.8105926513672
+          ]
+        },
+        {
+          "group_id": 36615,
+          "opendrive_id": "2432",
+          "stop_line_id": 36602,
+          "frame": 2890179,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            9.401363372802734,
+            202.4134521484375
+          ]
+        },
+        {
+          "group_id": 36537,
+          "opendrive_id": "2426",
+          "stop_line_id": 36524,
+          "frame": 2892599,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            35.37929916381836,
+            103.68992614746094
+          ]
+        },
+        {
+          "group_id": 36281,
+          "opendrive_id": "2406",
+          "stop_line_id": 36268,
+          "frame": 2895015,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            33.457340240478516,
+            13.991125106811523
+          ]
+        },
+        {
+          "group_id": 36217,
+          "opendrive_id": "2402",
+          "stop_line_id": 36204,
+          "frame": 2896527,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -35.44485855102539,
+            -1.4599848985671997
+          ]
+        }
+      ],
+      "traffic_spawned": [
+        {
+          "id": 591,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 44,
+          "lane": -2,
+          "native_s": 6.0,
+          "initial_xyz": [
+            -184.57594299316406,
+            -17.585704803466797,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 592,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 44,
+          "lane": 1,
+          "native_s": 55.0,
+          "initial_xyz": [
+            -191.58946228027344,
+            -66.58377075195312,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 593,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 5,
+          "lane": -2,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -131.93467712402344,
+            -36.91206359863281,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 594,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 5,
+          "lane": 1,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -124.76313018798828,
+            -61.86339569091797,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 595,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 1,
+          "lane": 2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -76.73690795898438,
+            6.236118316650391,
+            0.25
+          ]
+        },
+        {
+          "id": 596,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 1,
+          "lane": -1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -101.75387573242188,
+            -0.7030093669891357,
+            0.25
+          ]
+        },
+        {
+          "id": 597,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 16,
+          "lane": 2,
+          "native_s": 12.0,
+          "initial_xyz": [
+            36.16423797607422,
+            -64.62568664550781,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 598,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 16,
+          "lane": -1,
+          "native_s": 36.0,
+          "initial_xyz": [
+            28.525062561035156,
+            -40.82142639160156,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 599,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 29,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            35.08800506591797,
+            60.2191162109375,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 600,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 29,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            28.097993850708008,
+            35.21632385253906,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 601,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 0,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            2.167299509048462,
+            -4.455968856811523,
+            0.25
+          ]
+        },
+        {
+          "id": 602,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 0,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -22.815589904785156,
+            2.604861259460449,
+            0.25
+          ]
+        },
+        {
+          "id": 603,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 40,
+          "lane": -2,
+          "native_s": 10.0,
+          "initial_xyz": [
+            -54.12608337402344,
+            44.895023345947266,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 604,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 40,
+          "lane": 1,
+          "native_s": 30.0,
+          "initial_xyz": [
+            -47.258636474609375,
+            64.94092559814453,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 605,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 37,
+          "lane": -3,
+          "native_s": 350.0,
+          "initial_xyz": [
+            -247.16058349609375,
+            -52.36977767944336,
+            10.25
+          ]
+        },
+        {
+          "id": 606,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 37,
+          "lane": 2,
+          "native_s": 450.0,
+          "initial_xyz": [
+            -232.98533630371094,
+            47.56609344482422,
+            10.25
+          ]
+        }
+      ],
+      "traffic_skipped": [],
+      "traffic_encounters": {
+        "591:same": {
+          "actor_id": 591,
+          "direction": "same",
+          "first_sim_time": 936.400013953,
+          "minimum_bbox_clearance_m": 3.1260114628204185,
+          "maximum_npc_speed_kmh": 19.411668263882238,
+          "last_sim_time": 1107.850016508
+        },
+        "592:opposite": {
+          "actor_id": 592,
+          "direction": "opposite",
+          "first_sim_time": 936.400013953,
+          "minimum_bbox_clearance_m": 3.519902127388705,
+          "maximum_npc_speed_kmh": 19.590932006219276,
+          "last_sim_time": 2126.000031679
+        },
+        "591:crossing": {
+          "actor_id": 591,
+          "direction": "crossing",
+          "first_sim_time": 953.800014212,
+          "minimum_bbox_clearance_m": 2.4078999711955706,
+          "maximum_npc_speed_kmh": 19.618624553548276,
+          "last_sim_time": 1108.850016523
+        },
+        "594:same": {
+          "actor_id": 594,
+          "direction": "same",
+          "first_sim_time": 998.400014877,
+          "minimum_bbox_clearance_m": 0.0,
+          "maximum_npc_speed_kmh": 19.562529096484226,
+          "last_sim_time": 1993.000029698
+        },
+        "604:crossing": {
+          "actor_id": 604,
+          "direction": "crossing",
+          "first_sim_time": 1046.850015599,
+          "minimum_bbox_clearance_m": 10.705629453331406,
+          "maximum_npc_speed_kmh": 22.375204316230732,
+          "last_sim_time": 2062.900030739
+        },
+        "604:same": {
+          "actor_id": 604,
+          "direction": "same",
+          "first_sim_time": 1052.000015676,
+          "minimum_bbox_clearance_m": 8.579825993301643,
+          "maximum_npc_speed_kmh": 19.446338156766164,
+          "last_sim_time": 2051.800030574
+        },
+        "601:same": {
+          "actor_id": 601,
+          "direction": "same",
+          "first_sim_time": 1113.000016584,
+          "minimum_bbox_clearance_m": 0.0,
+          "maximum_npc_speed_kmh": 19.601991473390637,
+          "last_sim_time": 1177.200017541
+        },
+        "601:crossing": {
+          "actor_id": 601,
+          "direction": "crossing",
+          "first_sim_time": 1148.200017109,
+          "minimum_bbox_clearance_m": 0.0,
+          "maximum_npc_speed_kmh": 19.547589284980422,
+          "last_sim_time": 2230.150033231
+        },
+        "593:crossing": {
+          "actor_id": 593,
+          "direction": "crossing",
+          "first_sim_time": 1284.50001914,
+          "minimum_bbox_clearance_m": 1.7019228299122022,
+          "maximum_npc_speed_kmh": 10.415411349954933,
+          "last_sim_time": 1330.250019822
+        },
+        "602:opposite": {
+          "actor_id": 602,
+          "direction": "opposite",
+          "first_sim_time": 1307.400019481,
+          "minimum_bbox_clearance_m": 2.602729098061272,
+          "maximum_npc_speed_kmh": 18.681252261198328,
+          "last_sim_time": 1336.550019916
+        },
+        "593:same": {
+          "actor_id": 593,
+          "direction": "same",
+          "first_sim_time": 1331.300019837,
+          "minimum_bbox_clearance_m": 0.0,
+          "maximum_npc_speed_kmh": 19.579750416285016,
+          "last_sim_time": 1370.350020419
+        },
+        "602:crossing": {
+          "actor_id": 602,
+          "direction": "crossing",
+          "first_sim_time": 1337.550019931,
+          "minimum_bbox_clearance_m": 14.666487876532889,
+          "maximum_npc_speed_kmh": 19.395477361818138,
+          "last_sim_time": 1340.650019977
+        },
+        "598:crossing": {
+          "actor_id": 598,
+          "direction": "crossing",
+          "first_sim_time": 1368.250020388,
+          "minimum_bbox_clearance_m": 7.640162252611354,
+          "maximum_npc_speed_kmh": 18.786750115125844,
+          "last_sim_time": 2053.900030605
+        },
+        "598:opposite": {
+          "actor_id": 598,
+          "direction": "opposite",
+          "first_sim_time": 1382.900020606,
+          "minimum_bbox_clearance_m": 0.7877011112997365,
+          "maximum_npc_speed_kmh": 19.462326093558165,
+          "last_sim_time": 2068.100030817
+        },
+        "600:crossing": {
+          "actor_id": 600,
+          "direction": "crossing",
+          "first_sim_time": 1424.250021222,
+          "minimum_bbox_clearance_m": 2.278787874489964,
+          "maximum_npc_speed_kmh": 19.519853975383715,
+          "last_sim_time": 2059.900030694
+        },
+        "600:opposite": {
+          "actor_id": 600,
+          "direction": "opposite",
+          "first_sim_time": 1438.85002144,
+          "minimum_bbox_clearance_m": 1.5232003180819806,
+          "maximum_npc_speed_kmh": 22.281797731417257,
+          "last_sim_time": 1472.200021937
+        },
+        "600:same": {
+          "actor_id": 600,
+          "direction": "same",
+          "first_sim_time": 1551.250023115,
+          "minimum_bbox_clearance_m": 1.7067812610486945,
+          "maximum_npc_speed_kmh": 19.478687102801466,
+          "last_sim_time": 2051.800030574
+        },
+        "605:crossing": {
+          "actor_id": 605,
+          "direction": "crossing",
+          "first_sim_time": 1563.7000233,
+          "minimum_bbox_clearance_m": 19.379137357924655,
+          "maximum_npc_speed_kmh": 7.032688165844331,
+          "last_sim_time": 1574.150023456
+        },
+        "605:same": {
+          "actor_id": 605,
+          "direction": "same",
+          "first_sim_time": 1575.150023471,
+          "minimum_bbox_clearance_m": 3.128913284076609,
+          "maximum_npc_speed_kmh": 38.4524865714886,
+          "last_sim_time": 1585.450023625
+        },
+        "594:opposite": {
+          "actor_id": 594,
+          "direction": "opposite",
+          "first_sim_time": 1579.200023531,
+          "minimum_bbox_clearance_m": 11.69701532570401,
+          "maximum_npc_speed_kmh": 29.772481033968184,
+          "last_sim_time": 1590.550023701
+        },
+        "595:opposite": {
+          "actor_id": 595,
+          "direction": "opposite",
+          "first_sim_time": 1614.750024061,
+          "minimum_bbox_clearance_m": 15.064289436680674,
+          "maximum_npc_speed_kmh": 38.87505624240348,
+          "last_sim_time": 1617.850024107
+        },
+        "606:opposite": {
+          "actor_id": 606,
+          "direction": "opposite",
+          "first_sim_time": 1653.150024633,
+          "minimum_bbox_clearance_m": 1.5376119093611111,
+          "maximum_npc_speed_kmh": 37.99369945117591,
+          "last_sim_time": 1825.050027195
+        },
+        "597:opposite": {
+          "actor_id": 597,
+          "direction": "opposite",
+          "first_sim_time": 1816.65002707,
+          "minimum_bbox_clearance_m": 8.307812384763247,
+          "maximum_npc_speed_kmh": 38.60356762019065,
+          "last_sim_time": 1825.050027195
+        },
+        "594:crossing": {
+          "actor_id": 594,
+          "direction": "crossing",
+          "first_sim_time": 1903.750028368,
+          "minimum_bbox_clearance_m": 4.85335377059707,
+          "maximum_npc_speed_kmh": 19.55888182960082,
+          "last_sim_time": 1998.000029772
+        },
+        "603:crossing": {
+          "actor_id": 603,
+          "direction": "crossing",
+          "first_sim_time": 2020.100030101,
+          "minimum_bbox_clearance_m": 13.437464622503523,
+          "maximum_npc_speed_kmh": 19.46127700233101,
+          "last_sim_time": 2064.000030755
+        },
+        "603:same": {
+          "actor_id": 603,
+          "direction": "same",
+          "first_sim_time": 2054.90003062,
+          "minimum_bbox_clearance_m": 12.983356184341694,
+          "maximum_npc_speed_kmh": 19.671723992399453,
+          "last_sim_time": 2060.900030709
+        },
+        "592:crossing": {
+          "actor_id": 592,
+          "direction": "crossing",
+          "first_sim_time": 2127.000031694,
+          "minimum_bbox_clearance_m": 3.36429361796302,
+          "maximum_npc_speed_kmh": 19.525942260170115,
+          "last_sim_time": 2158.300032161
+        },
+        "601:opposite": {
+          "actor_id": 601,
+          "direction": "opposite",
+          "first_sim_time": 2175.100032411,
+          "minimum_bbox_clearance_m": 4.127667608244209,
+          "maximum_npc_speed_kmh": 19.39929615637612,
+          "last_sim_time": 2225.950033169
+        },
+        "599:opposite": {
+          "actor_id": 599,
+          "direction": "opposite",
+          "first_sim_time": 2235.350033309,
+          "minimum_bbox_clearance_m": 5.3373401854808895,
+          "maximum_npc_speed_kmh": 19.473871002947526,
+          "last_sim_time": 2248.85003351
+        },
+        "604:opposite": {
+          "actor_id": 604,
+          "direction": "opposite",
+          "first_sim_time": 2247.800033494,
+          "minimum_bbox_clearance_m": 22.389184153743336,
+          "maximum_npc_speed_kmh": 19.16346516318078,
+          "last_sim_time": 2248.85003351
+        }
+      },
+      "last_live_npc_count": 16,
+      "cleanup_removed_ids": [
+        591,
+        592,
+        593,
+        594,
+        595,
+        596,
+        597,
+        598,
+        599,
+        600,
+        601,
+        602,
+        603,
+        604,
+        605,
+        606
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null
+    },
+    "traffic16-braking-release": {
+      "source_log": "log/bus-traffic-fix-20261023/traffic16-braking-release/lap.json",
+      "sha256": "2d22f93ee8f7dd29f68a7a3d0551913b5bed2c73aa1c13358bd9666c2233186e",
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "distance_m": 303.72070243926777,
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03",
+        "S04"
+      ],
+      "collisions": [],
+      "emergency_episode_count": 4,
+      "emergency_episodes": [
+        {
+          "start_sim_s": 149.400002226,
+          "faults": [
+            "controller_node_exe: control_state",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 150.700002245
+        },
+        {
+          "start_sim_s": 173.600002586,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 174.100002594
+        },
+        {
+          "start_sim_s": 180.600002691,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 181.700002707
+        },
+        {
+          "start_sim_s": 271.80000405,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status",
+            "controller_node_exe: control_state"
+          ],
+          "end_sim_s": 272.700004063
+        }
+      ],
+      "peak_speed_kmh": {
+        "urban": 20.012755025548543,
+        "ring_road": 0
+      },
+      "signal_crossings": [
+        {
+          "group_id": 35817,
+          "opendrive_id": "2376",
+          "stop_line_id": 35804,
+          "frame": 2940423,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -143.19894409179688,
+            -85.24577331542969
+          ]
+        },
+        {
+          "group_id": 36025,
+          "opendrive_id": "2390",
+          "stop_line_id": 36012,
+          "frame": 2941359,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -127.45540618896484,
+            -13.324102401733398
+          ]
+        },
+        {
+          "group_id": 36249,
+          "opendrive_id": "2404",
+          "stop_line_id": 36236,
+          "frame": 2942805,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -63.259742736816406,
+            6.140002250671387
+          ]
+        }
+      ],
+      "traffic_spawned": [
+        {
+          "id": 613,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 44,
+          "lane": -2,
+          "native_s": 6.0,
+          "initial_xyz": [
+            -184.57594299316406,
+            -17.585704803466797,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 614,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 44,
+          "lane": 1,
+          "native_s": 55.0,
+          "initial_xyz": [
+            -191.58946228027344,
+            -66.58377075195312,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 615,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 5,
+          "lane": -2,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -131.93467712402344,
+            -36.91206359863281,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 616,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 5,
+          "lane": 1,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -124.76313018798828,
+            -61.86339569091797,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 617,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 1,
+          "lane": 2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -76.73690795898438,
+            6.236118316650391,
+            0.25
+          ]
+        },
+        {
+          "id": 618,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 1,
+          "lane": -1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -101.75387573242188,
+            -0.7030093669891357,
+            0.25
+          ]
+        },
+        {
+          "id": 619,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 16,
+          "lane": 2,
+          "native_s": 12.0,
+          "initial_xyz": [
+            36.16423797607422,
+            -64.62568664550781,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 620,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 16,
+          "lane": -1,
+          "native_s": 36.0,
+          "initial_xyz": [
+            28.525062561035156,
+            -40.82142639160156,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 621,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 29,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            35.08800506591797,
+            60.2191162109375,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 622,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 29,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            28.097993850708008,
+            35.21632385253906,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 623,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 0,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            2.167299509048462,
+            -4.455968856811523,
+            0.25
+          ]
+        },
+        {
+          "id": 624,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 0,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -22.815589904785156,
+            2.604861259460449,
+            0.25
+          ]
+        },
+        {
+          "id": 625,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 40,
+          "lane": -2,
+          "native_s": 10.0,
+          "initial_xyz": [
+            -54.12608337402344,
+            44.895023345947266,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 626,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 40,
+          "lane": 1,
+          "native_s": 30.0,
+          "initial_xyz": [
+            -47.258636474609375,
+            64.94092559814453,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 627,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 37,
+          "lane": -3,
+          "native_s": 350.0,
+          "initial_xyz": [
+            -247.16058349609375,
+            -52.36977767944336,
+            10.25
+          ]
+        },
+        {
+          "id": 628,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 37,
+          "lane": 2,
+          "native_s": 450.0,
+          "initial_xyz": [
+            -232.98533630371094,
+            47.56609344482422,
+            10.25
+          ]
+        }
+      ],
+      "traffic_skipped": [],
+      "traffic_encounters": {
+        "613:same": {
+          "actor_id": 613,
+          "direction": "same",
+          "first_sim_time": 97.000001445,
+          "minimum_bbox_clearance_m": 0.0,
+          "maximum_npc_speed_kmh": 19.039155542174232,
+          "last_sim_time": 187.100002788
+        },
+        "614:opposite": {
+          "actor_id": 614,
+          "direction": "opposite",
+          "first_sim_time": 97.000001445,
+          "minimum_bbox_clearance_m": 3.5612440757787933,
+          "maximum_npc_speed_kmh": 19.55054266462678,
+          "last_sim_time": 103.300001539
+        },
+        "613:crossing": {
+          "actor_id": 613,
+          "direction": "crossing",
+          "first_sim_time": 113.500001691,
+          "minimum_bbox_clearance_m": 1.9671057308527982,
+          "maximum_npc_speed_kmh": 12.947689582593991,
+          "last_sim_time": 195.450002912
+        },
+        "616:crossing": {
+          "actor_id": 616,
+          "direction": "crossing",
+          "first_sim_time": 124.950001861,
+          "minimum_bbox_clearance_m": 4.05835543736606,
+          "maximum_npc_speed_kmh": 1.8895160589149947e-06,
+          "last_sim_time": 140.500002093
+        },
+        "616:opposite": {
+          "actor_id": 616,
+          "direction": "opposite",
+          "first_sim_time": 141.60000211,
+          "minimum_bbox_clearance_m": 1.6073251450129384,
+          "maximum_npc_speed_kmh": 19.974817747904563,
+          "last_sim_time": 147.750002201
+        },
+        "623:opposite": {
+          "actor_id": 623,
+          "direction": "opposite",
+          "first_sim_time": 160.150002386,
+          "minimum_bbox_clearance_m": 4.876226770269683,
+          "maximum_npc_speed_kmh": 19.659053697340493,
+          "last_sim_time": 170.50000254
+        },
+        "623:crossing": {
+          "actor_id": 623,
+          "direction": "crossing",
+          "first_sim_time": 249.050003711,
+          "minimum_bbox_clearance_m": 17.401121599288373,
+          "maximum_npc_speed_kmh": 16.914636478674634,
+          "last_sim_time": 263.600003927
+        }
+      },
+      "last_live_npc_count": 16,
+      "cleanup_removed_ids": [
+        613,
+        614,
+        615,
+        616,
+        617,
+        618,
+        619,
+        620,
+        621,
+        622,
+        623,
+        624,
+        625,
+        626,
+        627,
+        628
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null
+    },
+    "traffic16-bus-tolerance": {
+      "source_log": "log/bus-traffic-fix-20261023/traffic16-bus-tolerance/lap.json",
+      "sha256": "8d2c8f6ce4c39083bbca14bf9d544aa520d047ec9d1ae28c046034f1956f6a63",
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError('Red/unknown signal stop-line crossing')",
+      "distance_m": 155.10155506973388,
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03"
+      ],
+      "collisions": [],
+      "emergency_episode_count": 1,
+      "emergency_episodes": [
+        {
+          "start_sim_s": 169.300002522,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "controller_node_exe: control_state",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 171.500002555
+        }
+      ],
+      "peak_speed_kmh": {
+        "urban": 20.200162600929254,
+        "ring_road": 0
+      },
+      "signal_crossings": [
+        {
+          "group_id": 35817,
+          "opendrive_id": "2376",
+          "stop_line_id": 35804,
+          "frame": 3048498,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -143.19927978515625,
+            -85.40261840820312
+          ]
+        },
+        {
+          "group_id": 36025,
+          "opendrive_id": "2390",
+          "stop_line_id": 36012,
+          "frame": 3049743,
+          "state": "Red",
+          "previous_state": "Red",
+          "phase_transition": false,
+          "violation": true,
+          "front_xy": [
+            -128.67652893066406,
+            -13.082196235656738
+          ]
+        }
+      ],
+      "traffic_spawned": [
+        {
+          "id": 635,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 44,
+          "lane": -2,
+          "native_s": 6.0,
+          "initial_xyz": [
+            -184.57594299316406,
+            -17.585704803466797,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 636,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 44,
+          "lane": 1,
+          "native_s": 55.0,
+          "initial_xyz": [
+            -191.58946228027344,
+            -66.58377075195312,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 637,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 5,
+          "lane": -2,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -131.93467712402344,
+            -36.91206359863281,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 638,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 5,
+          "lane": 1,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -124.76313018798828,
+            -61.86339569091797,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 639,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 1,
+          "lane": 2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -76.73690795898438,
+            6.236118316650391,
+            0.25
+          ]
+        },
+        {
+          "id": 640,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 1,
+          "lane": -1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -101.75387573242188,
+            -0.7030093669891357,
+            0.25
+          ]
+        },
+        {
+          "id": 641,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 16,
+          "lane": 2,
+          "native_s": 12.0,
+          "initial_xyz": [
+            36.16423797607422,
+            -64.62568664550781,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 642,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 16,
+          "lane": -1,
+          "native_s": 36.0,
+          "initial_xyz": [
+            28.525062561035156,
+            -40.82142639160156,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 643,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 29,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            35.08800506591797,
+            60.2191162109375,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 644,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 29,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            28.097993850708008,
+            35.21632385253906,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 645,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 0,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            2.167299509048462,
+            -4.455968856811523,
+            0.25
+          ]
+        },
+        {
+          "id": 646,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 0,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -22.815589904785156,
+            2.604861259460449,
+            0.25
+          ]
+        },
+        {
+          "id": 647,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 40,
+          "lane": -2,
+          "native_s": 10.0,
+          "initial_xyz": [
+            -54.12608337402344,
+            44.895023345947266,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 648,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 40,
+          "lane": 1,
+          "native_s": 30.0,
+          "initial_xyz": [
+            -47.258636474609375,
+            64.94092559814453,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 649,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 37,
+          "lane": -3,
+          "native_s": 350.0,
+          "initial_xyz": [
+            -247.16058349609375,
+            -52.36977767944336,
+            10.25
+          ]
+        },
+        {
+          "id": 650,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 37,
+          "lane": 2,
+          "native_s": 450.0,
+          "initial_xyz": [
+            -232.98533630371094,
+            47.56609344482422,
+            10.25
+          ]
+        }
+      ],
+      "traffic_skipped": [],
+      "traffic_encounters": {
+        "635:same": {
+          "actor_id": 635,
+          "direction": "same",
+          "first_sim_time": 78.500001169,
+          "minimum_bbox_clearance_m": 0.0,
+          "maximum_npc_speed_kmh": 19.570429843484913,
+          "last_sim_time": 174.200002595
+        },
+        "636:opposite": {
+          "actor_id": 636,
+          "direction": "opposite",
+          "first_sim_time": 78.500001169,
+          "minimum_bbox_clearance_m": 3.561143574965972,
+          "maximum_npc_speed_kmh": 19.569194753651733,
+          "last_sim_time": 84.60000126
+        },
+        "635:crossing": {
+          "actor_id": 635,
+          "direction": "crossing",
+          "first_sim_time": 94.900001414,
+          "minimum_bbox_clearance_m": 1.2396502861572924,
+          "maximum_npc_speed_kmh": 11.81014912817956,
+          "last_sim_time": 129.150001924
+        },
+        "638:crossing": {
+          "actor_id": 638,
+          "direction": "crossing",
+          "first_sim_time": 105.100001566,
+          "minimum_bbox_clearance_m": 4.964332575109595,
+          "maximum_npc_speed_kmh": 1.7879662933061415e-06,
+          "last_sim_time": 122.900001831
+        },
+        "638:opposite": {
+          "actor_id": 638,
+          "direction": "opposite",
+          "first_sim_time": 123.950001846,
+          "minimum_bbox_clearance_m": 1.2396982010445274,
+          "maximum_npc_speed_kmh": 19.365054550401997,
+          "last_sim_time": 132.300001971
+        }
+      },
+      "last_live_npc_count": 16,
+      "cleanup_removed_ids": [
+        635,
+        636,
+        637,
+        638,
+        639,
+        640,
+        641,
+        642,
+        643,
+        644,
+        645,
+        646,
+        647,
+        648,
+        649,
+        650
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null
+    },
+    "traffic16-signal-margin": {
+      "source_log": "log/bus-traffic-fix-20261023/traffic16-signal-margin/lap.json",
+      "sha256": "098dbe03515550adedbce53c0d49ff362ec4556d2c2f307d1013d6b007553fed",
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError('Red/unknown signal stop-line crossing')",
+      "distance_m": 154.69806349895362,
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03"
+      ],
+      "collisions": [],
+      "emergency_episode_count": 0,
+      "emergency_episodes": [],
+      "peak_speed_kmh": {
+        "urban": 20.203616000410737,
+        "ring_road": 0
+      },
+      "signal_crossings": [
+        {
+          "group_id": 35817,
+          "opendrive_id": "2376",
+          "stop_line_id": 35804,
+          "frame": 3100100,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -143.13143920898438,
+            -85.24191284179688
+          ]
+        },
+        {
+          "group_id": 36025,
+          "opendrive_id": "2390",
+          "stop_line_id": 36012,
+          "frame": 3102289,
+          "state": "Red",
+          "previous_state": "Red",
+          "phase_transition": false,
+          "violation": true,
+          "front_xy": [
+            -129.8701629638672,
+            -13.546292304992676
+          ]
+        }
+      ],
+      "traffic_spawned": [
+        {
+          "id": 657,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 44,
+          "lane": -2,
+          "native_s": 6.0,
+          "initial_xyz": [
+            -184.57594299316406,
+            -17.585704803466797,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 658,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 44,
+          "lane": 1,
+          "native_s": 55.0,
+          "initial_xyz": [
+            -191.58946228027344,
+            -66.58377075195312,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 659,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 5,
+          "lane": -2,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -131.93467712402344,
+            -36.91206359863281,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 660,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 5,
+          "lane": 1,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -124.76313018798828,
+            -61.86339569091797,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 661,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 1,
+          "lane": 2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -76.73690795898438,
+            6.236118316650391,
+            0.25
+          ]
+        },
+        {
+          "id": 662,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 1,
+          "lane": -1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -101.75387573242188,
+            -0.7030093669891357,
+            0.25
+          ]
+        },
+        {
+          "id": 663,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 16,
+          "lane": 2,
+          "native_s": 12.0,
+          "initial_xyz": [
+            36.16423797607422,
+            -64.62568664550781,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 664,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 16,
+          "lane": -1,
+          "native_s": 36.0,
+          "initial_xyz": [
+            28.525062561035156,
+            -40.82142639160156,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 665,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 29,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            35.08800506591797,
+            60.2191162109375,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 666,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 29,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            28.097993850708008,
+            35.21632385253906,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 667,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 0,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            2.167299509048462,
+            -4.455968856811523,
+            0.25
+          ]
+        },
+        {
+          "id": 668,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 0,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -22.815589904785156,
+            2.604861259460449,
+            0.25
+          ]
+        },
+        {
+          "id": 669,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 40,
+          "lane": -2,
+          "native_s": 10.0,
+          "initial_xyz": [
+            -54.12608337402344,
+            44.895023345947266,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 670,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 40,
+          "lane": 1,
+          "native_s": 30.0,
+          "initial_xyz": [
+            -47.258636474609375,
+            64.94092559814453,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 671,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 37,
+          "lane": -3,
+          "native_s": 350.0,
+          "initial_xyz": [
+            -247.16058349609375,
+            -52.36977767944336,
+            10.25
+          ]
+        },
+        {
+          "id": 672,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 37,
+          "lane": 2,
+          "native_s": 450.0,
+          "initial_xyz": [
+            -232.98533630371094,
+            47.56609344482422,
+            10.25
+          ]
+        }
+      ],
+      "traffic_skipped": [],
+      "traffic_encounters": {
+        "657:same": {
+          "actor_id": 657,
+          "direction": "same",
+          "first_sim_time": 28.700000427,
+          "minimum_bbox_clearance_m": 2.3303486211484428,
+          "maximum_npc_speed_kmh": 19.046144440184605,
+          "last_sim_time": 64.750000964
+        },
+        "658:opposite": {
+          "actor_id": 658,
+          "direction": "opposite",
+          "first_sim_time": 28.700000427,
+          "minimum_bbox_clearance_m": 1.619118896539272,
+          "maximum_npc_speed_kmh": 19.680782906267268,
+          "last_sim_time": 73.100001089
+        },
+        "657:crossing": {
+          "actor_id": 657,
+          "direction": "crossing",
+          "first_sim_time": 45.050000671,
+          "minimum_bbox_clearance_m": 2.8374364096606493,
+          "maximum_npc_speed_kmh": 11.942406107703565,
+          "last_sim_time": 75.20000112
+        },
+        "660:crossing": {
+          "actor_id": 660,
+          "direction": "crossing",
+          "first_sim_time": 56.40000084,
+          "minimum_bbox_clearance_m": 3.6997151944272084,
+          "maximum_npc_speed_kmh": 14.878150554514798,
+          "last_sim_time": 65.80000098
+        },
+        "658:crossing": {
+          "actor_id": 658,
+          "direction": "crossing",
+          "first_sim_time": 63.700000949,
+          "minimum_bbox_clearance_m": 12.429228594356928,
+          "maximum_npc_speed_kmh": 19.154588906354004,
+          "last_sim_time": 65.80000098
+        },
+        "660:opposite": {
+          "actor_id": 660,
+          "direction": "opposite",
+          "first_sim_time": 66.850000996,
+          "minimum_bbox_clearance_m": 1.0904453286041074,
+          "maximum_npc_speed_kmh": 19.135594418207347,
+          "last_sim_time": 71.050001058
+        },
+        "659:same": {
+          "actor_id": 659,
+          "direction": "same",
+          "first_sim_time": 103.40000154,
+          "minimum_bbox_clearance_m": 1.7533902928659024,
+          "maximum_npc_speed_kmh": 19.39420086196781,
+          "last_sim_time": 167.850002501
+        },
+        "669:crossing": {
+          "actor_id": 669,
+          "direction": "crossing",
+          "first_sim_time": 127.400001898,
+          "minimum_bbox_clearance_m": 27.65431440072662,
+          "maximum_npc_speed_kmh": 19.460415538691073,
+          "last_sim_time": 127.400001898
+        },
+        "662:crossing": {
+          "actor_id": 662,
+          "direction": "crossing",
+          "first_sim_time": 157.650002349,
+          "minimum_bbox_clearance_m": 24.723339479270876,
+          "maximum_npc_speed_kmh": 0.030674042109763003,
+          "last_sim_time": 167.850002501
+        }
+      },
+      "last_live_npc_count": 16,
+      "cleanup_removed_ids": [
+        657,
+        658,
+        659,
+        660,
+        661,
+        662,
+        663,
+        664,
+        665,
+        666,
+        667,
+        668,
+        669,
+        670,
+        671,
+        672
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null
+    },
+    "traffic16-physical-signal": {
+      "source_log": "log/bus-traffic-fix-20261023/traffic16-physical-signal/lap.json",
+      "sha256": "c3a2c2a2059506105a92d15be8b17309adab7f38a1dbaf5df7b869baa8dc1682",
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError('No progress for 120 seconds; inspect recorded planning factors')",
+      "distance_m": 303.36843236619006,
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03",
+        "S04"
+      ],
+      "collisions": [],
+      "emergency_episode_count": 5,
+      "emergency_episodes": [
+        {
+          "start_sim_s": 115.800001725,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 115.900001727
+        },
+        {
+          "start_sim_s": 159.400002375,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 160.40000239
+        },
+        {
+          "start_sim_s": 232.400003463,
+          "faults": [
+            "controller_node_exe: control_state",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 233.100003473
+        },
+        {
+          "start_sim_s": 268.900004006,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 269.400004014
+        },
+        {
+          "start_sim_s": 317.000004723,
+          "faults": [
+            "service_log_checker: response_status",
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 317.200004726
+        }
+      ],
+      "peak_speed_kmh": {
+        "urban": 19.40035335654326,
+        "ring_road": 0
+      },
+      "signal_crossings": [
+        {
+          "group_id": 35817,
+          "opendrive_id": "2376",
+          "stop_line_id": 35804,
+          "frame": 3159816,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -142.94821166992188,
+            -85.37968444824219
+          ]
+        },
+        {
+          "group_id": 36025,
+          "opendrive_id": "2390",
+          "stop_line_id": 36012,
+          "frame": 3161926,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -129.698974609375,
+            -13.527312278747559
+          ]
+        },
+        {
+          "group_id": 36249,
+          "opendrive_id": "2404",
+          "stop_line_id": 36236,
+          "frame": 3163441,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -63.144203186035156,
+            6.490748405456543
+          ]
+        }
+      ],
+      "traffic_spawned": [
+        {
+          "id": 679,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 44,
+          "lane": -2,
+          "native_s": 6.0,
+          "initial_xyz": [
+            -184.57594299316406,
+            -17.585704803466797,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 680,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 44,
+          "lane": 1,
+          "native_s": 55.0,
+          "initial_xyz": [
+            -191.58946228027344,
+            -66.58377075195312,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 681,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 5,
+          "lane": -2,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -131.93467712402344,
+            -36.91206359863281,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 682,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 5,
+          "lane": 1,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -124.76313018798828,
+            -61.86339569091797,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 683,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 1,
+          "lane": 2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -76.73690795898438,
+            6.236118316650391,
+            0.25
+          ]
+        },
+        {
+          "id": 684,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 1,
+          "lane": -1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -101.75387573242188,
+            -0.7030093669891357,
+            0.25
+          ]
+        },
+        {
+          "id": 685,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 16,
+          "lane": 2,
+          "native_s": 12.0,
+          "initial_xyz": [
+            36.16423797607422,
+            -64.62568664550781,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 686,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 16,
+          "lane": -1,
+          "native_s": 36.0,
+          "initial_xyz": [
+            28.525062561035156,
+            -40.82142639160156,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 687,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 29,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            35.08800506591797,
+            60.2191162109375,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 688,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 29,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            28.097993850708008,
+            35.21632385253906,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 689,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 0,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            2.167299509048462,
+            -4.455968856811523,
+            0.25
+          ]
+        },
+        {
+          "id": 690,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 0,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -22.815589904785156,
+            2.604861259460449,
+            0.25
+          ]
+        },
+        {
+          "id": 691,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 40,
+          "lane": -2,
+          "native_s": 10.0,
+          "initial_xyz": [
+            -54.12608337402344,
+            44.895023345947266,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 692,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 40,
+          "lane": 1,
+          "native_s": 30.0,
+          "initial_xyz": [
+            -47.258636474609375,
+            64.94092559814453,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 693,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 37,
+          "lane": -3,
+          "native_s": 350.0,
+          "initial_xyz": [
+            -247.16058349609375,
+            -52.36977767944336,
+            10.25
+          ]
+        },
+        {
+          "id": 694,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 37,
+          "lane": 2,
+          "native_s": 450.0,
+          "initial_xyz": [
+            -232.98533630371094,
+            47.56609344482422,
+            10.25
+          ]
+        }
+      ],
+      "traffic_skipped": [],
+      "traffic_encounters": {
+        "679:same": {
+          "actor_id": 679,
+          "direction": "same",
+          "first_sim_time": 55.300000824,
+          "minimum_bbox_clearance_m": 1.8875100251390133,
+          "maximum_npc_speed_kmh": 18.155524286790516,
+          "last_sim_time": 117.900001756
+        },
+        "680:opposite": {
+          "actor_id": 680,
+          "direction": "opposite",
+          "first_sim_time": 55.300000824,
+          "minimum_bbox_clearance_m": 3.561045817498853,
+          "maximum_npc_speed_kmh": 19.84337542906776,
+          "last_sim_time": 61.400000914
+        },
+        "679:crossing": {
+          "actor_id": 679,
+          "direction": "crossing",
+          "first_sim_time": 74.700001113,
+          "minimum_bbox_clearance_m": 1.8908511138463258,
+          "maximum_npc_speed_kmh": 19.56845800439316,
+          "last_sim_time": 127.300001896
+        },
+        "691:crossing": {
+          "actor_id": 691,
+          "direction": "crossing",
+          "first_sim_time": 184.500002749,
+          "minimum_bbox_clearance_m": 27.11269926999488,
+          "maximum_npc_speed_kmh": 19.460088472455794,
+          "last_sim_time": 184.500002749
+        },
+        "682:crossing": {
+          "actor_id": 682,
+          "direction": "crossing",
+          "first_sim_time": 247.600003689,
+          "minimum_bbox_clearance_m": 27.867857706682095,
+          "maximum_npc_speed_kmh": 19.667654224018854,
+          "last_sim_time": 247.600003689
+        },
+        "689:opposite": {
+          "actor_id": 689,
+          "direction": "opposite",
+          "first_sim_time": 262.000003904,
+          "minimum_bbox_clearance_m": 6.223109166305263,
+          "maximum_npc_speed_kmh": 19.485885750115802,
+          "last_sim_time": 272.50000406
+        },
+        "685:crossing": {
+          "actor_id": 685,
+          "direction": "crossing",
+          "first_sim_time": 350.200005218,
+          "minimum_bbox_clearance_m": 13.294928139117681,
+          "maximum_npc_speed_kmh": 19.48286225813027,
+          "last_sim_time": 403.200006008
+        },
+        "680:same": {
+          "actor_id": 680,
+          "direction": "same",
+          "first_sim_time": 404.300006024,
+          "minimum_bbox_clearance_m": 1.5798045488735282,
+          "maximum_npc_speed_kmh": 19.254264314118892,
+          "last_sim_time": 436.550006505
+        },
+        "690:same": {
+          "actor_id": 690,
+          "direction": "same",
+          "first_sim_time": 407.350006069,
+          "minimum_bbox_clearance_m": 8.37931539912947,
+          "maximum_npc_speed_kmh": 19.63248054552275,
+          "last_sim_time": 436.550006505
+        },
+        "681:crossing": {
+          "actor_id": 681,
+          "direction": "crossing",
+          "first_sim_time": 421.850006286,
+          "minimum_bbox_clearance_m": 22.92772403703232,
+          "maximum_npc_speed_kmh": 17.75810317872534,
+          "last_sim_time": 436.550006505
+        },
+        "687:same": {
+          "actor_id": 687,
+          "direction": "same",
+          "first_sim_time": 431.300006426,
+          "minimum_bbox_clearance_m": 2.309279811510022,
+          "maximum_npc_speed_kmh": 19.50458970989157,
+          "last_sim_time": 436.550006505
+        }
+      },
+      "last_live_npc_count": 16,
+      "cleanup_removed_ids": [
+        679,
+        680,
+        681,
+        682,
+        683,
+        684,
+        685,
+        686,
+        687,
+        688,
+        689,
+        690,
+        691,
+        692,
+        693,
+        694
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null
+    },
+    "s04-s05-diagnostic2": {
+      "source_log": "log/bus-traffic-fix-20261023/s04-s05-diagnostic2/lap.json",
+      "sha256": "8f29526dc0e8092af0abb3a894ec4ea5a781ec99985fe45ffbb23e26318690da",
+      "success": true,
+      "result": "section_completed",
+      "error": null,
+      "distance_m": 166.1490334820628,
+      "visited_stops": [
+        "S04",
+        "S05"
+      ],
+      "collisions": [],
+      "emergency_episode_count": 2,
+      "emergency_episodes": [
+        {
+          "start_sim_s": 728.000010848,
+          "faults": [
+            "controller_node_exe: control_state"
+          ],
+          "end_sim_s": 728.400010854
+        },
+        {
+          "start_sim_s": 783.100011669,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 783.20001167
+        }
+      ],
+      "peak_speed_kmh": {
+        "urban": 15.764456518247464,
+        "ring_road": 0
+      },
+      "signal_crossings": [
+        {
+          "group_id": 36249,
+          "opendrive_id": "2404",
+          "stop_line_id": 36236,
+          "frame": 3171906,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -63.15263366699219,
+            6.455713748931885
+          ]
+        },
+        {
+          "group_id": 36265,
+          "opendrive_id": "2405",
+          "stop_line_id": 36252,
+          "frame": 3173097,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            16.223997116088867,
+            3.6941134929656982
+          ]
+        }
+      ],
+      "traffic_spawned": [
+        {
+          "id": 701,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 44,
+          "lane": -2,
+          "native_s": 6.0,
+          "initial_xyz": [
+            -184.57594299316406,
+            -17.585704803466797,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 702,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 44,
+          "lane": 1,
+          "native_s": 55.0,
+          "initial_xyz": [
+            -191.58946228027344,
+            -66.58377075195312,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 703,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 5,
+          "lane": -2,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -131.93467712402344,
+            -36.91206359863281,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 704,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 5,
+          "lane": 1,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -124.76313018798828,
+            -61.86339569091797,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 705,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 1,
+          "lane": -1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -101.75387573242188,
+            -0.7030093669891357,
+            0.25
+          ]
+        },
+        {
+          "id": 706,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 16,
+          "lane": 2,
+          "native_s": 12.0,
+          "initial_xyz": [
+            36.16423797607422,
+            -64.62568664550781,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 707,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 16,
+          "lane": -1,
+          "native_s": 36.0,
+          "initial_xyz": [
+            28.525062561035156,
+            -40.82142639160156,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 708,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 29,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            35.08800506591797,
+            60.2191162109375,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 709,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 29,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            28.097993850708008,
+            35.21632385253906,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 710,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 0,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            2.167299509048462,
+            -4.455968856811523,
+            0.25
+          ]
+        },
+        {
+          "id": 711,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 0,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -22.815589904785156,
+            2.604861259460449,
+            0.25
+          ]
+        },
+        {
+          "id": 712,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 40,
+          "lane": -2,
+          "native_s": 10.0,
+          "initial_xyz": [
+            -54.12608337402344,
+            44.895023345947266,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 713,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 40,
+          "lane": 1,
+          "native_s": 30.0,
+          "initial_xyz": [
+            -47.258636474609375,
+            64.94092559814453,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 714,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 37,
+          "lane": -3,
+          "native_s": 350.0,
+          "initial_xyz": [
+            -247.16058349609375,
+            -52.36977767944336,
+            10.25
+          ]
+        },
+        {
+          "id": 715,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 37,
+          "lane": 2,
+          "native_s": 450.0,
+          "initial_xyz": [
+            -232.98533630371094,
+            47.56609344482422,
+            10.25
+          ]
+        }
+      ],
+      "traffic_skipped": [
+        {
+          "road": 1,
+          "lane": 2,
+          "native_s": 15.0,
+          "reason": "near_section_start"
+        }
+      ],
+      "traffic_encounters": {
+        "705:opposite": {
+          "actor_id": 705,
+          "direction": "opposite",
+          "first_sim_time": 671.950010012,
+          "minimum_bbox_clearance_m": 12.855666752675686,
+          "maximum_npc_speed_kmh": 11.042475490034242,
+          "last_sim_time": 681.300010152
+        },
+        "713:crossing": {
+          "actor_id": 713,
+          "direction": "crossing",
+          "first_sim_time": 679.15001012,
+          "minimum_bbox_clearance_m": 5.535214738506483,
+          "maximum_npc_speed_kmh": 19.114528630851165,
+          "last_sim_time": 730.300010882
+        },
+        "710:opposite": {
+          "actor_id": 710,
+          "direction": "opposite",
+          "first_sim_time": 683.350010182,
+          "minimum_bbox_clearance_m": 7.005272844683811,
+          "maximum_npc_speed_kmh": 19.479824019752247,
+          "last_sim_time": 694.850010354
+        },
+        "713:opposite": {
+          "actor_id": 713,
+          "direction": "opposite",
+          "first_sim_time": 731.350010897,
+          "minimum_bbox_clearance_m": 16.0130855968922,
+          "maximum_npc_speed_kmh": 19.022803201192183,
+          "last_sim_time": 732.400010913
+        },
+        "709:opposite": {
+          "actor_id": 709,
+          "direction": "opposite",
+          "first_sim_time": 748.100011147,
+          "minimum_bbox_clearance_m": 1.6494812104755339,
+          "maximum_npc_speed_kmh": 19.32877719798028,
+          "last_sim_time": 768.300011448
+        },
+        "707:same": {
+          "actor_id": 707,
+          "direction": "same",
+          "first_sim_time": 841.700012542,
+          "minimum_bbox_clearance_m": 25.26795415599515,
+          "maximum_npc_speed_kmh": 18.757380738786257,
+          "last_sim_time": 841.700012542
+        }
+      },
+      "last_live_npc_count": 15,
+      "cleanup_removed_ids": [
+        701,
+        702,
+        703,
+        704,
+        705,
+        706,
+        707,
+        708,
+        709,
+        710,
+        711,
+        712,
+        713,
+        714,
+        715
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null
+    },
+    "s03-s05-smooth": {
+      "source_log": "log/bus-traffic-fix-20261023/s03-s05-smooth/lap.json",
+      "sha256": "9bb1b0995fe230a1c080951e71b6a99faf58007a8cd4130418c73094f122a44d",
+      "success": true,
+      "result": "section_completed",
+      "error": null,
+      "distance_m": 255.97152757143976,
+      "visited_stops": [
+        "S03",
+        "S04",
+        "S05"
+      ],
+      "collisions": [],
+      "emergency_episode_count": 5,
+      "emergency_episodes": [
+        {
+          "start_sim_s": 54.700000815,
+          "faults": [
+            "controller_node_exe: control_state"
+          ],
+          "end_sim_s": 54.900000818
+        },
+        {
+          "start_sim_s": 241.6000036,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 241.900003604
+        },
+        {
+          "start_sim_s": 243.00000362,
+          "faults": [
+            "service_log_checker: response_status",
+            "planning_validator: trajectory_validation_trajectory_shift"
+          ],
+          "end_sim_s": 243.100003622
+        },
+        {
+          "start_sim_s": 386.900005765,
+          "faults": [
+            "controller_node_exe: control_state"
+          ],
+          "end_sim_s": 387.000005766
+        },
+        {
+          "start_sim_s": 392.60000585,
+          "faults": [
+            "planning_validator: trajectory_validation_trajectory_shift",
+            "service_log_checker: response_status"
+          ],
+          "end_sim_s": 393.200005859
+        }
+      ],
+      "peak_speed_kmh": {
+        "urban": 13.264261329182048,
+        "ring_road": 0
+      },
+      "signal_crossings": [
+        {
+          "group_id": 36025,
+          "opendrive_id": "2390",
+          "stop_line_id": 36012,
+          "frame": 3194272,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -129.87643432617188,
+            -13.584980010986328
+          ]
+        },
+        {
+          "group_id": 36249,
+          "opendrive_id": "2404",
+          "stop_line_id": 36236,
+          "frame": 3196973,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -63.17473220825195,
+            6.4593377113342285
+          ]
+        },
+        {
+          "group_id": 36265,
+          "opendrive_id": "2405",
+          "stop_line_id": 36252,
+          "frame": 3198267,
+          "state": "Yellow",
+          "previous_state": "Yellow",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            16.336984634399414,
+            3.5437510013580322
+          ]
+        }
+      ],
+      "traffic_spawned": [
+        {
+          "id": 722,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 44,
+          "lane": -2,
+          "native_s": 6.0,
+          "initial_xyz": [
+            -184.57594299316406,
+            -17.585704803466797,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 723,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 44,
+          "lane": 1,
+          "native_s": 55.0,
+          "initial_xyz": [
+            -191.58946228027344,
+            -66.58377075195312,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 724,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 1,
+          "lane": 2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -76.73690795898438,
+            6.236118316650391,
+            0.25
+          ]
+        },
+        {
+          "id": 725,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 1,
+          "lane": -1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -101.75387573242188,
+            -0.7030093669891357,
+            0.25
+          ]
+        },
+        {
+          "id": 726,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 16,
+          "lane": 2,
+          "native_s": 12.0,
+          "initial_xyz": [
+            36.16423797607422,
+            -64.62568664550781,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 727,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 16,
+          "lane": -1,
+          "native_s": 36.0,
+          "initial_xyz": [
+            28.525062561035156,
+            -40.82142639160156,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 728,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 29,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            35.08800506591797,
+            60.2191162109375,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 729,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 29,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            28.097993850708008,
+            35.21632385253906,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 730,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 0,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            2.167299509048462,
+            -4.455968856811523,
+            0.25
+          ]
+        },
+        {
+          "id": 731,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 0,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -22.815589904785156,
+            2.604861259460449,
+            0.25
+          ]
+        },
+        {
+          "id": 732,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 40,
+          "lane": -2,
+          "native_s": 10.0,
+          "initial_xyz": [
+            -54.12608337402344,
+            44.895023345947266,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 733,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 40,
+          "lane": 1,
+          "native_s": 30.0,
+          "initial_xyz": [
+            -47.258636474609375,
+            64.94092559814453,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 734,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 37,
+          "lane": -3,
+          "native_s": 350.0,
+          "initial_xyz": [
+            -247.16058349609375,
+            -52.36977767944336,
+            10.25
+          ]
+        },
+        {
+          "id": 735,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 37,
+          "lane": 2,
+          "native_s": 450.0,
+          "initial_xyz": [
+            -232.98533630371094,
+            47.56609344482422,
+            10.25
+          ]
+        }
+      ],
+      "traffic_skipped": [
+        {
+          "road": 5,
+          "lane": -2,
+          "native_s": 40.0,
+          "reason": "near_section_start"
+        },
+        {
+          "road": 5,
+          "lane": 1,
+          "native_s": 15.0,
+          "reason": "near_section_start"
+        }
+      ],
+      "traffic_encounters": {
+        "725:crossing": {
+          "actor_id": 725,
+          "direction": "crossing",
+          "first_sim_time": 91.250001359,
+          "minimum_bbox_clearance_m": 17.527567958174814,
+          "maximum_npc_speed_kmh": 21.448318389821708,
+          "last_sim_time": 100.600001499
+        },
+        "733:crossing": {
+          "actor_id": 733,
+          "direction": "crossing",
+          "first_sim_time": 94.350001405,
+          "minimum_bbox_clearance_m": 20.98138732005979,
+          "maximum_npc_speed_kmh": 19.53676622484998,
+          "last_sim_time": 98.500001467
+        },
+        "733:same": {
+          "actor_id": 733,
+          "direction": "same",
+          "first_sim_time": 99.550001483,
+          "minimum_bbox_clearance_m": 27.991292657828616,
+          "maximum_npc_speed_kmh": 19.235377889687648,
+          "last_sim_time": 99.550001483
+        },
+        "723:crossing": {
+          "actor_id": 723,
+          "direction": "crossing",
+          "first_sim_time": 116.350001733,
+          "minimum_bbox_clearance_m": 18.474202479460335,
+          "maximum_npc_speed_kmh": 19.551642273097137,
+          "last_sim_time": 128.700001917
+        },
+        "732:opposite": {
+          "actor_id": 732,
+          "direction": "opposite",
+          "first_sim_time": 176.000002622,
+          "minimum_bbox_clearance_m": 15.935422573288259,
+          "maximum_npc_speed_kmh": 2.471925278977767e-06,
+          "last_sim_time": 185.100002758
+        },
+        "732:crossing": {
+          "actor_id": 732,
+          "direction": "crossing",
+          "first_sim_time": 186.150002773,
+          "minimum_bbox_clearance_m": 10.7098841598537,
+          "maximum_npc_speed_kmh": 19.58574826742359,
+          "last_sim_time": 248.100003696
+        },
+        "732:same": {
+          "actor_id": 732,
+          "direction": "same",
+          "first_sim_time": 198.65000296,
+          "minimum_bbox_clearance_m": 0.0,
+          "maximum_npc_speed_kmh": 19.505076303113192,
+          "last_sim_time": 243.00000362
+        },
+        "730:opposite": {
+          "actor_id": 730,
+          "direction": "opposite",
+          "first_sim_time": 273.800004079,
+          "minimum_bbox_clearance_m": 26.546554384898947,
+          "maximum_npc_speed_kmh": 19.108852158977705,
+          "last_sim_time": 273.800004079
+        },
+        "730:crossing": {
+          "actor_id": 730,
+          "direction": "crossing",
+          "first_sim_time": 274.800004094,
+          "minimum_bbox_clearance_m": 27.464441564724357,
+          "maximum_npc_speed_kmh": 19.684889615706467,
+          "last_sim_time": 274.800004094
+        },
+        "729:crossing": {
+          "actor_id": 729,
+          "direction": "crossing",
+          "first_sim_time": 389.650005806,
+          "minimum_bbox_clearance_m": 10.647692770402745,
+          "maximum_npc_speed_kmh": 22.902318112948272,
+          "last_sim_time": 399.900005958
+        }
+      },
+      "last_live_npc_count": 14,
+      "cleanup_removed_ids": [
+        722,
+        723,
+        724,
+        725,
+        726,
+        727,
+        728,
+        729,
+        730,
+        731,
+        732,
+        733,
+        734,
+        735
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null
+    },
+    "traffic16-smooth-urban": {
+      "source_log": "log/bus-traffic-fix-20261023/traffic16-smooth-urban/lap.json",
+      "sha256": "2994dc77c7131b9fb299b889e71e3ff7175daf3936869f0103ca942654527ad5",
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError('Red/unknown signal stop-line crossing')",
+      "distance_m": 154.72153754991268,
+      "visited_stops": [
+        "S01",
+        "S02",
+        "S03"
+      ],
+      "collisions": [],
+      "emergency_episode_count": 0,
+      "emergency_episodes": [],
+      "peak_speed_kmh": {
+        "urban": 20.60995207130855,
+        "ring_road": 0
+      },
+      "signal_crossings": [
+        {
+          "group_id": 35817,
+          "opendrive_id": "2376",
+          "stop_line_id": 35804,
+          "frame": 3201744,
+          "state": "Green",
+          "previous_state": "Green",
+          "phase_transition": false,
+          "violation": false,
+          "front_xy": [
+            -143.04588317871094,
+            -85.26142883300781
+          ]
+        },
+        {
+          "group_id": 36025,
+          "opendrive_id": "2390",
+          "stop_line_id": 36012,
+          "frame": 3202866,
+          "state": "Red",
+          "previous_state": "Red",
+          "phase_transition": false,
+          "violation": true,
+          "front_xy": [
+            -129.84536743164062,
+            -13.556221008300781
+          ]
+        }
+      ],
+      "traffic_spawned": [
+        {
+          "id": 737,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 44,
+          "lane": -2,
+          "native_s": 6.0,
+          "initial_xyz": [
+            -184.57594299316406,
+            -17.585704803466797,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 738,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 44,
+          "lane": 1,
+          "native_s": 55.0,
+          "initial_xyz": [
+            -191.58946228027344,
+            -66.58377075195312,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 739,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 5,
+          "lane": -2,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -131.93467712402344,
+            -36.91206359863281,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 740,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 5,
+          "lane": 1,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -124.76313018798828,
+            -61.86339569091797,
+            0.2499847412109375
+          ]
+        },
+        {
+          "id": 741,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 1,
+          "lane": 2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            -76.73690795898438,
+            6.236118316650391,
+            0.25
+          ]
+        },
+        {
+          "id": 742,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 1,
+          "lane": -1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -101.75387573242188,
+            -0.7030093669891357,
+            0.25
+          ]
+        },
+        {
+          "id": 743,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 16,
+          "lane": 2,
+          "native_s": 12.0,
+          "initial_xyz": [
+            36.16423797607422,
+            -64.62568664550781,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 744,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 16,
+          "lane": -1,
+          "native_s": 36.0,
+          "initial_xyz": [
+            28.525062561035156,
+            -40.82142639160156,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 745,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 29,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            35.08800506591797,
+            60.2191162109375,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 746,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 29,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            28.097993850708008,
+            35.21632385253906,
+            0.2500152587890625
+          ]
+        },
+        {
+          "id": 747,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 0,
+          "lane": -2,
+          "native_s": 15.0,
+          "initial_xyz": [
+            2.167299509048462,
+            -4.455968856811523,
+            0.25
+          ]
+        },
+        {
+          "id": 748,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 0,
+          "lane": 1,
+          "native_s": 40.0,
+          "initial_xyz": [
+            -22.815589904785156,
+            2.604861259460449,
+            0.25
+          ]
+        },
+        {
+          "id": 749,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 40,
+          "lane": -2,
+          "native_s": 10.0,
+          "initial_xyz": [
+            -54.12608337402344,
+            44.895023345947266,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 750,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 40,
+          "lane": 1,
+          "native_s": 30.0,
+          "initial_xyz": [
+            -47.258636474609375,
+            64.94092559814453,
+            0.305450439453125
+          ]
+        },
+        {
+          "id": 751,
+          "type": "vehicle.tesla.model3",
+          "initial_direction": "same",
+          "road": 37,
+          "lane": -3,
+          "native_s": 350.0,
+          "initial_xyz": [
+            -247.16058349609375,
+            -52.36977767944336,
+            10.25
+          ]
+        },
+        {
+          "id": 752,
+          "type": "vehicle.audi.a2",
+          "initial_direction": "opposite",
+          "road": 37,
+          "lane": 2,
+          "native_s": 450.0,
+          "initial_xyz": [
+            -232.98533630371094,
+            47.56609344482422,
+            10.25
+          ]
+        }
+      ],
+      "traffic_skipped": [],
+      "traffic_encounters": {
+        "737:same": {
+          "actor_id": 737,
+          "direction": "same",
+          "first_sim_time": 494.900007374,
+          "minimum_bbox_clearance_m": 3.3289775912029143,
+          "maximum_npc_speed_kmh": 19.3970530054169,
+          "last_sim_time": 509.500007592
+        },
+        "738:opposite": {
+          "actor_id": 738,
+          "direction": "opposite",
+          "first_sim_time": 494.900007374,
+          "minimum_bbox_clearance_m": 2.906182880732737,
+          "maximum_npc_speed_kmh": 19.66112212094548,
+          "last_sim_time": 564.350008409
+        },
+        "740:crossing": {
+          "actor_id": 740,
+          "direction": "crossing",
+          "first_sim_time": 507.40000756,
+          "minimum_bbox_clearance_m": 4.831770362908011,
+          "maximum_npc_speed_kmh": 19.60316396715683,
+          "last_sim_time": 510.550007607
+        },
+        "737:crossing": {
+          "actor_id": 737,
+          "direction": "crossing",
+          "first_sim_time": 510.550007607,
+          "minimum_bbox_clearance_m": 3.906932941279333,
+          "maximum_npc_speed_kmh": 19.551412291438265,
+          "last_sim_time": 518.600007727
+        },
+        "740:opposite": {
+          "actor_id": 740,
+          "direction": "opposite",
+          "first_sim_time": 511.600007623,
+          "minimum_bbox_clearance_m": 1.6928175432081647,
+          "maximum_npc_speed_kmh": 18.576995050592835,
+          "last_sim_time": 521.650007773
+        }
+      },
+      "last_live_npc_count": 16,
+      "cleanup_removed_ids": [
+        737,
+        738,
+        739,
+        740,
+        741,
+        742,
+        743,
+        744,
+        745,
+        746,
+        747,
+        748,
+        749,
+        750,
+        751,
+        752
+      ],
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "cleanup_error": null
+    }
+  },
+  "limitations": [
+    "NPCs choose junction branches; initial same/opposite directions are not fixed routes",
+    "Traffic Manager may despawn blocked NPCs; no replacement or intervention was used to claim completion",
+    "Run-to-run signal phases and NPC paths differ; counts are observations, not a controlled A/B performance estimate",
+    "Prior soft previous-path continuity experiment did not improve isolated replay and was removed before deployment",
+    "traffic16-horizon3 was interrupted for diagnosis; SIGINT produced a pybind conversion error and STOP response timed out; owned NPCs were removed and runtime was subsequently stopped/restarted",
+    "traffic16-rear-history physically stalled on the curb near S08: collision sensor reported no event, but scene inspection confirmed curb contact; this is a failed run, not collision-free validation",
+    "Bell, passenger demand, service stops and pedestrian traffic are outside this validation"
+  ]
+}

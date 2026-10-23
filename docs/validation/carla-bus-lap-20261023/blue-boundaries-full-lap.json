@@ -1,0 +1,522 @@
+{
+  "success": true,
+  "result": "lap_completed",
+  "total_distance_m": 2006.9106897714964,
+  "visited_stops": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07",
+    "S08",
+    "S09",
+    "S10",
+    "S01"
+  ],
+  "full_course": true,
+  "stop_at_all_stops": false,
+  "collisions": [],
+  "cleanup": {
+    "stop_verified": true,
+    "test_speed_limit_clear_sent": true,
+    "route_cleared": true,
+    "errors": []
+  },
+  "signal_crossings": [
+    {
+      "group_id": 35817,
+      "opendrive_id": "2376",
+      "stop_line_id": 35804,
+      "frame": 2392033,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        -143.138916015625,
+        -85.31327056884766
+      ]
+    },
+    {
+      "group_id": 36025,
+      "opendrive_id": "2390",
+      "stop_line_id": 36012,
+      "frame": 2392813,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        -130.56674194335938,
+        -13.469722747802734
+      ]
+    },
+    {
+      "group_id": 36249,
+      "opendrive_id": "2404",
+      "stop_line_id": 36236,
+      "frame": 2394320,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        -63.120094299316406,
+        6.42487096786499
+      ]
+    },
+    {
+      "group_id": 36265,
+      "opendrive_id": "2405",
+      "stop_line_id": 36252,
+      "frame": 2395532,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        16.330041885375977,
+        3.6378631591796875
+      ]
+    },
+    {
+      "group_id": 36153,
+      "opendrive_id": "2398",
+      "stop_line_id": 36140,
+      "frame": 2397036,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        36.69767761230469,
+        -75.10557556152344
+      ]
+    },
+    {
+      "group_id": 36599,
+      "opendrive_id": "2431",
+      "stop_line_id": 36595,
+      "frame": 2397625,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        37.01737594604492,
+        -133.8050994873047
+      ]
+    },
+    {
+      "group_id": 36473,
+      "opendrive_id": "2421",
+      "stop_line_id": 36460,
+      "frame": 2398550,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        36.594276428222656,
+        -175.89866638183594
+      ]
+    },
+    {
+      "group_id": 36615,
+      "opendrive_id": "2432",
+      "stop_line_id": 36602,
+      "frame": 2401563,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        9.376397132873535,
+        202.39404296875
+      ]
+    },
+    {
+      "group_id": 36537,
+      "opendrive_id": "2426",
+      "stop_line_id": 36524,
+      "frame": 2403076,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        35.409969329833984,
+        103.70228576660156
+      ]
+    },
+    {
+      "group_id": 36281,
+      "opendrive_id": "2406",
+      "stop_line_id": 36268,
+      "frame": 2404288,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        32.720062255859375,
+        14.041383743286133
+      ]
+    },
+    {
+      "group_id": 36217,
+      "opendrive_id": "2402",
+      "stop_line_id": 36204,
+      "frame": 2405797,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        -35.423397064208984,
+        -1.3569591045379639
+      ]
+    },
+    {
+      "group_id": 35897,
+      "opendrive_id": "2381",
+      "stop_line_id": 35884,
+      "frame": 2407310,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        -53.83238220214844,
+        75.23966217041016
+      ]
+    },
+    {
+      "group_id": 36377,
+      "opendrive_id": "2412",
+      "stop_line_id": 36364,
+      "frame": 2408216,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        -108.14356994628906,
+        84.35054016113281
+      ]
+    },
+    {
+      "group_id": 35993,
+      "opendrive_id": "2388",
+      "stop_line_id": 35980,
+      "frame": 2409422,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        -184.27635192871094,
+        15.923572540283203
+      ]
+    }
+  ],
+  "source_log": "log/bus-boundaries-20261023/full-lap/lap.json",
+  "source_log_sha256": "8df840c22bf2cafc625f0f5f79c39030e8d1c83b2cfd4f675965012691888f26",
+  "map_sha256": "674e8e38076356693dd344a18964bdf7bfb2a722ecddd082ffac2563831a6d71",
+  "duration_sim_s": 929.7500138539999,
+  "peak_speed_kmh": {
+    "ring_road": 46.40748800586568,
+    "urban": 26.39993296409461
+  },
+  "temporary_emergency_episodes": 7,
+  "temporary_emergency_records": 23,
+  "ring_policy_events": [
+    {
+      "event": "ring_lane_request",
+      "sim_time": 263.400003924,
+      "lane": -2,
+      "initial": true,
+      "status": {
+        "success": true,
+        "code": 0,
+        "message": "Successfully set preferred primitive."
+      }
+    },
+    {
+      "event": "ring_speed_cap",
+      "sim_time": 632.85000943,
+      "cap_kmh": 20.0
+    },
+    {
+      "event": "ring_lane_request",
+      "sim_time": 657.250009793,
+      "lane": -3,
+      "initial": false,
+      "status": {
+        "success": true,
+        "code": 0,
+        "message": "Successfully set preferred primitive."
+      }
+    },
+    {
+      "event": "ring_stage",
+      "sim_time": 657.550009798,
+      "stage": "merging_outer",
+      "native_s": 68.98593139648435,
+      "lane": -2,
+      "center_offset_m": -0.1387330253543917
+    },
+    {
+      "event": "ring_stage",
+      "sim_time": 665.000009909,
+      "stage": "outer_cruise",
+      "native_s": 96.22493779659266,
+      "lane": -3,
+      "center_offset_m": -0.12619029668876536
+    },
+    {
+      "event": "ring_speed_cap",
+      "sim_time": 665.000009909,
+      "cap_kmh": 50.0
+    },
+    {
+      "event": "ring_speed_cap",
+      "sim_time": 730.050010878,
+      "cap_kmh": 20.0
+    },
+    {
+      "event": "ring_lane_request",
+      "sim_time": 737.900010995,
+      "lane": -2,
+      "initial": false,
+      "status": {
+        "success": true,
+        "code": 0,
+        "message": "Successfully set preferred primitive."
+      }
+    },
+    {
+      "event": "ring_stage",
+      "sim_time": 738.150010999,
+      "stage": "merging_middle",
+      "native_s": 670.2460107803345,
+      "lane": -3,
+      "center_offset_m": -0.4289818742937346
+    },
+    {
+      "event": "ring_lane_request",
+      "sim_time": 748.200011149,
+      "lane": -1,
+      "initial": false,
+      "status": {
+        "success": true,
+        "code": 0,
+        "message": "Successfully set preferred primitive."
+      }
+    },
+    {
+      "event": "ring_stage",
+      "sim_time": 748.450011152,
+      "stage": "merging_inner",
+      "native_s": 712.7762327194214,
+      "lane": -2,
+      "center_offset_m": 0.14721681755842475
+    },
+    {
+      "event": "ring_stage",
+      "sim_time": 756.700011275,
+      "stage": "exit_ready",
+      "native_s": 745.289472579956,
+      "lane": -1,
+      "center_offset_m": 0.14001466424453257
+    },
+    {
+      "event": "ring_speed_cap",
+      "sim_time": 756.700011275,
+      "cap_kmh": 50.0
+    }
+  ],
+  "station_pass_events": [
+    {
+      "event": "anchor_passed",
+      "sim_time": 288.450004298,
+      "anchor": "S02",
+      "road": 8,
+      "lane": 2,
+      "requested_lane": 2,
+      "requested_lane_reached": true
+    },
+    {
+      "event": "anchor_passed",
+      "sim_time": 311.650004643,
+      "anchor": "S03",
+      "road": 5,
+      "lane": -2,
+      "requested_lane": -2,
+      "requested_lane_reached": true
+    },
+    {
+      "event": "anchor_passed",
+      "sim_time": 364.300005428,
+      "anchor": "S04",
+      "road": 1,
+      "lane": 2,
+      "requested_lane": 2,
+      "requested_lane_reached": true
+    },
+    {
+      "event": "anchor_passed",
+      "sim_time": 501.700007475,
+      "anchor": "S05",
+      "road": 16,
+      "lane": 2,
+      "requested_lane": 2,
+      "requested_lane_reached": true
+    },
+    {
+      "event": "anchor_passed",
+      "sim_time": 596.60000889,
+      "anchor": "R01",
+      "road": 13,
+      "lane": 1,
+      "requested_lane": 1,
+      "requested_lane_reached": true
+    },
+    {
+      "event": "anchor_passed",
+      "sim_time": 646.450009632,
+      "anchor": "R02",
+      "road": 37,
+      "lane": -1,
+      "requested_lane": -2,
+      "requested_lane_reached": false
+    },
+    {
+      "event": "anchor_passed",
+      "sim_time": 676.750010084,
+      "anchor": "R03",
+      "road": 37,
+      "lane": -3,
+      "requested_lane": -3,
+      "requested_lane_reached": true
+    },
+    {
+      "event": "anchor_passed",
+      "sim_time": 717.650010693,
+      "anchor": "R04",
+      "road": 37,
+      "lane": -3,
+      "requested_lane": -3,
+      "requested_lane_reached": true
+    },
+    {
+      "event": "anchor_passed",
+      "sim_time": 760.850011337,
+      "anchor": "R05",
+      "road": 37,
+      "lane": -1,
+      "requested_lane": -1,
+      "requested_lane_reached": true
+    },
+    {
+      "event": "anchor_passed",
+      "sim_time": 787.000011727,
+      "anchor": "R06",
+      "road": 27,
+      "lane": -1,
+      "requested_lane": -1,
+      "requested_lane_reached": true
+    },
+    {
+      "event": "anchor_passed",
+      "sim_time": 864.250012878,
+      "anchor": "S06",
+      "road": 29,
+      "lane": -2,
+      "requested_lane": -2,
+      "requested_lane_reached": true
+    },
+    {
+      "event": "anchor_passed",
+      "sim_time": 932.900013901,
+      "anchor": "S07",
+      "road": 0,
+      "lane": -1,
+      "requested_lane": -2,
+      "requested_lane_reached": false
+    },
+    {
+      "event": "anchor_passed",
+      "sim_time": 1011.800015076,
+      "anchor": "S08",
+      "road": 40,
+      "lane": -2,
+      "requested_lane": -2,
+      "requested_lane_reached": true
+    },
+    {
+      "event": "anchor_passed",
+      "sim_time": 1120.600016698,
+      "anchor": "S09",
+      "road": 23,
+      "lane": -2,
+      "requested_lane": -2,
+      "requested_lane_reached": true
+    },
+    {
+      "event": "anchor_passed",
+      "sim_time": 1141.900017015,
+      "anchor": "S10",
+      "road": 43,
+      "lane": -2,
+      "requested_lane": -2,
+      "requested_lane_reached": true
+    },
+    {
+      "event": "anchor_passed",
+      "sim_time": 1186.200017675,
+      "anchor": "S01",
+      "road": 44,
+      "lane": -2,
+      "requested_lane": -2,
+      "requested_lane_reached": true
+    }
+  ],
+  "rolling_return_events": [
+    {
+      "event": "rolling_return_route",
+      "sim_time": 1011.900015078,
+      "status": {
+        "success": false,
+        "code": 4,
+        "message": "New route is not safe. Reroute failed."
+      }
+    },
+    {
+      "event": "rolling_return_route",
+      "sim_time": 1013.900015108,
+      "status": {
+        "success": false,
+        "code": 4,
+        "message": "New route is not safe. Reroute failed."
+      }
+    },
+    {
+      "event": "rolling_return_route",
+      "sim_time": 1015.950015138,
+      "status": {
+        "success": true,
+        "code": 0,
+        "message": ""
+      }
+    }
+  ],
+  "limitations": [
+    "Empty-road validation only; oncoming traffic and pedestrians are untested.",
+    "Some curve transitions and trajectory-shift safety events still cause temporary deceleration.",
+    "S07 passes the inner lane to preserve its following left-turn connection; precise outer-lane service approach remains pending.",
+    "Service stops and passenger bell are not exercised."
+  ]
+}

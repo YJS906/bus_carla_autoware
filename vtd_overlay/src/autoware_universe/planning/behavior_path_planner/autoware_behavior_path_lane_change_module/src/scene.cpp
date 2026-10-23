@@ -17,6 +17,7 @@
 #include "autoware/behavior_path_lane_change_module/utils/tactical_lane_selection.hpp"
 
 #include "autoware/behavior_path_lane_change_module/utils/calculation.hpp"
+#include "autoware/behavior_path_lane_change_module/utils/current_lane_follower.hpp"
 #include "autoware/behavior_path_lane_change_module/utils/path.hpp"
 #include "autoware/behavior_path_lane_change_module/utils/target_landing.hpp"
 #include "autoware/behavior_path_lane_change_module/utils/utils.hpp"
@@ -1224,6 +1225,11 @@ FilteredLanesObjects NormalLaneChange::filter_objects() const
       continue;
     }
 
+    if (utils::lane_change::is_separated_current_lane_follower(
+          ext_object, current_pose, planner_data_->parameters.vehicle_info.rear_overhang_m,
+          lanes_polygon.current, lanes_polygon.target)) {
+      continue;
+    }
     filtered_objects.others.push_back(ext_object);
   }
 

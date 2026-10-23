@@ -158,6 +158,7 @@ private:
   // State
   State state_;
   traffic_signal_policy::FlashingStop flashing_stop_;
+  traffic_signal_policy::YellowPassWindow yellow_pass_window_;
   traffic_signal_policy::Signal signal_policy_{traffic_signal_policy::Signal::NORMAL};
 
   // Parameter

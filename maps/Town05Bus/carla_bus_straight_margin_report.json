@@ -1,0 +1,9 @@
+{
+  "source": "carla_paved_straight_v2",
+  "map_sha256": "674e8e38076356693dd344a18964bdf7bfb2a722ecddd082ffac2563831a6d71",
+  "proof_sha256": "a63781ec495d0700f327656d1c7320180c912fd458b3a35b8d179c90c23ff1f1",
+  "geometry_modified": false,
+  "routing_permissions_modified": false,
+  "boundary_count": 174,
+  "backup": "/home/a/autoware_data/maps/Town05Bus/backups/bus-straight-margins-20261023T074944620260Z"
+}

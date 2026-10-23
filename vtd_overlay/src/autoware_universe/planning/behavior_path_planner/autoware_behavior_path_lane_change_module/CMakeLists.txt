@@ -28,6 +28,8 @@ ament_auto_add_library(${PROJECT_NAME} SHARED
 )
 
 if(BUILD_TESTING)
+  ament_add_gtest(test_current_lane_follower test/test_current_lane_follower.cpp)
+  target_link_libraries(test_current_lane_follower ${PROJECT_NAME})
   ament_add_gtest(test_lane_start_distance test/test_lane_start_distance.cpp)
   target_link_libraries(test_lane_start_distance ${PROJECT_NAME})
   ament_add_gtest(test_intersection_exit test/test_intersection_exit.cpp)

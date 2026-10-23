@@ -12,7 +12,7 @@ if docker exec "$container" pgrep -f '^python3 .*carla_bus_(control_validation|l
   exit 1
 fi
 docker exec "$container" mkdir -p /tmp/bus-tools
-for name in carla_bus_lap.py carla_bus_control_validation.py carla_closed_loop_validation.py carla_validation_actors.py carla_native_lane_check.py; do
+for name in carla_bus_lap.py carla_bus_course_traffic.py carla_bus_following.py carla_bus_ring_policy.py carla_bus_route_policy.py carla_bus_signal_audit.py carla_bus_control_validation.py carla_closed_loop_validation.py carla_validation_actors.py carla_native_lane_check.py; do
   docker cp "$repo_root/tools/$name" "$container:/tmp/bus-tools/"
 done
 docker cp "$repo_root/scenarios/bus/town05_bus_route.json" "$container:/tmp/bus-tools/"

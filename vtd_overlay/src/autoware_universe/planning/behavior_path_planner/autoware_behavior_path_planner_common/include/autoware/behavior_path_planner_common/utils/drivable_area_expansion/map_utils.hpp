@@ -40,6 +40,12 @@ SegmentRtree extract_uncrossable_segments(
 bool has_types(
   const lanelet::ConstLineString3d & ls,
   const std::vector<DrivableAreaExpansionParameters::LinestringType> & types);
+
+// Optional simulator metadata: measured paved room outside a lane marking.
+// Does not modify the route/centreline or permit entering an unverified surface.
+void apply_verified_straight_margins(
+  std::vector<Point> & bound, const lanelet::LaneletMap & map,
+  const std::vector<Polygon2d> & objects, const std::vector<Pose> & path_poses = {});
 }  // namespace autoware::behavior_path_planner::drivable_area_expansion
 
 #endif  // AUTOWARE__BEHAVIOR_PATH_PLANNER_COMMON__UTILS__DRIVABLE_AREA_EXPANSION__MAP_UTILS_HPP_

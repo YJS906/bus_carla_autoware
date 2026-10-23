@@ -117,6 +117,25 @@ public:
   auto common() { return common_data_ptr_; }
   auto targets() { return get_target_objects(filtered_objects_, get_current_lanes()); }
   auto profile_start() { return speed_preparation_start_; }
+  void spatial_bus_profile(bool old_speed_scaled_limits = false)
+  {
+    auto & p = lane_change_parameters_->trajectory;
+    p.minimum_lane_change_length = 30.0;
+    p.min_lane_changing_velocity = 1.5;
+    p.lateral_jerk = 0.4;
+    p.lat_acc_map = {};
+    if (old_speed_scaled_limits) {
+      p.lat_acc_map.add(0.0, 0.0066, 0.00825);
+      p.lat_acc_map.add(1.0, 0.0132, 0.0165);
+      p.lat_acc_map.add(1.5, 0.0297, 0.037125);
+      p.lat_acc_map.add(2.0, 0.0528, 0.066);
+      p.lat_acc_map.add(4.0, 0.2112, 0.264);
+      p.lat_acc_map.add(10.0, 0.6, 0.693);
+    } else {
+      p.lat_acc_map.add(0.0, 0.6, 0.693);
+      p.lat_acc_map.add(10.0, 0.6, 0.693);
+    }
+  }
   using NormalLaneChange::adapt_candidate_speed;
   using NormalLaneChange::braking_wait_output;
   using NormalLaneChange::check_candidate_path_safety;
@@ -196,6 +215,36 @@ TEST_F(SpeedPreparation, UpstreamStopIsNeverRemoved)
   for (const auto & p : output.path.points) EXPECT_FLOAT_EQ(p.point.longitudinal_velocity_mps, 0.0);
 }
 
+TEST_F(SpeedPreparation, IndependentStopCompletesOldBrakingWithoutApprovingLateralMotion)
+{
+  SpeedPreparationModule module;
+  module.request(2.0);
+  module.common()->transient_data.distance_to_static_obstacle = 3.0;
+  module.upstream_stop(3.0);
+  const auto initially_blocked = module.braking_wait_output();
+  for (const auto & p : initially_blocked.path.points) {
+    EXPECT_FLOAT_EQ(p.point.longitudinal_velocity_mps, 0.0);
+  }
+  // Still above target: the old reachable-braking safety condition must remain.
+  module.odometry->twist.twist.linear.x = 3.0;
+  const auto still_braking = module.braking_wait_output();
+  for (const auto & p : still_braking.path.points) {
+    EXPECT_FLOAT_EQ(p.point.longitudinal_velocity_mps, 0.0);
+  }
+  // A separate stop has already reduced speed below the target at the same pose.
+  module.odometry->twist.twist.linear.x = 0.0;
+  const auto resumed = module.braking_wait_output();
+  EXPECT_FALSE(module.isSafe());
+  for (const auto & p : resumed.path.points) {
+    EXPECT_DOUBLE_EQ(p.point.pose.position.y, 0.0);
+    if (p.point.pose.position.x >= 0.0 && p.point.pose.position.x < 3.0) {
+      EXPECT_FLOAT_EQ(p.point.longitudinal_velocity_mps, 2.0);
+    } else if (p.point.pose.position.x >= 3.0) {
+      EXPECT_FLOAT_EQ(p.point.longitudinal_velocity_mps, 0.0);
+    }
+  }
+}
+
 TEST_F(SpeedPreparation, ChangingTargetClearsPreparation)
 {
   SpeedPreparationModule module;
@@ -262,5 +311,48 @@ TEST_F(SpeedPreparation, TooFastToMergeNowStillCreatesLongitudinalPreparation)
   EXPECT_GT(*candidate.info.speed_preparation_target, 0.0);
   EXPECT_LT(*candidate.info.speed_preparation_target, 10.0);
   EXPECT_FALSE(candidate.info.braking_profile);  // Not certified as executable at measured speed.
+}
+}  // namespace autoware::behavior_path_planner
+
+namespace autoware::behavior_path_planner
+{
+TEST_F(SpeedPreparation, SpatialLengthSurvivesLowSpeedWithoutCrawlComfortLimit)
+{
+  SpeedPreparationModule module;
+  module.spatial_bus_profile();
+  for (double speed : {1.5, 3.0, 5.0}) {
+    const auto metrics = utils::lane_change::calculation::calc_shift_phase_metrics(
+      module.common(), 3.5, speed, 5.0, 0.0, 100.0);
+    ASSERT_FALSE(metrics.empty());
+    for (const auto & metric : metrics) {
+      EXPECT_GE(metric.length, 30.0 - 1e-6);
+      EXPECT_NEAR(metric.length, speed * metric.duration, 1e-6);
+    }
+  }
+  EXPECT_GE(utils::lane_change::calculation::calc_min_lane_change_lengths(
+    module.common(), {3.5}).front(), 30.0);
+}
+
+TEST_F(SpeedPreparation, SpatialLengthDoesNotCompressIntoInsufficientRoom)
+{
+  SpeedPreparationModule module;
+  module.spatial_bus_profile();
+  EXPECT_TRUE(utils::lane_change::calculation::calc_shift_phase_metrics(
+    module.common(), 3.5, 1.5, 5.0, 0.0, 29.0).empty());
+}
+
+TEST_F(SpeedPreparation, SameThirtyMetreCurveUsesPhysicalComfortLimit)
+{
+  SpeedPreparationModule module;
+  const auto curve = curved_candidate();
+  module.spatial_bus_profile(true);
+  const auto old_cap = module.curvature_speed_limit(curve);
+  ASSERT_TRUE(old_cap);
+  EXPECT_LT(*old_cap, 1.0);
+  module.spatial_bus_profile();
+  const auto cap = module.curvature_speed_limit(curve);
+  ASSERT_TRUE(cap);
+  EXPECT_GT(*cap, 3.0);
+  EXPECT_LT(*cap, curve.info.velocity.lane_changing);
 }
 }  // namespace autoware::behavior_path_planner

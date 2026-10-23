@@ -134,6 +134,8 @@ struct TrajectoryParameters
   double min_prepare_duration{1.0};
   // Zero keeps the ordinary preparation search for maneuvers across multiple lanes.
   double multi_lane_prepare_duration{0.0};
+  // Spatial preference independent of the acceleration/jerk safety limits.
+  double minimum_lane_change_length{0.0};
   double lateral_jerk{0.5};
   double min_longitudinal_acc{-1.0};
   double max_longitudinal_acc{1.0};

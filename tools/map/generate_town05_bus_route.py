@@ -103,6 +103,11 @@ def generate(args):
         if w is None:
             raise ValueError(f'Unknown native waypoint {a}')
         record = {**a, **pose(w)}
+        xy = Point(w.transform.location.x, -w.transform.location.y)
+        containing = [rid for rid, poly in roads.items() if poly.covers(xy)]
+        if len(containing) != 1:
+            raise ValueError(f'Expected one lanelet at anchor {a["id"]}: {containing}')
+        record['lanelet_id'] = containing[0]
         if a['kind'] == 'stop':
             record['validation'] = validate_stop(w, roads, crossings)
             record['stop_reference'] = 'road_centreline_reference; calibrate base_link offset with bus profile'
@@ -115,7 +120,28 @@ def generate(args):
     for i, (a, start) in enumerate(anchors):
         b, goal = anchors[(i + 1) % len(anchors)]
         a['route_distance_m'] = round(distance, 3)
-        trace = planner.trace_route(start.transform.location, goal.transform.location)
+        if start.road_id == goal.road_id == 37 and start.s < goal.s:
+            # This is a visual/topological reference, not the lateral trajectory.
+            # Put graph lane transitions on the same straights used by the runner.
+            trace = []
+            lane = start.lane_id
+            transitions = [(80.,-3),(700.,-2),(745.,-1)]
+            samples_s = sorted(set([start.s,goal.s] +
+                list(range(math.ceil(start.s),math.floor(goal.s)+1,2)) +
+                [s for s,_ in transitions if start.s < s < goal.s]))
+            for s in samples_s:
+                trace.append((native.get_waypoint_xodr(37,lane,s), 'LANEFOLLOW'))
+                for change_s,target in transitions:
+                    if s == change_s and start.s < s < goal.s and lane != target:
+                        wp = native.get_waypoint_xodr(37,target,s)
+                        if abs(target-lane) != 1:
+                            raise ValueError('Ring reference must change one lane at a time')
+                        trace.append((wp, 'CHANGELANERIGHT' if target < lane else 'CHANGELANELEFT'))
+                        lane = target
+            if lane != goal.lane_id:
+                raise ValueError('Ring reference does not reach the requested lane')
+        else:
+            trace = planner.trace_route(start.transform.location, goal.transform.location)
         if not trace:
             raise ValueError(f"No directed route: {a['id']} to {b['id']}")
         # Native planner sampling can start just behind the requested origin.
@@ -133,7 +159,7 @@ def generate(args):
             raise ValueError('Native route contains only samples behind its start')
         # The reference includes exact anchors at both ends. This does not
         # convert graph lane-change edges into drivable lateral trajectories.
-        samples = [(start, 'ANCHOR')] + [(w, option.name) for w, option in trace] + [(goal, 'ANCHOR')]
+        samples = [(start, 'ANCHOR')] + [(w, getattr(option,'name',option)) for w, option in trace] + [(goal, 'ANCHOR')]
         points = []
         for w, option in samples:
             value = pose(w)
@@ -171,6 +197,7 @@ def generate(args):
               'closed_loop': True, 'status': 'offline_topology_validated_not_driving_validated',
               'coordinate_transform': 'ROS map=(CARLA x, -CARLA y, CARLA z); yaw_ros=-yaw_carla',
               'route_reference_only': True, 'length_m': round(distance, 3),
+              'ring_lane_policy': source.get('ring_lane_policy'),
               'source_sha256': {'spec': digest(args.spec), 'xodr': digest(args.xodr),
                                 'lanelet_map': digest(args.lanelet_map)},
               'stops': stops, 'anchors': [a for a, _ in anchors], 'segments': segments,
