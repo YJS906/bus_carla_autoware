@@ -1,0 +1,411 @@
+{
+  "date": "2026-10-26",
+  "scope": "Empty-road S09-S10-S01, 20 km/h ceiling, GT objects/signals; not full-route service or passenger validation",
+  "completed_bell_trials": 5,
+  "completed_no_bell_trials": 1,
+  "tests": {
+    "service_policy": 7,
+    "related_total": 27
+  },
+  "gui_checks": [
+    "Space and mouse bell accepted",
+    "Repeated key/button requests remained one service",
+    "Korean text visually inspected",
+    "Requested button alternated RGB (143,21,37) and (207,35,56)",
+    "Blinking stopped and request cleared after service",
+    "Window close verified STOP",
+    "User manual Space/departure run completed and request cleared before S01 terminal stop"
+  ],
+  "runs": [
+    {
+      "run": "bell-before-01",
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError('set_course_route: The planned route is empty.')",
+      "service_completed": false,
+      "restart_verified": false,
+      "bell_pending": true,
+      "service_events": [],
+      "bell_events": [
+        {
+          "outcome": "accepted",
+          "remaining_m": 67.371,
+          "speed_mps": 1.4978156916024453e-06,
+          "sim_time": 542.400008082
+        }
+      ],
+      "collisions": 0,
+      "signal_states": {},
+      "signal_violations": 0,
+      "emergency_episodes": 0,
+      "travel_distance_m": 0,
+      "peak_kmh": 0,
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "evidence": "bell-before-01.json.gz",
+      "json_sha256": "058affcb3d1744fb9e1a32b3bcaa08cc0734d0b3cc75c858a756a702b996bc7b",
+      "note": "Initial S02 service goal rejected by full-footprint check. No safety check relaxed; demo moved to S10."
+    },
+    {
+      "run": "s10-bell-before-01",
+      "success": false,
+      "result": "error",
+      "error": "RuntimeError('Left autonomous mode during service demonstration')",
+      "service_completed": false,
+      "restart_verified": false,
+      "bell_pending": true,
+      "service_events": [],
+      "bell_events": [
+        {
+          "outcome": "accepted",
+          "remaining_m": 64.69900000000007,
+          "speed_mps": 9.554540912830245e-08,
+          "sim_time": 646.350009631
+        }
+      ],
+      "collisions": 0,
+      "signal_states": {},
+      "signal_violations": 0,
+      "emergency_episodes": 0,
+      "travel_distance_m": 63.79331625250779,
+      "peak_kmh": 18.350808846971628,
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "evidence": "s10-bell-before-01.json.gz",
+      "json_sha256": "af7ec190530fac66f3419011f86838704d396c7e1e819fc17ae92edaeb8f143a",
+      "note": "Reached S10 but normal goal-arrival STOP was initially treated as failure. Fixed to allow qualified stationary dwell in STOP."
+    },
+    {
+      "run": "s10-bell-before-02",
+      "success": true,
+      "result": "service_demo_completed",
+      "error": null,
+      "service_completed": true,
+      "restart_verified": true,
+      "bell_pending": false,
+      "service_events": [
+        {
+          "station": "S10",
+          "hold_sim_s": 5.000000074000013,
+          "longitudinal_error_m": -0.7105897201574969,
+          "lateral_error_m": 0.03238468560289465,
+          "speed_mps": 1.192336970449573e-06,
+          "road": 43,
+          "lane": -2
+        }
+      ],
+      "bell_events": [
+        {
+          "outcome": "accepted",
+          "remaining_m": 64.69900000000007,
+          "speed_mps": 1.4499266866487947e-06,
+          "sim_time": 698.750010412
+        }
+      ],
+      "collisions": 0,
+      "signal_states": {
+        "Green": 1
+      },
+      "signal_violations": 0,
+      "emergency_episodes": 0,
+      "travel_distance_m": 148.8120100291726,
+      "peak_kmh": 18.753914171944064,
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "evidence": "s10-bell-before-02.json.gz",
+      "json_sha256": "899de4cbab7c4665a8fa15a58e08089c31bec3c088de3b8e18e9c09ed3b5714a"
+    },
+    {
+      "run": "s10-bell-blink-01",
+      "success": true,
+      "result": "service_demo_completed",
+      "error": null,
+      "service_completed": true,
+      "restart_verified": true,
+      "bell_pending": false,
+      "service_events": [
+        {
+          "station": "S10",
+          "hold_sim_s": 5.000000075000116,
+          "longitudinal_error_m": -0.7342048654844759,
+          "lateral_error_m": 0.012572267435325673,
+          "speed_mps": 1.736491863709638e-06,
+          "road": 43,
+          "lane": -2
+        }
+      ],
+      "bell_events": [
+        {
+          "outcome": "accepted",
+          "remaining_m": 64.69900000000007,
+          "speed_mps": 7.634616456083804e-08,
+          "sim_time": 1407.850020978
+        }
+      ],
+      "collisions": 0,
+      "signal_states": {
+        "Green": 1
+      },
+      "signal_violations": 0,
+      "emergency_episodes": 0,
+      "travel_distance_m": 148.85960214575516,
+      "peak_kmh": 18.98151686681816,
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "evidence": "s10-bell-blink-01.json.gz",
+      "json_sha256": "644ce8a2c9ca9bc16908c438c5113e3570875888cd3eac905e8d4f4b39c5daf6",
+      "inputs": "s10-bell-blink-01-inputs.json"
+    },
+    {
+      "run": "s10-bell-gui-01",
+      "success": false,
+      "result": "interrupted",
+      "error": "RuntimeError('Lap interrupted')",
+      "service_completed": false,
+      "restart_verified": false,
+      "bell_pending": false,
+      "service_events": [],
+      "bell_events": [],
+      "collisions": 0,
+      "signal_states": {},
+      "signal_violations": 0,
+      "emergency_episodes": 0,
+      "travel_distance_m": 0,
+      "peak_kmh": 0,
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "errors": []
+      },
+      "evidence": "s10-bell-gui-01.json.gz",
+      "json_sha256": "11575bc3bfefede6336b0697af86e30112076b5b8c80c55bd044b5d1d8023ab0",
+      "note": "Closed while stationary to repair missing Korean fonts; no service run.",
+      "inputs": "s10-bell-gui-01-inputs.json"
+    },
+    {
+      "run": "s10-bell-gui-02",
+      "success": true,
+      "result": "service_demo_completed",
+      "error": null,
+      "service_completed": true,
+      "restart_verified": true,
+      "bell_pending": false,
+      "service_events": [
+        {
+          "station": "S10",
+          "hold_sim_s": 5.0000000739998995,
+          "longitudinal_error_m": -0.7491440647929606,
+          "lateral_error_m": 0.015635166354631858,
+          "speed_mps": 1.3454486583112426e-06,
+          "road": 43,
+          "lane": -2
+        }
+      ],
+      "bell_events": [
+        {
+          "outcome": "accepted",
+          "remaining_m": 64.69900000000007,
+          "speed_mps": 2.1745134285369936e-06,
+          "sim_time": 1166.000017374
+        },
+        {
+          "outcome": "already_requested",
+          "remaining_m": 64.69900000000007,
+          "speed_mps": 2.1745134285369936e-06,
+          "sim_time": 1166.000017374
+        },
+        {
+          "outcome": "already_requested",
+          "remaining_m": 64.69900000000007,
+          "speed_mps": 2.8039593018731273e-06,
+          "sim_time": 1166.100017376
+        },
+        {
+          "outcome": "already_requested",
+          "remaining_m": 64.69900000000007,
+          "speed_mps": 4.978012087505783e-07,
+          "sim_time": 1175.850017521
+        }
+      ],
+      "collisions": 0,
+      "signal_states": {
+        "Green": 1
+      },
+      "signal_violations": 0,
+      "emergency_episodes": 0,
+      "travel_distance_m": 148.96181795502525,
+      "peak_kmh": 18.9306157602211,
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "evidence": "s10-bell-gui-02.json.gz",
+      "json_sha256": "db18297b311d978ecb02715aa82822013d2f479a04ae963ba9a5731e1959fd29",
+      "inputs": "s10-bell-gui-02-inputs.json"
+    },
+    {
+      "run": "s10-bell-moving-01",
+      "success": true,
+      "result": "service_demo_completed",
+      "error": null,
+      "service_completed": true,
+      "restart_verified": true,
+      "bell_pending": false,
+      "service_events": [
+        {
+          "station": "S10",
+          "hold_sim_s": 5.000000074000013,
+          "longitudinal_error_m": -0.7202840809540964,
+          "lateral_error_m": 0.009112359272346287,
+          "speed_mps": 1.049222870442974e-06,
+          "road": 43,
+          "lane": -2
+        }
+      ],
+      "bell_events": [
+        {
+          "outcome": "accepted",
+          "remaining_m": 59.575407638124034,
+          "speed_mps": 2.8392088915589793,
+          "sim_time": 933.950013916
+        }
+      ],
+      "collisions": 0,
+      "signal_states": {
+        "Green": 1
+      },
+      "signal_violations": 0,
+      "emergency_episodes": 0,
+      "travel_distance_m": 148.8337742786034,
+      "peak_kmh": 18.59923736950704,
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "evidence": "s10-bell-moving-01.json.gz",
+      "json_sha256": "6a4a4c8efb17b9cbebe0c97d6c31a90f2c401da56fc3ae37fc3f085e4d5342f6",
+      "inputs": "s10-bell-moving-01-inputs.json"
+    },
+    {
+      "run": "s10-no-bell-01",
+      "success": true,
+      "result": "service_demo_completed",
+      "error": null,
+      "service_completed": false,
+      "restart_verified": false,
+      "bell_pending": false,
+      "service_events": [],
+      "bell_events": [],
+      "collisions": 0,
+      "signal_states": {
+        "Green": 1
+      },
+      "signal_violations": 0,
+      "emergency_episodes": 0,
+      "travel_distance_m": 148.82570376248532,
+      "peak_kmh": 19.044879209898955,
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "evidence": "s10-no-bell-01.json.gz",
+      "json_sha256": "2df5d7760607ae00fd2327d97546a0fda2bdf45e238552c6f170f160a4c9181c",
+      "note": "Driving/STOP succeeded; launcher was edited during execution and its final copy failed. Unchanged JSON recovered from container /tmp/bus-service-15035.json."
+    },
+    {
+      "run": "s10-no-bell-02",
+      "success": false,
+      "result": "interrupted",
+      "error": "RuntimeError('Lap interrupted')",
+      "service_completed": false,
+      "restart_verified": false,
+      "bell_pending": false,
+      "service_events": [],
+      "bell_events": [],
+      "collisions": 0,
+      "signal_states": {},
+      "signal_violations": 0,
+      "emergency_episodes": 0,
+      "travel_distance_m": 78.78989286681144,
+      "peak_kmh": 18.633199753649677,
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "evidence": "s10-no-bell-02.json.gz",
+      "json_sha256": "56c4fd1453067bc9834545f236fb38d79ac5d3a5105fac82c5bfd128161ff5cd",
+      "note": "Intentionally interrupted after passing S10 to hand the UI to the user for a manual Space test. Not a completed trial.",
+      "inputs": "s10-no-bell-02-inputs.json"
+    },
+    {
+      "run": "manual-space",
+      "success": true,
+      "result": "service_demo_completed",
+      "error": null,
+      "service_completed": true,
+      "restart_verified": true,
+      "bell_pending": false,
+      "service_events": [
+        {
+          "station": "S10",
+          "hold_sim_s": 5.0000000739998995,
+          "longitudinal_error_m": -0.7277196616730144,
+          "lateral_error_m": 0.01178059793722293,
+          "speed_mps": 3.81528318308812e-07,
+          "road": 43,
+          "lane": -2
+        }
+      ],
+      "bell_events": [
+        {
+          "outcome": "accepted",
+          "remaining_m": 64.69900000000007,
+          "speed_mps": 7.649641186743767e-08,
+          "sim_time": 1602.150023873
+        }
+      ],
+      "collisions": 0,
+      "signal_states": {
+        "Green": 1
+      },
+      "signal_violations": 0,
+      "emergency_episodes": 0,
+      "travel_distance_m": 148.83005935678466,
+      "peak_kmh": 18.528662510663988,
+      "cleanup": {
+        "stop_verified": true,
+        "test_speed_limit_clear_sent": true,
+        "route_cleared": true,
+        "errors": []
+      },
+      "evidence": "manual-space.json.gz",
+      "json_sha256": "e31d88ce8421a1c1bf7fcb92ab378e214b2dc729cf4988ed545fff093e586eb1",
+      "inputs": "manual-space-inputs.json",
+      "note": "User-operated Space and departure button. S10 service completed, request cleared, traffic-signal wait, then unconditional S01 diagnostic terminal stop. Result copied while completed UI remained open."
+    }
+  ]
+}

@@ -7,7 +7,7 @@ mkdir -p "$output_dir"
 exec 9>"${TMPDIR:-/tmp}/carla-bus-control-validation.lock"
 flock -n 9 || { echo "Another bus driving test is running." >&2; exit 1; }
 container=selfcar-carla-autoware
-if docker exec "$container" pgrep -f '^python3 .*carla_bus_(control_validation|lap).py' >/dev/null; then
+if docker exec "$container" pgrep -f '^python3 .*carla_bus_(control_validation|lap|service).py' >/dev/null; then
   echo "A bus driving test is already running." >&2
   exit 1
 fi

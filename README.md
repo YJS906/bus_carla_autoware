@@ -4,11 +4,11 @@ CARLA 0.9.16 **Town05 / Fuso Rosa** 버스로 도심 → 순환로 → 도심 �
 하차벨과 대기 승객에 따라 정류장 정차 여부를 결정하는 것을 목표로 한다.
 기존 Prius/VTD 작업과 검증 이력도 함께 보존한다.
 
-## 현재 상태 — 문서 정리 2026-10-26 / 최신 주행 검증 2026-10-24
+## 현재 상태 — 2026-10-26 / 전체 코스 검증 2026-10-24
 
-**주행 기반과 교통 차량 16대 조건의 노선 완주를 검증했고, 수요 기반 정류장 서비스는
-후속 작업이다.** [미션 단계](docs/carla-bus-mission.md#구현-및-검증-순서)는
-0·1 완료, 2 부분 완료, 3~6 미완료다. 아래 초기 시험은 당시 조건의 이력이며,
+**교통 차량 16대 조건의 노선 완주에 이어, S10 한 곳의 하차벨 정차·5초 대기·재출발을
+검증했다.** [미션 단계](docs/carla-bus-mission.md#구현-및-검증-순서)는
+0·1 완료, 2~4 부분 완료, 5·6 미완료다. 아래 초기 시험은 당시 조건의 이력이며,
 최신 교통 시험의 판정은 `following-validation.json`의 `final_traffic_lap`을 따른다.
 
 - 기존 작업 전체 백업, 도심 정류장 **10개**와 고정 노선, 정지 버스 확인 UI 완료.
@@ -49,11 +49,16 @@ CARLA 0.9.16 **Town05 / Fuso Rosa** 버스로 도심 → 순환로 → 도심 �
   일시적 긴급 상태 2회는 자동 회복했다. 이동 중 최신 경계 표본 649개 중
   순간 경계 밖 차체 면적이 0.1m²를 넘은 표본 5개는 개선 대상으로 남는다.
   [최종 결과와 실패 이력](docs/validation/carla-bus-lap-20261024/following-validation.json)
-- **조건부 정류장 정차·항상 바깥 차로 접근·하차벨 UI·보행자 대응은 아직 미검증이다.**
+- **S09→S10→S01 하차벨 시범 운행을 추가했다.** 빈 도로에서 출발 전/주행 중 벨 접수,
+  S10 바깥 차로 정차·5초 대기·재출발, 무요청 통과를 확인했다. UI 버튼과 Space를
+  지원하며 요청이 유지되는 동안 하차벨 버튼이 빨간색으로 깜빡인다.
+  [하차벨 실행·검증 안내](docs/carla-bus-service.md)
+- **전체 정류장의 조건부 정차·항상 바깥 차로 접근·승객 판단·버스 보행자 대응은 아직 미검증이다.**
   기존 승용차 시험을 버스 검증 결과로 간주하지 않는다.
 
 [최종 교통 시험](docs/validation/carla-bus-lap-20261024/following-validation.json) ·
 [실행 방법](docs/carla-bus-operations.md) ·
+[하차벨 시범 운행](docs/carla-bus-service.md) ·
 [미션 설계 및 진행 단계](docs/carla-bus-mission.md) ·
 [노선·정류장](scenarios/bus/README.md) ·
 [검증 지도 사본](maps/Town05Bus/README.md)
@@ -194,7 +199,8 @@ self-hosted NVIDIA runner.
 차로 중앙 정차, 하차벨·대기 승객 조건, 구현 단계는
 [버스 미션 설계](docs/carla-bus-mission.md)를 따른다.
 버스의 직진·곡선·목표 정지, 빈 도로와 후행 보완을 적용한 교통 차량 16대의 전체 노선 경유 완주를 검증했다.
-조건부 정차·하차벨 UI는 후속 단계이며, 상세 조건과 남은 문제는 위의 검증 보고서를 따른다.
+S10 단일 정류장의 하차벨 UI·정차·재출발은 별도 시범 구간에서 검증했다.
+전체 정류장의 조건부 정차와 승객 판단은 후속 단계이며, 상세 조건과 남은 문제는 위의 검증 보고서를 따른다.
 
 The current city setup is Town05. The latest [behavior repair and AUTO validation report](docs/carla-behavior-repair-20260922.md)
 records three parked-car avoidance runs, three pedestrian-stop runs, and two
