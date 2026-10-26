@@ -1,10 +1,15 @@
 # CARLA + Autoware 수요 기반 자율주행 버스
 
 CARLA 0.9.16 **Town05 / Fuso Rosa** 버스로 도심 → 순환로 → 도심 노선을 주행하고,
-하차벨과 대기 승객에 따라 정류장 정차 여부를 결정하는 프로젝트다.
+하차벨과 대기 승객에 따라 정류장 정차 여부를 결정하는 것을 목표로 한다.
 기존 Prius/VTD 작업과 검증 이력도 함께 보존한다.
 
-## 현재 상태 — 2026-10-24
+## 현재 상태 — 문서 정리 2026-10-26 / 최신 주행 검증 2026-10-24
+
+**주행 기반과 교통 차량 16대 조건의 노선 완주를 검증했고, 수요 기반 정류장 서비스는
+후속 작업이다.** [미션 단계](docs/carla-bus-mission.md#구현-및-검증-순서)는
+0·1 완료, 2 부분 완료, 3~6 미완료다. 아래 초기 시험은 당시 조건의 이력이며,
+최신 교통 시험의 판정은 `following-validation.json`의 `final_traffic_lap`을 따른다.
 
 - 기존 작업 전체 백업, 도심 정류장 **10개**와 고정 노선, 정지 버스 확인 UI 완료.
 - S01~S10 모두 오른쪽 인도에 지붕·벤치가 있는 실제 정류장 시설을 배치했다.
@@ -40,18 +45,23 @@ CARLA 0.9.16 **Town05 / Fuso Rosa** 버스로 도심 → 순환로 → 도심 �
   경계 여유 폭을 1.0→1.4m로 늘리고 교차로 연결점의 폭 할당을 수정했다.
   일반 차선 변경 최소 길이 30m와 횡가속도 기반 속도 제한을 분리했다.
   현재 차로의 분리된 뒤차를 구분하며 목표 차로 뒤차 검사는 유지한다.
-  NPC 추종 보완을 적용한 시험이며, 일시적 긴급 상태 2회는 자동 회복했다.
+  GT 객체·신호 입력과 NPC 추종 보완을 적용한 한 바퀴 시험이며,
+  일시적 긴급 상태 2회는 자동 회복했다. 이동 중 최신 경계 표본 649개 중
+  순간 경계 밖 차체 면적이 0.1m²를 넘은 표본 5개는 개선 대상으로 남는다.
   [최종 결과와 실패 이력](docs/validation/carla-bus-lap-20261024/following-validation.json)
 - **조건부 정류장 정차·항상 바깥 차로 접근·하차벨 UI·보행자 대응은 아직 미검증이다.**
   기존 승용차 시험을 버스 검증 결과로 간주하지 않는다.
 
-[정류장 노선 완주 결과](docs/validation/carla-bus-lap-20261022/README.md) ·
-[20km/h 순환로 검증](docs/validation/carla-bus-speed-20261022/README.md) ·
-[형상·경로·정지 문제 수정](docs/validation/carla-bus-envelope-20261022/README.md) ·
+[최종 교통 시험](docs/validation/carla-bus-lap-20261024/following-validation.json) ·
 [실행 방법](docs/carla-bus-operations.md) ·
 [미션 설계 및 진행 단계](docs/carla-bus-mission.md) ·
 [노선·정류장](scenarios/bus/README.md) ·
 [검증 지도 사본](maps/Town05Bus/README.md)
+
+초기 검증 이력:
+[20km/h 노선 완주](docs/validation/carla-bus-lap-20261022/README.md) ·
+[20km/h 순환로 시험](docs/validation/carla-bus-speed-20261022/README.md) ·
+[10km/h 형상·경로·정지 문제 수정](docs/validation/carla-bus-envelope-20261022/README.md)
 
 현재 PC에서 버스를 실행하려면:
 
