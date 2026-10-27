@@ -27,10 +27,11 @@ if ! "$headless" && ! docker exec "$container" sh -c 'test -n "$(fc-list :lang=k
   }
 fi
 docker exec "$container" mkdir -p /tmp/bus-tools
-for name in carla_bus_service.py carla_bus_service_policy.py carla_bus_lap.py carla_bus_course_traffic.py carla_bus_following.py carla_bus_ring_policy.py carla_bus_route_policy.py carla_bus_signal_audit.py carla_bus_control_validation.py carla_closed_loop_validation.py carla_validation_actors.py carla_native_lane_check.py; do
+for name in carla_bus_service.py carla_bus_service_policy.py carla_bus_service_profile.py carla_bus_loop_service.py carla_bus_loop_policy.py carla_bus_demand_service.py carla_bus_demand_policy.py carla_bus_passengers.py carla_bus_stop_props.py carla_bus_lap.py carla_bus_course_traffic.py carla_bus_following.py carla_bus_ring_policy.py carla_bus_route_policy.py carla_bus_signal_audit.py carla_bus_control_validation.py carla_closed_loop_validation.py carla_validation_actors.py carla_native_lane_check.py; do
   docker cp "$repo_root/tools/$name" "$container:/tmp/bus-tools/"
 done
 docker cp "$repo_root/scenarios/bus/town05_bus_route.json" "$container:/tmp/bus-tools/"
+docker cp "$repo_root/scenarios/bus/town05_bus_service_stops.json" "$container:/tmp/bus-tools/"
 python3 - "$repo_root" "$output_dir" <<'PY'
 import hashlib
 import json
@@ -42,11 +43,15 @@ root, output = map(Path, sys.argv[1:])
 sources = list((root/'tools').glob('carla_bus_*.py')) + [
     root/'tools/carla_closed_loop_validation.py', root/'tools/carla_validation_actors.py',
     root/'tools/carla_native_lane_check.py', root/'scenarios/bus/town05_bus_route.json',
+    root/'scenarios/bus/town05_bus_service_stops.json',
     root/'scripts/carla/run_bus_service']
 record = {
     'git_head': subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip(),
     'runtime_image': subprocess.check_output(
         ['docker', 'inspect', '--format', '{{.Image}}', 'selfcar-carla-autoware'], text=True).strip(),
+    'runtime_map_sha256': subprocess.check_output(
+        ['docker', 'exec', 'selfcar-carla-autoware', 'sha256sum',
+         '/home/aw/autoware_data/maps/Town05Bus/lanelet2_map.osm'],text=True).split()[0],
     'source_sha256': {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sources},
 }
 (output/'inputs.json').write_text(json.dumps(record, indent=2)+'\n')

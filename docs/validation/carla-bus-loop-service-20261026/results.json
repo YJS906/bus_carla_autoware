@@ -1,0 +1,437 @@
+[
+  {
+    "success": false,
+    "result": "interrupted",
+    "error": "RuntimeError('Lap interrupted')",
+    "cleanup": {
+      "stop_verified": true,
+      "test_speed_limit_clear_sent": true,
+      "route_cleared": true,
+      "errors": []
+    },
+    "completed_laps": 0,
+    "travel_distance_m": null,
+    "random_bell_seed": 26026,
+    "random_bell_schedule": [
+      {
+        "lap": 1,
+        "request": false,
+        "progress_m": null
+      },
+      {
+        "lap": 2,
+        "request": true,
+        "progress_m": 3283.4884510872175
+      }
+    ],
+    "bell_events": [
+      {
+        "outcome": "accepted",
+        "remaining_m": 1602.0648201057716,
+        "speed_mps": 1.4843070091954438,
+        "sim_time": 2733.750040736
+      }
+    ],
+    "service_events": [],
+    "station_passes": [],
+    "lap_crossings": [],
+    "route_handoffs": [],
+    "restart_events": [],
+    "restart_verified": false,
+    "bell_pending": true,
+    "visited_stops": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05"
+    ],
+    "run": "random-26026-01",
+    "raw_sha256": "50e9304115a9f6a84523f656f93995c3f46392c06212471683240a0cfbeb0bc0",
+    "collision_count": 0,
+    "signal_states": {
+      "Green": 5
+    },
+    "signal_violations": 0,
+    "emergency_episodes": [
+      {
+        "start_sim_s": 2692.000040113,
+        "messages": [
+          "OK",
+          "detected sudden shift in trajectory"
+        ],
+        "end_sim_s": 2693.900040142
+      }
+    ],
+    "random_comparison": [
+      {
+        "lap": 1,
+        "expected_service": false,
+        "actual_service": null
+      },
+      {
+        "lap": 2,
+        "expected_service": true,
+        "actual_service": null
+      }
+    ],
+    "random_comparison_passed": false,
+    "source_inputs": "random-26026-01-inputs.json",
+    "peak_speed_kmh": {
+      "urban": 20.02315841609876,
+      "ring": 0
+    },
+    "S10_no_request_min_speed_kmh": []
+  },
+  {
+    "success": false,
+    "result": "error",
+    "error": "RuntimeError('No progress for 120 seconds')",
+    "cleanup": {
+      "stop_verified": true,
+      "test_speed_limit_clear_sent": true,
+      "route_cleared": true,
+      "errors": []
+    },
+    "completed_laps": 1,
+    "travel_distance_m": null,
+    "random_bell_seed": 26026,
+    "random_bell_schedule": [
+      {
+        "lap": 1,
+        "request": false,
+        "progress_m": null
+      },
+      {
+        "lap": 2,
+        "request": true,
+        "progress_m": 3283.4884510872175
+      }
+    ],
+    "bell_events": [],
+    "service_events": [],
+    "station_passes": [
+      {
+        "lap": 1,
+        "served": false,
+        "speed_mps": 6.533046142465827,
+        "progress_m": 1949.8832045825948
+      }
+    ],
+    "lap_crossings": [
+      {
+        "lap": 1,
+        "sim_time": 3800.40005663,
+        "speed_mps": 7.291596067722123,
+        "mode": 2,
+        "travel_distance_m": 2007.9172906160393
+      }
+    ],
+    "route_handoffs": [
+      {
+        "goal": "R02",
+        "cycle": 2,
+        "progress_m": 1753.068507394898,
+        "status": {
+          "success": true,
+          "code": 0,
+          "message": ""
+        }
+      }
+    ],
+    "restart_events": [],
+    "restart_verified": false,
+    "bell_pending": false,
+    "visited_stops": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07",
+      "S08",
+      "S09",
+      "S10",
+      "S01",
+      "S02",
+      "S03"
+    ],
+    "run": "random-26026-02",
+    "raw_sha256": "f931c1aae39eaedbb098da8021e715a82c6f3be8232b07aba97f783099378cce",
+    "collision_count": 0,
+    "signal_states": {
+      "Green": 15,
+      "Yellow": 1
+    },
+    "signal_violations": 0,
+    "emergency_episodes": [
+      {
+        "start_sim_s": 3214.600047901,
+        "messages": [
+          "detected sudden shift in trajectory"
+        ],
+        "end_sim_s": 3215.000047907
+      },
+      {
+        "start_sim_s": 3280.000048875,
+        "messages": [
+          "OK",
+          "deceleration is too large"
+        ],
+        "end_sim_s": 3280.700048886
+      },
+      {
+        "start_sim_s": 3433.600051164,
+        "messages": [
+          "OK",
+          "detected sudden shift in trajectory"
+        ],
+        "end_sim_s": 3435.300051189
+      },
+      {
+        "start_sim_s": 3480.700051866,
+        "messages": [
+          "OK",
+          "emergency occurred due to "
+        ],
+        "end_sim_s": 3481.500051878
+      },
+      {
+        "start_sim_s": 3912.700058303,
+        "messages": [
+          "detected sudden shift in trajectory"
+        ],
+        "end_sim_s": 3912.800058305
+      }
+    ],
+    "random_comparison": [
+      {
+        "lap": 1,
+        "expected_service": false,
+        "actual_service": false
+      },
+      {
+        "lap": 2,
+        "expected_service": true,
+        "actual_service": null
+      }
+    ],
+    "random_comparison_passed": false,
+    "source_inputs": "random-26026-02-inputs.json",
+    "peak_speed_kmh": {
+      "urban": 26.321518326240962,
+      "ring": 48.026713416619295
+    },
+    "S10_no_request_min_speed_kmh": [
+      {
+        "lap": 1,
+        "minimum_kmh": 11.918496119769832
+      }
+    ]
+  },
+  {
+    "success": true,
+    "result": "continuous_service_validation_completed",
+    "error": null,
+    "cleanup": {
+      "stop_verified": true,
+      "test_speed_limit_clear_sent": true,
+      "route_cleared": true,
+      "errors": []
+    },
+    "completed_laps": 2,
+    "travel_distance_m": 4021.5704535452096,
+    "random_bell_seed": 26026,
+    "random_bell_schedule": [
+      {
+        "lap": 1,
+        "request": false,
+        "progress_m": null
+      },
+      {
+        "lap": 2,
+        "request": true,
+        "progress_m": 3283.4884510872175
+      }
+    ],
+    "bell_events": [
+      {
+        "outcome": "accepted",
+        "source": "random_test",
+        "remaining_m": 695.6546191957927,
+        "speed_mps": 5.834378549583707,
+        "sim_time": 5687.550084751
+      }
+    ],
+    "service_events": [
+      {
+        "lap": 2,
+        "station": "S10",
+        "sim_time": 6121.05009121,
+        "hold_sim_s": 5.000000073999217,
+        "longitudinal_error_m": -0.7564971394707843,
+        "lateral_error_m": -0.004233804540214212,
+        "speed_mps": 1.107858598810269e-06,
+        "road": 43,
+        "lane": -2
+      }
+    ],
+    "station_passes": [
+      {
+        "lap": 1,
+        "served": false,
+        "speed_mps": 6.524839729415255,
+        "progress_m": 1949.923556070041
+      },
+      {
+        "lap": 2,
+        "served": true,
+        "speed_mps": 2.285979903859599,
+        "progress_m": 3981.3678661763133
+      }
+    ],
+    "lap_crossings": [
+      {
+        "lap": 1,
+        "sim_time": 5189.800077334,
+        "speed_mps": 7.661561870363585,
+        "mode": 2,
+        "travel_distance_m": 2008.4945241235482
+      },
+      {
+        "lap": 2,
+        "sim_time": 6156.850091744,
+        "speed_mps": 5.115730675236611,
+        "mode": 2,
+        "travel_distance_m": 4012.1982370852093
+      }
+    ],
+    "route_handoffs": [
+      {
+        "goal": "R02",
+        "cycle": 2,
+        "progress_m": 1753.0245076203023,
+        "status": {
+          "success": true,
+          "code": 0,
+          "message": ""
+        }
+      },
+      {
+        "goal": "S10",
+        "cycle": 2,
+        "progress_m": 2035.0659459173478,
+        "status": {
+          "success": true,
+          "code": 0,
+          "message": ""
+        }
+      }
+    ],
+    "restart_events": [
+      {
+        "lap": 2,
+        "sim_time": 6126.550091292
+      }
+    ],
+    "restart_verified": true,
+    "bell_pending": false,
+    "visited_stops": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07",
+      "S08",
+      "S09",
+      "S10",
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07",
+      "S08",
+      "S09",
+      "S10",
+      "S01"
+    ],
+    "run": "random-26026-03",
+    "raw_sha256": "575d4e756ecbc13b47a1969d004fb2f76de28a4714587f098d0a43fa35cc46f4",
+    "collision_count": 0,
+    "signal_states": {
+      "Green": 27,
+      "Yellow": 1
+    },
+    "signal_violations": 0,
+    "emergency_episodes": [
+      {
+        "start_sim_s": 4668.600069567,
+        "messages": [
+          "deceleration is too large"
+        ],
+        "end_sim_s": 4668.700069569
+      },
+      {
+        "start_sim_s": 4793.100071422,
+        "messages": [
+          "OK",
+          "detected sudden shift in trajectory"
+        ],
+        "end_sim_s": 4794.30007144
+      },
+      {
+        "start_sim_s": 4871.500072591,
+        "messages": [
+          "OK",
+          "emergency occurred due to "
+        ],
+        "end_sim_s": 4872.80007261
+      },
+      {
+        "start_sim_s": 5789.900086276,
+        "messages": [
+          "OK",
+          "detected sudden shift in trajectory"
+        ],
+        "end_sim_s": 5791.600086301
+      },
+      {
+        "start_sim_s": 5836.200086966,
+        "messages": [
+          "OK",
+          "emergency occurred due to "
+        ],
+        "end_sim_s": 5837.400086984
+      }
+    ],
+    "random_comparison": [
+      {
+        "lap": 1,
+        "expected_service": false,
+        "actual_service": false
+      },
+      {
+        "lap": 2,
+        "expected_service": true,
+        "actual_service": true
+      }
+    ],
+    "random_comparison_passed": true,
+    "source_inputs": "random-26026-03-inputs.json",
+    "peak_speed_kmh": {
+      "urban": 27.668328587355553,
+      "ring": 48.471825625859246
+    },
+    "S10_no_request_min_speed_kmh": [
+      {
+        "lap": 1,
+        "minimum_kmh": 11.593142736793826
+      }
+    ]
+  }
+]

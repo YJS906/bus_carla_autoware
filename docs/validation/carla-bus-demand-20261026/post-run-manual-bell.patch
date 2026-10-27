@@ -1,0 +1,42 @@
+--- tested/tools/carla_bus_demand_policy.py
++++ current/tools/carla_bus_demand_policy.py
+@@ -71,11 +71,13 @@
+         return reasons
+ 
+ 
+-def bell_target(stops, progress_m, velocity):
++def bell_target(stops, progress_m, velocity, dwelling=False):
+     """Latch to the next safely reachable unserved stop; late requests carry on."""
+     for stop in stops:
+         if stop.bell:
+             return stop, 'already_requested'
++    if dwelling and stops and stops[0].required:
++        return stops[0], 'accepted'
+     for index, stop in enumerate(stops):
+         if stop.dwell.completed:
+             continue
+--- tested/tools/carla_bus_demand_service.py
++++ current/tools/carla_bus_demand_service.py
+@@ -149,11 +149,8 @@
+                     continue
+                 if self.phase not in ('READY','DRIVING','DWELLING'):
+                     continue
+-                current = self.current_demand
+-                if self.phase=='DWELLING' and current and current.required:
+-                    target,outcome=current,'already_requested' if current.bell else 'accepted'
+-                else:
+-                    target,outcome=bell_target(self.demands[self.stop_index:],self.progress_m,speed(self.ego))
++                target,outcome=bell_target(self.demands[self.stop_index:],self.progress_m,
++                                          speed(self.ego),dwelling=self.phase=='DWELLING')
+                 if expected and (target is None or target.key!=expected):
+                     raise RuntimeError('Random bell could not reach its planned station')
+                 if target:
+@@ -284,6 +281,8 @@
+                          abs(current.distance_m-self.progress_m)<5)
+                 complete=current.dwell.observe(sim,velocity,longitudinal,lateral,correct)
+                 self.phase='DWELLING' if current.dwell.stopped_since is not None else 'DRIVING'
++                if self.phase=='DWELLING':
++                    self.message=current.station+' 승하차 대기'
+                 if complete:
+                     reasons=current.reasons
+                     boarded=self.passengers.board(current.station)

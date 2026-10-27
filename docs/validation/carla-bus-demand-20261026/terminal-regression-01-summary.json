@@ -1,0 +1,61 @@
+{
+  "success": true,
+  "error": null,
+  "result": "demand_terminal_regression_completed",
+  "completed_laps": 0,
+  "travel_distance_m": 96.0694952258782,
+  "passengers_spawned": 0,
+  "passenger_final_states": {},
+  "boarded_passengers": 0,
+  "service_events": [
+    {
+      "key": "2:S01",
+      "station": "S01",
+      "reasons": [
+        "bell"
+      ],
+      "boarded": 0,
+      "sim_time": 8651.400128915,
+      "hold_sim_s": 5.0500000749998435,
+      "longitudinal_error_m": -0.9241839445918895,
+      "lateral_error_m": -0.00301354571796966,
+      "speed_mps": 4.76837273144482e-07,
+      "road": 44,
+      "lane": -2
+    }
+  ],
+  "station_passes": [
+    {
+      "key": "2:S01",
+      "station": "S01",
+      "served": true,
+      "progress_m": 4066.345751871391,
+      "speed_mps": 2.4917444427536046,
+      "waiting": 0
+    }
+  ],
+  "restart_events": [
+    {
+      "key": "2:S01",
+      "sim_time": 8657.000128999
+    }
+  ],
+  "signal_crossings": {
+    "Green": 1
+  },
+  "signal_violations": 0,
+  "collision_count": 0,
+  "emergency_episodes": 0,
+  "cleanup": {
+    "stop_verified": true,
+    "test_speed_limit_clear_sent": true,
+    "route_cleared": true,
+    "errors": [],
+    "waiting_passengers_removed": true
+  },
+  "cleanup_error": null,
+  "bell_pending": false,
+  "minimum_service_hold_s": 5.0500000749998435,
+  "maximum_abs_longitudinal_error_m": 0.9241839445918895,
+  "maximum_abs_lateral_error_m": 0.00301354571796966
+}

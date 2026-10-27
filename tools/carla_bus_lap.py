@@ -257,6 +257,12 @@ class BusLap(BusValidation):
                 self.event('ring_stage', stage=self.ring_policy.stage, native_s=wp.s,
                            lane=wp.lane_id, center_offset_m=offset)
 
+    def has_passed_station(self, station):
+        return station in self.result['visited_stops']
+
+    def adjust_course_speed_cap(self, cap, reason):
+        return cap, reason
+
     def update_speed_limit(self, wp, rear):
         right = wp.transform.rotation.get_right_vector()
         delta = rear - wp.transform.location
@@ -266,7 +272,7 @@ class BusLap(BusValidation):
         urban_cap = self.urban_merge_policy.observe(
             wp.road_id, wp.lane_id, offset, yaw,
             self.get_clock().now().nanoseconds / 1e9,
-            station_passed='S04' in self.result['visited_stops'])
+            station_passed=self.has_passed_station('S04'))
         cap = self.args.speed_kmh
         reason = 'route_speed_limits'
         if self.ring_policy and wp.road_id in (36, 37):
@@ -275,6 +281,7 @@ class BusLap(BusValidation):
         if urban_cap is not None:
             cap = min(cap, urban_cap)
             reason = 'S04_exit_preparation'
+        cap, reason = self.adjust_course_speed_cap(cap, reason)
         if cap != self.applied_cap:
             limit = VelocityLimit()
             limit.stamp = self.get_clock().now().to_msg()

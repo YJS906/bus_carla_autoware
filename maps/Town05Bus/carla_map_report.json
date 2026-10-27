@@ -1671,7 +1671,7 @@
     "stop_sign_lane_regulations": 8,
     "unmapped_scene_stop_triggers": 25
   },
-  "map_sha256": "674e8e38076356693dd344a18964bdf7bfb2a722ecddd082ffac2563831a6d71",
+  "map_sha256": "0307f057b5385af7055cd5fac169493dfbb0ebe30b7539df2d54d523ef521adf",
   "lane_change_source": "carla_town05_lane_change_v1",
   "stop_line_adjustment": {
     "report": "carla_stop_line_report.json",

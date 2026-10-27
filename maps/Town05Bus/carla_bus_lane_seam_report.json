@@ -1,6 +1,6 @@
 {
   "source": "native_shared_boundary_seam_v1",
-  "map_sha256": "26dad8cd5a1142b887f77c3356b16072f98534959fd3a6e399610d6a8e6e9483",
+  "map_sha256": "0307f057b5385af7055cd5fac169493dfbb0ebe30b7539df2d54d523ef521adf",
   "xodr_sha256": "7edc53b0be840e177598da7a4ed9571146d7b2595ce280d154c90f92e8a48851",
   "geometry_modified": false,
   "boundaries": [
@@ -16,8 +16,24 @@
       ],
       "samples": 70,
       "max_boundary_error_m": 0.040538213759423826,
-      "endpoint_inset_m": 0.25
+      "endpoint_inset_m": 0.25,
+      "native_unpainted_both_seam_m": 0.0
+    },
+    {
+      "way_id": 2087,
+      "native_sections": [
+        [
+          8,
+          0,
+          1,
+          2
+        ]
+      ],
+      "samples": 128,
+      "max_boundary_error_m": 1.7115171342326555e-05,
+      "endpoint_inset_m": 0.25,
+      "native_unpainted_both_seam_m": 0.1384127239716122
     }
   ],
-  "backup": "/home/a/autoware_data/maps/Town05Bus/backups/bus-lane-seams-20261023T050611819113Z"
+  "backup": "/home/a/autoware_data/maps/Town05Bus/backups/bus-lane-seams-20261026T072734596056Z"
 }

@@ -1,0 +1,22 @@
+--- tested/tools/carla_bus_service.py
++++ current/tools/carla_bus_service.py
+@@ -469,7 +469,8 @@
+             if finished_loop:lines.append('정지 이유: 지정한 바퀴 수 검증 완료')
+             elif s.get('stop_reason'):lines.append('정지 이유: '+s['stop_reason'])
+         if args.demand_service:
+-            lines.append(f"대기 승객: {s.get('waiting_passengers',0)}명 · 탑승 완료: {s.get('boarded_passengers',0)}명")
++            lines.append(f"다음 정류장 대기: {s.get('waiting_passengers',0)}명 · 전체 대기: {s.get('total_waiting_passengers',0)}명")
++            lines.append(f"탑승 완료: {s.get('boarded_passengers',0)}명")
+             if not finished_loop:lines.append('정류장 처리: '+s.get('service_reason','확인 중'))
+         if phase == 'DWELLING':
+             lines.append(f"승하차 대기: {s.get('dwell_s', 5):.1f}초")
+--- tested/tools/carla_bus_demand_service.py
++++ current/tools/carla_bus_demand_service.py
+@@ -192,6 +192,7 @@
+             speed_kmh=velocity*3.6,dwell_s=demand.dwell.remaining_s if demand else 0,
+             current_stop=self.current_station,next_stop=demand.station if demand else '검증 종료',
+             waiting_passengers=demand.waiting if demand else 0,
++            total_waiting_passengers=sum(self.waiting_counts.values()),
+             boarded_passengers=self.passengers.boarded if self.passengers else 0,
+             service_reason=label,stop_reason=reason,
+             lap_number=self.lap_count+1,completed_laps=self.lap_count)

@@ -1,0 +1,82 @@
+{
+  "stop_line": [
+    [
+      36.856450647,
+      14.049585382
+    ],
+    [
+      29.856452763,
+      14.048532007
+    ]
+  ],
+  "approach_directions": [
+    [
+      -0.008931506425142288,
+      -0.9999601244926453
+    ],
+    [
+      -0.008931506425142288,
+      -0.9999601244926453
+    ],
+    [
+      -0.008931084536015987,
+      -0.9999601244926453
+    ],
+    [
+      -0.008931506425142288,
+      -0.9999601244926453
+    ]
+  ],
+  "ego_yaw_after_stop": -90.01859283447266,
+  "front_after_stop": [
+    33.484825134277344,
+    14.619649887084961
+  ],
+  "events": [
+    {
+      "group_id": 36281,
+      "opendrive_id": "2406",
+      "stop_line_id": 36268,
+      "frame": 273183,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        32.756107330322266,
+        13.801271438598633
+      ],
+      "signed_downstream_distance_m": 0.24769691196157034
+    },
+    {
+      "group_id": 36281,
+      "opendrive_id": "2406",
+      "stop_line_id": 36268,
+      "frame": 293743,
+      "state": "Green",
+      "previous_state": "Green",
+      "phase_transition": false,
+      "violation": false,
+      "front_xy": [
+        33.76405334472656,
+        13.933416366577148
+      ],
+      "signed_downstream_distance_m": 0.11570366339952283
+    },
+    {
+      "group_id": 36281,
+      "opendrive_id": "2406",
+      "stop_line_id": 36268,
+      "frame": 294143,
+      "state": "Red",
+      "previous_state": "Red",
+      "phase_transition": false,
+      "violation": true,
+      "front_xy": [
+        33.48417663574219,
+        14.14670181274414
+      ],
+      "signed_downstream_distance_m": -0.09762389681171486
+    }
+  ]
+}

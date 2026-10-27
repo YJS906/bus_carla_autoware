@@ -1,0 +1,259 @@
+{
+  "schema": 1,
+  "reference": "rear axle/base_link; each facility_offset_m is signed along travel; 0.45 m inward",
+  "route_sha256": "aaa26bd51dc1331709506f78d476cf86155f649825081c3e32dbc3e248376302",
+  "preflight": "Initial -6 m goals accepted; revised S04/S05/S07/S08 facility-reference goals reached in closed-loop tests on 2026-10-26",
+  "stops": [
+    {
+      "id": "S01",
+      "name": "서부 도심",
+      "kind": "stop",
+      "road_id": 44,
+      "lane_id": -2,
+      "section_id": 0,
+      "s_m": 24.000000000000004,
+      "carla": {
+        "x": -184.58091735839844,
+        "y": -35.58570861816406,
+        "z": 0.055450439453125,
+        "yaw_deg": -90.01579284667969
+      },
+      "ros_map": {
+        "x": -184.58091735839844,
+        "y": 35.58570861816406,
+        "z": 0.055450439453125,
+        "yaw_rad": 1.5710719639677198
+      },
+      "lanelet_id": 21623,
+      "route_distance_m": -6.0,
+      "inward_offset_m": 0.45,
+      "facility_offset_m": -6.0
+    },
+    {
+      "id": "S02",
+      "name": "북서 도심",
+      "kind": "stop",
+      "road_id": 8,
+      "lane_id": 2,
+      "section_id": 0,
+      "s_m": 21.999999999999996,
+      "carla": {
+        "x": -163.52926635742188,
+        "y": -84.64012145996094,
+        "z": 0.0,
+        "yaw_deg": 0.0863037109375
+      },
+      "ros_map": {
+        "x": -163.52926635742188,
+        "y": 84.64012145996094,
+        "z": 0.0,
+        "yaw_rad": -0.001506283912548817
+      },
+      "lanelet_id": 2124,
+      "route_distance_m": 61.370999999999995,
+      "inward_offset_m": 0.45,
+      "facility_offset_m": -6.0
+    },
+    {
+      "id": "S03",
+      "name": "중앙 북부",
+      "kind": "stop",
+      "road_id": 5,
+      "lane_id": -2,
+      "section_id": 0,
+      "s_m": 20.000000000000004,
+      "carla": {
+        "x": -131.7973175048828,
+        "y": -56.91159439086914,
+        "z": -1.52587890625e-05,
+        "yaw_deg": 90.39353942871094
+      },
+      "ros_map": {
+        "x": -131.7973175048828,
+        "y": 56.91159439086914,
+        "z": -1.52587890625e-05,
+        "yaw_rad": -1.5776648855623199
+      },
+      "lanelet_id": 1260,
+      "route_distance_m": 117.687,
+      "inward_offset_m": 0.45,
+      "facility_offset_m": -6.0
+    },
+    {
+      "id": "S04",
+      "name": "중앙 도심",
+      "kind": "stop",
+      "road_id": 1,
+      "lane_id": 2,
+      "section_id": 0,
+      "s_m": 24.0,
+      "carla": {
+        "x": -85.73688507080078,
+        "y": 6.258025169372559,
+        "z": 0.0,
+        "yaw_deg": 359.86053466796875
+      },
+      "ros_map": {
+        "x": -85.73688507080078,
+        "y": -6.258025169372559,
+        "z": 0.0,
+        "yaw_rad": -6.280751177943254
+      },
+      "lanelet_id": 542,
+      "route_distance_m": 215.744,
+      "inward_offset_m": 0.45,
+      "facility_offset_m": 0.0
+    },
+    {
+      "id": "S05",
+      "name": "북동 도심",
+      "kind": "stop",
+      "road_id": 16,
+      "lane_id": 2,
+      "section_id": 0,
+      "s_m": 24.0,
+      "carla": {
+        "x": 35.84339904785156,
+        "y": -52.629974365234375,
+        "z": 1.52587890625e-05,
+        "yaw_deg": 271.5320739746094
+      },
+      "ros_map": {
+        "x": 35.84339904785156,
+        "y": 52.629974365234375,
+        "z": 1.52587890625e-05,
+        "yaw_rad": -4.739128715625739
+      },
+      "lanelet_id": 3597,
+      "route_distance_m": 384.092,
+      "inward_offset_m": 0.45,
+      "facility_offset_m": 0.0
+    },
+    {
+      "id": "S06",
+      "name": "남동 도심",
+      "kind": "stop",
+      "road_id": 29,
+      "lane_id": -2,
+      "section_id": 0,
+      "s_m": 16.000000000000004,
+      "carla": {
+        "x": 35.08840560913086,
+        "y": 59.2191162109375,
+        "z": 1.52587890625e-05,
+        "yaw_deg": -89.97710418701172
+      },
+      "ros_map": {
+        "x": 35.08840560913086,
+        "y": -59.2191162109375,
+        "z": 1.52587890625e-05,
+        "yaw_rad": 1.5703967194733301
+      },
+      "lanelet_id": 7012,
+      "route_distance_m": 1562.319,
+      "inward_offset_m": 0.45,
+      "facility_offset_m": -6.0
+    },
+    {
+      "id": "S07",
+      "name": "동부 도심",
+      "kind": "stop",
+      "road_id": 0,
+      "lane_id": -2,
+      "section_id": 0,
+      "s_m": 26.0,
+      "carla": {
+        "x": -8.832669258117676,
+        "y": -4.429194450378418,
+        "z": 0.0,
+        "yaw_deg": 179.86053466796875
+      },
+      "ros_map": {
+        "x": -8.832669258117676,
+        "y": 4.429194450378418,
+        "z": 0.0,
+        "yaw_rad": -3.1391585243534608
+      },
+      "lanelet_id": 111,
+      "route_distance_m": 1659.255,
+      "inward_offset_m": 0.45,
+      "facility_offset_m": 0.0
+    },
+    {
+      "id": "S08",
+      "name": "중앙 남부",
+      "kind": "stop",
+      "road_id": 40,
+      "lane_id": -2,
+      "section_id": 0,
+      "s_m": 20.0,
+      "carla": {
+        "x": -54.192283630371094,
+        "y": 54.894805908203125,
+        "z": 0.055450439453125,
+        "yaw_deg": 90.3792953491211
+      },
+      "ros_map": {
+        "x": -54.192283630371094,
+        "y": -54.894805908203125,
+        "z": 0.055450439453125,
+        "yaw_rad": -1.577416279474561
+      },
+      "lanelet_id": 20200,
+      "route_distance_m": 1753.005,
+      "inward_offset_m": 0.45,
+      "facility_offset_m": 0.0
+    },
+    {
+      "id": "S09",
+      "name": "남서 도심",
+      "kind": "stop",
+      "road_id": 23,
+      "lane_id": -2,
+      "section_id": 0,
+      "s_m": 10.000000000000002,
+      "carla": {
+        "x": -151.79388427734375,
+        "y": 84.39300537109375,
+        "z": 0.0,
+        "yaw_deg": -179.93443298339844
+      },
+      "ros_map": {
+        "x": -151.79388427734375,
+        "y": -84.39300537109375,
+        "z": 0.0,
+        "yaw_rad": 3.1404482932693862
+      },
+      "lanelet_id": 5690,
+      "route_distance_m": 1876.585,
+      "inward_offset_m": 0.45,
+      "facility_offset_m": -6.0
+    },
+    {
+      "id": "S10",
+      "name": "서부 남단",
+      "kind": "stop",
+      "road_id": 43,
+      "lane_id": -2,
+      "section_id": 0,
+      "s_m": 24.000000000000004,
+      "carla": {
+        "x": -184.5575408935547,
+        "y": 49.19429016113281,
+        "z": 0.055450439453125,
+        "yaw_deg": -90.01579284667969
+      },
+      "ros_map": {
+        "x": -184.5575408935547,
+        "y": -49.19429016113281,
+        "z": 0.055450439453125,
+        "yaw_rad": 1.5710719639677198
+      },
+      "lanelet_id": 21311,
+      "route_distance_m": 1941.284,
+      "inward_offset_m": 0.45,
+      "facility_offset_m": -6.0
+    }
+  ],
+  "station_maneuver_minimum_length_m": 16.0
+}

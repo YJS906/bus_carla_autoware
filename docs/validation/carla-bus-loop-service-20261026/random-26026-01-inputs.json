@@ -1,0 +1,28 @@
+{
+  "git_head": "79e82f5af4cdc236ca5e3fda759c29d9ac4231c4",
+  "runtime_image": "sha256:4b92e95b6214b76fdc0db12b7b7d4a0208123450037aa244b7aaadabe9c0dbfe",
+  "source_sha256": {
+    "tools/carla_bus_service_policy.py": "47713f81ec1d80de52e07ed48c1700e92d8ab8be089ed2edc62b992adccfad41",
+    "tools/carla_bus_route_preview.py": "1ba4b3a67b6e3ea67a15957fe8de40da138798433d8531c3d6d88ac873cf679c",
+    "tools/carla_bus_following.py": "b5c12d0db3cc4ec9425121e96db9f0a535ee4173ec5685cc445cdc744d3be765",
+    "tools/carla_bus_loop_policy.py": "124456e4a02ebf412eff0e5d9af90640b53408520abfa8805edceba4a9f38a9a",
+    "tools/carla_bus_ring_policy.py": "9ed9df281335ae87d6299286ed30f4bb73183cfed0ab15215d48d8fa2259a1d9",
+    "tools/carla_bus_envelope_audit.py": "e1e6bbf0d2279133870bdc11abdae9d0f6ed960acd817fae6c44f93b289c6130",
+    "tools/carla_bus_route_policy.py": "200876f5370d8523f3defbd14960926710f55aac28f60c72eeff82f97dc6d456",
+    "tools/carla_bus_actuation_probe.py": "4d27921473e45d0b3851c8df35acd82d6ccb9e05b8425ac7f9cdeff2e57f4d92",
+    "tools/carla_bus_stop_props.py": "02466bf6a8078d7c32f870194efb76a98d2f72e57da7a004df19b4fdbc76d317",
+    "tools/carla_bus_course_traffic.py": "570d351311cf0b801958caadb992f6eed4a8f4764b24c957550f9efe270e25d5",
+    "tools/carla_bus_service.py": "5897bbef6602aee8e93f3f806c56c9a5df5935b1b0a536bc02a354fe6b673cac",
+    "tools/carla_bus_loop_service.py": "e92369bb0e036d5816ae9d61ad525e18b575f9414fbc64ff907b06486704fea8",
+    "tools/carla_bus_signal_audit.py": "dc999cabc602f91888296cdc840711d8079cd8d5e31c456e316b04bbbad49dd0",
+    "tools/carla_bus_lap.py": "f7e84ebfc09743160fee397bc967245894206bfecdc6146054f0be2a41ddba39",
+    "tools/carla_bus_turn_envelope_probe.py": "b210e70fcb6df1862242b281c1a153f95ce2e14cd1af0b26b3d02a68b66ba431",
+    "tools/carla_bus_inspection.py": "a13c4debdbe9346fccefdb343a34937b46e36e3bd858728a8bac72901f6938bf",
+    "tools/carla_bus_control_validation.py": "ace831c0c4ed3ac0f1600c12fc3a404b8991c885ba1be725f559301c5a0b5509",
+    "tools/carla_closed_loop_validation.py": "d460b7919baafb527a7db2b4ad70e52e22b1dc62080422e6f71830023fd38fe1",
+    "tools/carla_validation_actors.py": "de13ede18b629e43035f655b29bf5be10279c504c188f39af4cc17d44ab52a93",
+    "tools/carla_native_lane_check.py": "e9d6584b93127ced58c58fad382229a87d46d94af3bf411d25554d7b3b878645",
+    "scenarios/bus/town05_bus_route.json": "aaa26bd51dc1331709506f78d476cf86155f649825081c3e32dbc3e248376302",
+    "scripts/carla/run_bus_service": "c59c82d35bbe352d3526a53b622627e2abc5de8e948df0b5236f90b7e685be3c"
+  }
+}

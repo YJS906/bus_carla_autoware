@@ -1,0 +1,34 @@
+--- drive-tested/carla_bus_service.py
++++ final/carla_bus_service.py
+@@ -393,7 +393,9 @@
+         if not args.cleaning:
+             args.interrupted = True
+     ttk.Button(frame, text='시험 중단 · 버스 정지', command=request_stop).pack(fill='x', pady=4)
+-    ttk.Label(frame, text='하차벨은 이 창에 포커스가 있을 때 Space로 누릅니다.\n'
++    input_help = ('자동 시험 중에는 하차벨·Space 입력을 잠급니다.\n' if automatic_test else
++                  '하차벨은 이 창에 포커스가 있을 때 Space로 누릅니다.\n')
++    ttk.Label(frame, text=input_help+
+                          '현재는 S10에서만 서비스 정차하며, 늦은 요청은 거부합니다.\n'
+                          '신호 대기는 승하차 대기와 별도로 처리합니다.', wraplength=450).pack(anchor='w', pady=12)
+     key_down = False
+@@ -446,12 +448,17 @@
+         bell.state(['!disabled'] if not automatic_test and not stale and (s.get('accepting') or s.get('requested')) and
+                    phase in ('READY', 'DRIVING', 'DWELLING') else ['disabled'])
+         start.state(['!disabled'] if phase == 'READY' and not stale else ['disabled'])
+-        lines = [f"상태: {labels.get(phase, phase)}", f"다음: {s.get('next_stop', 'S10 · 서부 남단')}",
++        finished_loop = args.continuous and phase == 'DONE'
++        next_stop = '검증 종료' if finished_loop else s.get('next_stop', 'S10 · 서부 남단')
++        lines = [f"상태: {labels.get(phase, phase)}", f"다음: {next_stop}",
+                  f"속도: {s.get('speed_kmh', 0):.1f} km/h",
+                  '하차 요청: '+('접수됨' if s.get('requested') else '없음')]
+         if args.continuous:
+-            lines.insert(1, f"{s.get('lap_number',1)}바퀴째 · 최근 통과 {s.get('current_stop','S01')}")
+-            if s.get('stop_reason'):lines.append('정지 이유: '+s['stop_reason'])
++            lap_label = (f"{s.get('completed_laps',0)}바퀴 완료" if finished_loop else
++                         f"{s.get('lap_number',1)}바퀴째")
++            lines.insert(1, lap_label+f" · 최근 통과 {s.get('current_stop','S01')}")
++            if finished_loop:lines.append('정지 이유: 지정한 바퀴 수 검증 완료')
++            elif s.get('stop_reason'):lines.append('정지 이유: '+s['stop_reason'])
+         if phase == 'DWELLING':
+             lines.append(f"승하차 대기: {s.get('dwell_s', 5):.1f}초")
+         lines.append(s.get('message', ''))

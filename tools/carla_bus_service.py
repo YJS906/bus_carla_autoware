@@ -73,8 +73,8 @@ class BusService(BusLap):
 
     def ui(self):
         velocity = speed(self.ego)
-        remaining = self.station['route_distance_m'] - self.progress_m
-        accepting = self.phase in ('READY', 'DRIVING') and not self.passed_station
+        remaining = self.service_remaining()
+        accepting = self.accepting_requests()
         connected = (time.monotonic()-self.received.get('odom', 0) < 2 and
                      time.monotonic()-self.actuation_received < 2)
         self.channel.publish(phase=self.phase, message=self.message,
@@ -85,6 +85,15 @@ class BusService(BusLap):
                              dwell_s=self.policy.remaining_s,
                              next_stop='S01 · 시험 종료' if self.passed_station or self.policy.completed else 'S10 · 서부 남단')
 
+    def service_remaining(self):
+        return self.station['route_distance_m'] - self.progress_m
+
+    def accepting_requests(self):
+        return self.phase in ('READY', 'DRIVING') and not self.passed_station
+
+    def bell_pending(self):
+        return self.policy.requested
+
     def commands(self):
         start = False
         while True:
@@ -92,16 +101,21 @@ class BusService(BusLap):
                 command = self.channel.commands.get_nowait()
             except queue.Empty:
                 break
+            source = command.get('source', 'unspecified') if isinstance(command, dict) else 'unspecified'
+            command = command.get('action') if isinstance(command, dict) else command
             if command == 'start' and self.phase == 'READY':
                 start = True
             elif command == 'bell':
-                remaining = self.station['route_distance_m'] - self.progress_m
+                if self.args.random_bell_seed is not None and source != 'random_test':
+                    self.event('manual_bell_ignored_during_random_test', source=source)
+                    continue
+                remaining = self.service_remaining()
                 outcome = self.policy.ring(remaining, speed(self.ego),
-                    accepting=self.phase in ('READY', 'DRIVING') and not self.passed_station)
+                    accepting=self.accepting_requests())
                 self.message = {'accepted': 'S10 하차 요청 접수',
                                 'already_requested': 'S10 하차 요청이 이미 접수되어 있습니다',
                                 'too_late': 'S10 접수 마감 · 다음 정류장 이월은 아직 지원하지 않습니다'}[outcome]
-                row = dict(outcome=outcome, remaining_m=remaining, speed_mps=speed(self.ego),
+                row = dict(outcome=outcome, source=source, remaining_m=remaining, speed_mps=speed(self.ego),
                            sim_time=self.get_clock().now().nanoseconds/1e9)
                 self.result['bell_events'].append(row)
                 self.event('bell_request', **row)
@@ -138,7 +152,7 @@ class BusService(BusLap):
         if self.last_position is not None:
             self.travel_m += rear.distance(self.last_position)
         self.last_position = rear
-        self.progress_m = max(self.progress_m, route_progress(self.reference, rear.x, rear.y))
+        self.update_progress(rear)
         if self.last_moving_position is None or rear.distance(self.last_moving_position) > 1.:
             self.last_moving_position = rear
             self.last_progress_wall = now
@@ -164,6 +178,9 @@ class BusService(BusLap):
                 self.event('service_restart_verified', distance_m=rear.distance(self.restart_origin))
         return sim, rear, velocity, wp
 
+    def update_progress(self, rear):
+        self.progress_m = max(self.progress_m, route_progress(self.reference, rear.x, rear.y))
+
     def station_errors(self, rear):
         p = self.pose(self.station).position
         yaw = self.station['carla']['yaw_deg']*math.pi/180
@@ -171,7 +188,7 @@ class BusService(BusLap):
         return dx*math.cos(yaw)+dy*math.sin(yaw), -dx*math.sin(yaw)+dy*math.cos(yaw)
 
     def commit_station_route(self):
-        remaining = self.station['route_distance_m'] - self.progress_m
+        remaining = self.service_remaining()
         if remaining <= acceptance_distance(speed(self.ego)):
             raise RuntimeError('Bell retained but S10 route could not be committed before request deadline')
         if not self.can_request_reroute():
@@ -305,14 +322,21 @@ class BusService(BusLap):
 def execute(args, channel):
     node = None
     try:
-        node = BusService(args, channel)
+        if args.demand_service:
+            from carla_bus_demand_service import BusDemandService
+            node = BusDemandService(args, channel)
+        elif args.continuous:
+            from carla_bus_loop_service import BusLoopService
+            node = BusLoopService(args, channel)
+        else:
+            node = BusService(args, channel)
         node.run()
     except Exception as exc:
         print(repr(exc), flush=True)
         channel.publish(phase='ERROR', message=str(exc))
         if node:
             node.result.update(success=False, result='interrupted' if args.interrupted else 'error',
-                               error=repr(exc), bell_pending=node.policy.requested,
+                               error=repr(exc), bell_pending=node.bell_pending(),
                                service_completed=node.policy.completed)
             node.result['failure_context'] = {
                 key: message_to_ordereddict(value) for key, value in node.diagnostic_paths.items()}
@@ -329,9 +353,10 @@ def execute(args, channel):
             args.output.parent.mkdir(parents=True, exist_ok=True)
             args.output.write_text(json.dumps(node.result, ensure_ascii=False, indent=2)+'\n')
             ok = node.result['success']
-            channel.publish(phase='DONE' if ok else 'ERROR', requested=node.policy.requested,
+            channel.publish(phase='DONE' if ok else 'ERROR', requested=node.bell_pending(),
                             served=node.policy.completed, accepting=False,
-                            message=('시험 완료 · S10 서비스 정차 후 재출발 확인' if node.policy.completed else
+                            message=(f"연속 순환 검증 완료 · {node.result.get('completed_laps',0)}바퀴" if args.continuous else
+                                    '시험 완료 · S10 서비스 정차 후 재출발 확인' if node.policy.completed else
                                      '시험 완료 · S10 서비스 정차 없이 통과') if ok else
                                     node.result.get('error', '정리 실패 · 결과 파일 확인'))
             node.destroy_node()
@@ -344,7 +369,7 @@ def panel(args, channel):
     from tkinter import ttk
     root = tk.Tk()
     root.title('Town05 버스 · 하차벨 시범 운행')
-    root.geometry('500x600+40+80')
+    root.geometry('500x660+40+80' if args.demand_service else '500x600+40+80')
     root.attributes('-topmost', True)
     style = ttk.Style(root)
     style.theme_use('clam')
@@ -357,10 +382,17 @@ def panel(args, channel):
     frame = ttk.Frame(root, padding=22)
     frame.pack(fill='both', expand=True)
     ttk.Label(frame, text='버스 하차벨', font=('', 22, 'bold')).pack(anchor='w')
-    ttk.Label(frame, text='S09 출발 → S10 선택 정차 → S01 시험 종료', wraplength=450).pack(anchor='w', pady=10)
+    route_label = ('전체 코스 · 대기 승객 또는 하차벨이 있으면 정차' if args.demand_service else
+                   '전체 코스 연속 순환 · 하차벨 정차 대상 S10' if args.continuous else
+                   'S09 출발 → S10 선택 정차 → S01 시험 종료')
+    ttk.Label(frame, text=route_label, wraplength=450).pack(anchor='w', pady=10)
     text = tk.StringVar()
     ttk.Label(frame, textvariable=text, font=('', 12), wraplength=450).pack(anchor='w', pady=12)
-    bell = ttk.Button(frame, text='하차벨  ·  Space', style='Bell.TButton', command=lambda: channel.commands.put('bell'))
+    automatic_test = args.random_bell_seed is not None
+    def send_bell(source):
+        if not automatic_test:
+            channel.commands.put(dict(action='bell',source=source))
+    bell = ttk.Button(frame, text='하차벨  ·  Space', style='Bell.TButton', command=lambda: send_bell('button'))
     bell.pack(fill='x', ipady=15, pady=8)
     start = ttk.Button(frame, text='시범 운행 출발', command=lambda: channel.commands.put('start'))
     start.pack(fill='x', ipady=6, pady=4)
@@ -368,8 +400,12 @@ def panel(args, channel):
         if not args.cleaning:
             args.interrupted = True
     ttk.Button(frame, text='시험 중단 · 버스 정지', command=request_stop).pack(fill='x', pady=4)
-    ttk.Label(frame, text='하차벨은 이 창에 포커스가 있을 때 Space로 누릅니다.\n'
-                         'S10 접수 마감 후 입력과 다음 정류장 이월은 지원하지 않습니다.\n'
+    input_help = ('자동 시험 중에는 하차벨·Space 입력을 잠급니다.\n' if automatic_test else
+                  '하차벨은 이 창에 포커스가 있을 때 Space로 누릅니다.\n')
+    service_help = ('승객·벨이 없으면 10km/h 서행 통과합니다.\n'
+                    '늦은 요청은 다음 정류장으로 이월합니다.\n' if args.demand_service else
+                    '현재는 S10에서만 서비스 정차하며, 늦은 요청은 거부합니다.\n')
+    ttk.Label(frame, text=input_help+service_help+
                          '신호 대기는 승하차 대기와 별도로 처리합니다.', wraplength=450).pack(anchor='w', pady=12)
     key_down = False
     release_job = None
@@ -379,7 +415,7 @@ def panel(args, channel):
             root.after_cancel(release_job)
             release_job = None
         if not key_down and not bell.instate(['disabled']):
-            channel.commands.put('bell')
+            send_bell('keyboard_space')
         key_down = True
         return 'break'
     def release(_):
@@ -410,18 +446,32 @@ def panel(args, channel):
         if flashing:
             colour = '#cf2338' if int(time.monotonic()*2) % 2 == 0 else '#8f1525'
             style.configure('Bell.TButton', background=colour)
-            style.map('Bell.TButton', background=[('disabled', '#dce3ee'), ('active', colour)])
-            bell.configure(text='하차 요청 접수 · S10')
+            style.map('Bell.TButton', background=[('disabled', colour if automatic_test else '#dce3ee'), ('active', colour)],
+                      foreground=[('disabled','white' if automatic_test else '#566579')])
+            bell.configure(text='하차 요청 접수 · '+(s.get('bell_target') or 'S10'))
         else:
             style.configure('Bell.TButton', background='#2458d3')
             style.map('Bell.TButton', background=[('disabled', '#dce3ee'), ('active', '#1946ae')])
-            bell.configure(text='하차벨  ·  Space')
-        bell.state(['!disabled'] if not stale and (s.get('accepting') or s.get('requested')) and
+            style.map('Bell.TButton',foreground=[('disabled','#566579')])
+            bell.configure(text='자동 시험 · 수동 입력 잠금' if automatic_test else '하차벨  ·  Space')
+        bell.state(['!disabled'] if not automatic_test and not stale and (s.get('accepting') or s.get('requested')) and
                    phase in ('READY', 'DRIVING', 'DWELLING') else ['disabled'])
         start.state(['!disabled'] if phase == 'READY' and not stale else ['disabled'])
-        lines = [f"상태: {labels.get(phase, phase)}", f"다음: {s.get('next_stop', 'S10 · 서부 남단')}",
+        finished_loop = args.continuous and phase == 'DONE'
+        next_stop = '검증 종료' if finished_loop else s.get('next_stop', 'S10 · 서부 남단')
+        lines = [f"상태: {labels.get(phase, phase)}", f"다음: {next_stop}",
                  f"속도: {s.get('speed_kmh', 0):.1f} km/h",
                  '하차 요청: '+('접수됨' if s.get('requested') else '없음')]
+        if args.continuous:
+            lap_label = (f"{s.get('completed_laps',0)}바퀴 완료" if finished_loop else
+                         f"{s.get('lap_number',1)}바퀴째")
+            lines.insert(1, lap_label+f" · 최근 통과 {s.get('current_stop','S01')}")
+            if finished_loop:lines.append('정지 이유: 지정한 바퀴 수 검증 완료')
+            elif s.get('stop_reason'):lines.append('정지 이유: '+s['stop_reason'])
+        if args.demand_service:
+            lines.append(f"다음 정류장 대기: {s.get('waiting_passengers',0)}명 · 전체 대기: {s.get('total_waiting_passengers',0)}명")
+            lines.append(f"탑승 완료: {s.get('boarded_passengers',0)}명")
+            if not finished_loop:lines.append('정류장 처리: '+s.get('service_reason','확인 중'))
         if phase == 'DWELLING':
             lines.append(f"승하차 대기: {s.get('dwell_s', 5):.1f}초")
         lines.append(s.get('message', ''))
@@ -447,11 +497,30 @@ def main():
     parser.add_argument('--auto-start', action='store_true')
     parser.add_argument('--bell', action='store_true', help='Inject a bell request before departure')
     parser.add_argument('--bell-after-m', type=float, help='Inject one bell after measured travel distance')
-    parser.add_argument('--speed-kmh', type=float, default=20)
-    parser.add_argument('--duration', type=float, default=240)
+    parser.add_argument('--continuous', action='store_true', help='Full course with rolling route handoffs and S10 service')
+    parser.add_argument('--demand-service', action='store_true', help='All stations: waiting passengers OR bell; implies continuous')
+    parser.add_argument('--service-stops', type=Path)
+    parser.add_argument('--passenger-stops', help='Waiting passengers, e.g. S03:2,S06:1; empty string creates none')
+    parser.add_argument('--laps', type=int, default=0, help='Continuous validation laps; 0 runs until stopped')
+    parser.add_argument('--random-bell-seed', type=int, help='Reproducible request/no-request comparison, requires --laps >= 2')
+    parser.add_argument('--speed-kmh', type=float)
+    parser.add_argument('--duration', type=float)
     args = parser.parse_args()
-    if not 0 < args.speed_kmh <= 20:
-        parser.error('First-stage service demonstration supports 0 < speed <= 20 km/h')
+    if args.demand_service:
+        args.continuous = True
+        args.service_stops = args.service_stops or args.route.with_name('town05_bus_service_stops.json')
+    elif args.service_stops is not None or args.passenger_stops is not None:
+        parser.error('Passenger and service-stop options require --demand-service')
+    args.speed_kmh = args.speed_kmh if args.speed_kmh is not None else (50 if args.continuous else 20)
+    args.duration = args.duration if args.duration is not None else (5400 if args.continuous else 240)
+    if not 0 < args.speed_kmh <= (50 if args.continuous else 20):
+        parser.error('Speed limit: 20 km/h for short demo, 50 km/h for full course')
+    if args.laps < 0 or (args.laps and not args.continuous):
+        parser.error('--laps requires --continuous and must be nonnegative')
+    if args.random_bell_seed is not None and (not args.continuous or args.laps < (1 if args.demand_service else 2) or args.bell):
+        parser.error('Random testing requires finite laps (demand >= 1, S10 loop >= 2), without --bell')
+    if args.continuous and args.bell_after_m is not None:
+        parser.error('Use --random-bell-seed for continuous bell injection')
     if not math.isfinite(args.duration) or args.duration <= 0:
         parser.error('duration must be finite and positive')
     if args.headless and not args.auto_start:
@@ -462,7 +531,8 @@ def main():
         parser.error('Choose one bell injection mode')
     args.case='bus_service'; args.minimum_peak_kmh=0.; args.cruise_hold_s=0.
     args.host='127.0.0.1'; args.port=2000; args.input_mode='ground_truth'
-    args.start_anchor='S09'; args.end_anchor='S01'; args.resume_current_pose=False
+    args.start_anchor='S01' if args.continuous else 'S09'
+    args.end_anchor='S01'; args.resume_current_pose=False
     args.stop_at_all_stops=False; args.preflight=False; args.with_traffic=False
     args.interrupted=False; args.cleaning=False
     rclpy.init(args=[], signal_handler_options=SignalHandlerOptions.NO)

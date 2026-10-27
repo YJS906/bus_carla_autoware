@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "cases": [
+    {
+      "pending_next": false,
+      "event": {
+        "outcome": "accepted",
+        "source": "keyboard",
+        "station": "S02",
+        "key": "0:S02",
+        "progress_m": 60.0,
+        "remaining_m": 0.0,
+        "sim_time": 1.0
+      }
+    },
+    {
+      "pending_next": true,
+      "event": {
+        "outcome": "already_requested",
+        "source": "keyboard",
+        "station": "S03",
+        "key": "0:S03",
+        "progress_m": 60.0,
+        "remaining_m": 55.0,
+        "sim_time": 1.0
+      }
+    }
+  ]
+}

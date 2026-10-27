@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Recover a proven shared dashed boundary missed by whole-lane matching.
+"""Recover proven shared dashed boundaries missed by whole-lane matching.
 
-Town05 boundary 6522 separates road 25 lanes +1/+2. The two imported lanelet
+Town05 boundaries 6522/2087 separate road 25/8 lanes +1/+2. The imported lanelet
 polygons end at slightly different native road sections. Match the shared
 boundary itself, verify BOTH lanes and every native section's full marking.
 No geometry or existing boundary permissions are changed.
@@ -22,7 +22,21 @@ from shapely.geometry import LineString
 from repair_town05_lane_changes import constant_broken_both, native_marking_lane, tags
 
 SOURCE = 'native_shared_boundary_seam_v1'
-BOUNDARIES = (6522,)
+BOUNDARIES = {6522: (25, 0, 1, 2), 2087: (8, 0, 1, 2)}
+
+
+def reviewed_marking(marking, road_id):
+    if constant_broken_both(marking):
+        return True
+    # Road 8 has an explicitly laneChange=both unpainted 13.84 cm seam at s=0.
+    # It is not a solid/prohibited marking. All sampled interior points must
+    # still be dashed; never generalise this exception to another road/length.
+    marks = marking.findall('roadMark') if marking is not None else []
+    return (road_id == 8 and len(marks) == 2 and
+            marks[0].get('type') == 'none' and marks[0].get('laneChange') == 'both' and
+            float(marks[0].get('sOffset', '-1')) == 0 and
+            marks[1].get('type') == 'broken' and marks[1].get('laneChange') == 'both' and
+            0 < float(marks[1].get('sOffset', '-1')) <= .15)
 
 
 def candidate(text, xodr_text):
@@ -67,8 +81,11 @@ def candidate(text, xodr_text):
                 raise ValueError('Boundary is not between native same-direction adjacent lanes')
             section = roads[l.road_id].findall('./lanes/laneSection')[l.section_id]
             marking = native_marking_lane(section,l.lane_id,r.lane_id)
-            if not constant_broken_both(marking):
+            if not reviewed_marking(marking, l.road_id):
                 raise ValueError('Entire native section must explicitly allow dashed/both')
+            if (l.right_lane_marking.type != carla.LaneMarkingType.Broken or
+                    l.right_lane_marking.lane_change != carla.LaneChange.Both):
+                raise ValueError('Sampled native boundary must be dashed and allow both directions')
             edge = l.transform.location+l.transform.get_right_vector()*(l.lane_width/2)
             error = math.hypot(edge.x-p.x,edge.y-p.y)
             if error>.25 or abs(edge.z-p.z)>.25:
@@ -77,10 +94,11 @@ def candidate(text, xodr_text):
             keys.add((l.road_id,l.section_id,l.lane_id,r.lane_id))
         # Endpoint exclusion covers the map import seam, not a marking exemption:
         # the ENTIRE matched native lane sections have already been checked.
-        if keys!={(25,0,1,2)}:
+        if keys!={BOUNDARIES[way_id]}:
             raise ValueError(f'Unexpected native source for reviewed boundary: {keys}')
         proof.append(dict(way_id=way_id,native_sections=sorted(keys),samples=count+1,
-                          max_boundary_error_m=max_error,endpoint_inset_m=.25))
+                          max_boundary_error_m=max_error,endpoint_inset_m=.25,
+                          native_unpainted_both_seam_m=.13841272397161219 if way_id==2087 else 0.))
         if not existing:
             pattern = rf'<way\b(?=[^>]*\bid="{way_id}")[^>]*>.*?</way>'
             replacement = ''.join(f'<tag k="{k}" v="{v}" />' for k,v in expected.items())
